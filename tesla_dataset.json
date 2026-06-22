@@ -1,0 +1,1048 @@
+{
+  "trims": [
+    {
+      "model": "Model 3",
+      "trim_code": "$MT368",
+      "variant_code": "RWD_PRM_NV35",
+      "trim_name": "Model 3 Premium Rear-Wheel Drive",
+      "category": "Premium",
+      "drive": "Rear-Wheel Drive",
+      "start_price_cad": 39490,
+      "range_km": 463,
+      "range_alt_km": "413",
+      "accel_0_100_s": 6.2,
+      "topspeed_kmh": 201,
+      "seating": 5,
+      "cargo_l": 682,
+      "is_default": "yes"
+    },
+    {
+      "model": "Model 3",
+      "trim_code": "$MT370",
+      "variant_code": "LR_AWD_NV35",
+      "trim_name": "Model 3 Premium All-Wheel Drive",
+      "category": "Premium",
+      "drive": "Dual Motor All-Wheel Drive",
+      "start_price_cad": 49990,
+      "range_km": 570,
+      "range_alt_km": "520",
+      "accel_0_100_s": 4.4,
+      "topspeed_kmh": 201,
+      "seating": 5,
+      "cargo_l": 649,
+      "is_default": ""
+    },
+    {
+      "model": "Model 3",
+      "trim_code": "$MT379",
+      "variant_code": "PERF_NV35",
+      "trim_name": "Model 3 Performance All-Wheel Drive",
+      "category": "Performance",
+      "drive": "Dual Motor All-Wheel Drive",
+      "start_price_cad": 74990,
+      "range_km": 505,
+      "range_alt_km": "",
+      "accel_0_100_s": 3.1,
+      "topspeed_kmh": 262,
+      "seating": 5,
+      "cargo_l": 649,
+      "is_default": ""
+    },
+    {
+      "model": "Model Y",
+      "trim_code": "$MTY67",
+      "variant_code": "LR_AWD_NV36",
+      "trim_name": "Model Y Premium All-Wheel Drive",
+      "category": "Premium",
+      "drive": "Dual Motor All-Wheel Drive",
+      "start_price_cad": 64990,
+      "range_km": 542,
+      "range_alt_km": "488",
+      "accel_0_100_s": 4.8,
+      "topspeed_kmh": 201,
+      "seating": 5,
+      "cargo_l": 2150,
+      "is_default": ""
+    },
+    {
+      "model": "Model Y",
+      "trim_code": "$MTY68",
+      "variant_code": "SR_RWD_NV36_STANDARD",
+      "trim_name": "Model Y Rear-Wheel Drive",
+      "category": "",
+      "drive": "Rear-Wheel Drive",
+      "start_price_cad": 49990,
+      "range_km": 463,
+      "range_alt_km": "488",
+      "accel_0_100_s": 7.2,
+      "topspeed_kmh": 201,
+      "seating": 5,
+      "cargo_l": 2150,
+      "is_default": "yes"
+    },
+    {
+      "model": "Model Y",
+      "trim_code": "$MTY70",
+      "variant_code": "PERF_NV36",
+      "trim_name": "Model Y Performance All-Wheel Drive",
+      "category": "Performance",
+      "drive": "Dual Motor All-Wheel Drive",
+      "start_price_cad": 74990,
+      "range_km": 494,
+      "range_alt_km": "",
+      "accel_0_100_s": 3.5,
+      "topspeed_kmh": 250,
+      "seating": 5,
+      "cargo_l": 2138,
+      "is_default": ""
+    }
+  ],
+  "options": [
+    {
+      "model": "Model 3",
+      "group": "AUTOPILOT",
+      "option_code": "$APBS",
+      "option_name": "Basic Autopilot",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "AUTOPILOT",
+      "option_code": "$APF2",
+      "option_name": "Full Self-Driving (Supervised)",
+      "price_cad": 11000
+    },
+    {
+      "model": "Model 3",
+      "group": "AUTOPILOT",
+      "option_code": "$APF3",
+      "option_name": "Full Self-Driving (Supervised)",
+      "price_cad": 11000
+    },
+    {
+      "model": "Model 3",
+      "group": "AUTOPILOT",
+      "option_code": "$APFA",
+      "option_name": "Traffic-Aware Cruise Control",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "AUTOPILOT",
+      "option_code": "$APFS",
+      "option_name": "Traffic-Aware Cruise Control with Autosteer",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "AUTOPILOT",
+      "option_code": "$APPB",
+      "option_name": "Enhanced Autopilot",
+      "price_cad": 7800
+    },
+    {
+      "model": "Model 3",
+      "group": "BRAKES",
+      "option_code": "$BC3R",
+      "option_name": "Performance Brakes",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "CONNECTIVITY",
+      "option_code": "$CPF0",
+      "option_name": "Standard Connectivity",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "CONNECTIVITY",
+      "option_code": "$CPF1",
+      "option_name": "Premium Connectivity",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "COLD_WEATHER",
+      "option_code": "$CW03",
+      "option_name": "Cold Weather Feature",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "DRIVE_MODE",
+      "option_code": "$DV2W",
+      "option_name": "Rear-Wheel Drive",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "DRIVE_MODE",
+      "option_code": "$DV4W",
+      "option_name": "Dual Motor All-Wheel Drive",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "PERF_FIRMWARE",
+      "option_code": "$FM3U",
+      "option_name": "Acceleration Boost",
+      "price_cad": 2700
+    },
+    {
+      "model": "Model 3",
+      "group": "INTERIOR",
+      "option_code": "$IPB2",
+      "option_name": "Black Premium Interior",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "INTERIOR",
+      "option_code": "$IPB3",
+      "option_name": "Black Premium Interior",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "INTERIOR",
+      "option_code": "$IPB4",
+      "option_name": "Black Premium Interior",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "INTERIOR",
+      "option_code": "$IPW2",
+      "option_name": "Black and White Premium Interior",
+      "price_cad": 1300
+    },
+    {
+      "model": "Model 3",
+      "group": "INTERIOR",
+      "option_code": "$IPW3",
+      "option_name": "Black and White Premium Interior",
+      "price_cad": 1300
+    },
+    {
+      "model": "Model 3",
+      "group": "INTERIOR",
+      "option_code": "$IPW4",
+      "option_name": "Black and White Premium Interior",
+      "price_cad": 1300
+    },
+    {
+      "model": "Model 3",
+      "group": "MODEL",
+      "option_code": "$MDL3",
+      "option_name": "Model 3",
+      "price_cad": 20000
+    },
+    {
+      "model": "Model 3",
+      "group": "PAINT",
+      "option_code": "$PB00",
+      "option_name": "Frost Blue Metallic Paint",
+      "price_cad": 2600
+    },
+    {
+      "model": "Model 3",
+      "group": "PAINT",
+      "option_code": "$PB02",
+      "option_name": "Marine Blue Paint",
+      "price_cad": 1300
+    },
+    {
+      "model": "Model 3",
+      "group": "PEDALS",
+      "option_code": "$PL31",
+      "option_name": "Performance Pedals",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "PAINT",
+      "option_code": "$PN00",
+      "option_name": "Quicksilver Paint",
+      "price_cad": 2600
+    },
+    {
+      "model": "Model 3",
+      "group": "PAINT",
+      "option_code": "$PN01",
+      "option_name": "Stealth Gray Paint",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "PAINT",
+      "option_code": "$PPSW",
+      "option_name": "Pearl White Paint",
+      "price_cad": 1300
+    },
+    {
+      "model": "Model 3",
+      "group": "PAINT",
+      "option_code": "$PR01",
+      "option_name": "Ultra Red Paint",
+      "price_cad": 2600
+    },
+    {
+      "model": "Model 3",
+      "group": "PAINT",
+      "option_code": "$PX02",
+      "option_name": "Diamond Black Paint",
+      "price_cad": 2000
+    },
+    {
+      "model": "Model 3",
+      "group": "HEATED_SEAT",
+      "option_code": "$RSF0",
+      "option_name": "No Rear Heated Seats",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "HEATED_SEAT",
+      "option_code": "$RSF1",
+      "option_name": "Rear Heated Seats",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "SUPER_CHARGER",
+      "option_code": "$SC00",
+      "option_name": "No access to supercharger network",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "SUPER_CHARGER",
+      "option_code": "$SC04",
+      "option_name": "Supercharger Network Access + Pay-as-you-go",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "SUPER_CHARGER",
+      "option_code": "$SC05",
+      "option_name": "Free Supercharging",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "SUPER_CHARGER",
+      "option_code": "$SC06",
+      "option_name": "Time-bound Supercharging",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "SPOILER",
+      "option_code": "$SLR1",
+      "option_name": "Carbon Fiber Spoiler",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "WHEELS",
+      "option_code": "$W30A",
+      "option_name": "20’’ Warp Wheels",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "WHEELS",
+      "option_code": "$W38A",
+      "option_name": "18’’ Photon Wheels",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "WHEELS",
+      "option_code": "$W39G",
+      "option_name": "19’’ Nova Wheels",
+      "price_cad": 2000
+    },
+    {
+      "model": "Model 3",
+      "group": "WHEELS",
+      "option_code": "$W39S",
+      "option_name": "19’’ Nova Wheels",
+      "price_cad": 2000
+    },
+    {
+      "model": "Model 3",
+      "group": "TRIM",
+      "option_code": "$MT368",
+      "option_name": "Model 3 Premium Rear-Wheel Drive",
+      "price_cad": 19490
+    },
+    {
+      "model": "Model 3",
+      "group": "TRIM",
+      "option_code": "$MT370",
+      "option_name": "Model 3 Premium All-Wheel Drive",
+      "price_cad": 29990
+    },
+    {
+      "model": "Model 3",
+      "group": "TRIM",
+      "option_code": "$MT379",
+      "option_name": "Model 3 Performance All-Wheel Drive",
+      "price_cad": 54990
+    },
+    {
+      "model": "Model 3",
+      "group": "PREMIUM_PACKAGE",
+      "option_code": "$PRM30",
+      "option_name": "Partial Premium Interior",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "PREMIUM_PACKAGE",
+      "option_code": "$PRM31",
+      "option_name": "Premium Interior",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "PREMIUM_PACKAGE",
+      "option_code": "$PRM3S",
+      "option_name": "Standard Interior",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "SPORT_PACKAGE",
+      "option_code": "$SPT31",
+      "option_name": "Performance Upgrade",
+      "price_cad": 0
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT301",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT302",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT303",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT304",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT305",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT306",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT308",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT309",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT310",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT311",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT313",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT314",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT315",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT317",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT319",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT321",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT322",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT324",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT326",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT328",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT329",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT337",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT351",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT352",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT353",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT356",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT357",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT360",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model 3",
+      "group": "",
+      "option_code": "$MT371",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "AUTOPILOT",
+      "option_code": "$APBS",
+      "option_name": "Autopilot",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "AUTOPILOT",
+      "option_code": "$APF2",
+      "option_name": "Full Self-Driving (Supervised)",
+      "price_cad": 11000
+    },
+    {
+      "model": "Model Y",
+      "group": "AUTOPILOT",
+      "option_code": "$APF3",
+      "option_name": "Full Self-Driving (Supervised)",
+      "price_cad": 11000
+    },
+    {
+      "model": "Model Y",
+      "group": "AUTOPILOT",
+      "option_code": "$APFA",
+      "option_name": "Traffic-Aware Cruise Control",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "AUTOPILOT",
+      "option_code": "$APFS",
+      "option_name": "Traffic-Aware Cruise Control with Autosteer",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "AUTOPILOT",
+      "option_code": "$APPB",
+      "option_name": "Enhanced Autopilot",
+      "price_cad": 7800
+    },
+    {
+      "model": "Model Y",
+      "group": "BRAKES",
+      "option_code": "$BCYR",
+      "option_name": "Performance Brakes",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "CONNECTIVITY",
+      "option_code": "$CPF0",
+      "option_name": "Standard Connectivity",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "CONNECTIVITY",
+      "option_code": "$CPF1",
+      "option_name": "Premium Connectivity",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "CONNECTIVITY",
+      "option_code": "$CPF2",
+      "option_name": "Free Premium Connectivity",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "DRIVE_MODE",
+      "option_code": "$DV2W",
+      "option_name": "Rear-Wheel Drive",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "DRIVE_MODE",
+      "option_code": "$DV4W",
+      "option_name": "Dual Motor All-Wheel Drive",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "PERF_FIRMWARE",
+      "option_code": "$FM3U",
+      "option_name": "Acceleration Boost",
+      "price_cad": 2700
+    },
+    {
+      "model": "Model Y",
+      "group": "INTERIOR",
+      "option_code": "$IBB6",
+      "option_name": "All Black Interior",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "MODEL",
+      "option_code": "$MDLY",
+      "option_name": "Model Y",
+      "price_cad": 45000
+    },
+    {
+      "model": "Model Y",
+      "group": "PAINT",
+      "option_code": "$PB02",
+      "option_name": "Marine Blue Paint",
+      "price_cad": 1300
+    },
+    {
+      "model": "Model Y",
+      "group": "PEDALS",
+      "option_code": "$PL31",
+      "option_name": "Performance Pedals",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "PAINT",
+      "option_code": "$PN00",
+      "option_name": "Quicksilver Paint",
+      "price_cad": 2600
+    },
+    {
+      "model": "Model Y",
+      "group": "PAINT",
+      "option_code": "$PN01",
+      "option_name": "Stealth Grey Paint",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "PAINT",
+      "option_code": "$PPSW",
+      "option_name": "Pearl White Paint",
+      "price_cad": 1300
+    },
+    {
+      "model": "Model Y",
+      "group": "PAINT",
+      "option_code": "$PR01",
+      "option_name": "Ultra Red Paint",
+      "price_cad": 2600
+    },
+    {
+      "model": "Model Y",
+      "group": "PAINT",
+      "option_code": "$PX02",
+      "option_name": "Diamond Black Paint",
+      "price_cad": 2000
+    },
+    {
+      "model": "Model Y",
+      "group": "SUPER_CHARGER",
+      "option_code": "$SC00",
+      "option_name": "No access to supercharger network",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "SUPER_CHARGER",
+      "option_code": "$SC04",
+      "option_name": "Supercharger Network Access + Pay-as-you-go",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "SUPER_CHARGER",
+      "option_code": "$SC05",
+      "option_name": "Free Supercharging",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "SUPER_CHARGER",
+      "option_code": "$SC06",
+      "option_name": "Time-bound Supercharging",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "SPOILER",
+      "option_code": "$SLR1",
+      "option_name": "Carbon Fiber Spoiler",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "TOWING",
+      "option_code": "$TW01",
+      "option_name": "Tow Hitch",
+      "price_cad": 1300
+    },
+    {
+      "model": "Model Y",
+      "group": "INTERIOR",
+      "option_code": "$IPB12",
+      "option_name": "All Black Premium Interior",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "INTERIOR",
+      "option_code": "$IPB14",
+      "option_name": "All Black Premium Interior",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "INTERIOR",
+      "option_code": "$IPW12",
+      "option_name": "Black and White Premium Interior",
+      "price_cad": 1300
+    },
+    {
+      "model": "Model Y",
+      "group": "INTERIOR",
+      "option_code": "$IPW14",
+      "option_name": "Black and White Premium Interior",
+      "price_cad": 1300
+    },
+    {
+      "model": "Model Y",
+      "group": "TRIM",
+      "option_code": "$MTY67",
+      "option_name": "Model Y Premium All-Wheel Drive",
+      "price_cad": 19990
+    },
+    {
+      "model": "Model Y",
+      "group": "TRIM",
+      "option_code": "$MTY68",
+      "option_name": "Model Y Rear-Wheel Drive",
+      "price_cad": 4990
+    },
+    {
+      "model": "Model Y",
+      "group": "TRIM",
+      "option_code": "$MTY70",
+      "option_name": "Model Y Performance All-Wheel Drive",
+      "price_cad": 29990
+    },
+    {
+      "model": "Model Y",
+      "group": "PILOT",
+      "option_code": "$PILOT",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "PREMIUM_PACKAGE",
+      "option_code": "$PRMY0",
+      "option_name": "Premium Interior",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "PREMIUM_PACKAGE",
+      "option_code": "$PRMY1",
+      "option_name": "Premium Interior",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "SPORT_PACKAGE",
+      "option_code": "$SPTY1",
+      "option_name": "Performance Upgrade",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "REAR_SEATS",
+      "option_code": "$STY5B",
+      "option_name": "Five Seat Interior",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "REAR_SEATS",
+      "option_code": "$STY5S",
+      "option_name": "Five Seat Interior",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "REAR_SEATS",
+      "option_code": "$STY7S",
+      "option_name": "Seven Seat Interior",
+      "price_cad": 3000
+    },
+    {
+      "model": "Model Y",
+      "group": "WHEELS",
+      "option_code": "$WY18P",
+      "option_name": "18’’ Aperture Wheels",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "WHEELS",
+      "option_code": "$WY19P",
+      "option_name": "19’’ Crossflow Wheels",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "WHEELS",
+      "option_code": "$WY20B",
+      "option_name": "20’’ Helix 2.0 Wheels",
+      "price_cad": 2600
+    },
+    {
+      "model": "Model Y",
+      "group": "WHEELS",
+      "option_code": "$WY21A",
+      "option_name": "21’’ Arachnid 2.0 Wheels",
+      "price_cad": 0
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY01",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY03",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY04",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY05",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY06",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY09",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY10",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY11",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY13",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY36",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY37",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY38",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY42",
+      "option_name": "",
+      "price_cad": ""
+    },
+    {
+      "model": "Model Y",
+      "group": "",
+      "option_code": "$MTY48",
+      "option_name": "",
+      "price_cad": ""
+    }
+  ],
+  "generatedFrom": "tesla.com/en_ca configurator bootstrap (DSServices.Lexicon)"
+}

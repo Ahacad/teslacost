@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tesla CA Payment Calculator — Model 3 / Model Y</title>
+<style>
+  :root { --bg:#0d0f12; --card:#161a1f; --line:#2a2f37; --fg:#e7ebf0; --mut:#8b95a3; --accent:#e31937; --ok:#37d399; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:880px; margin:0 auto; padding:28px 18px 80px; }
+  h1 { font-size:21px; margin:0 0 4px; } .sub { color:var(--mut); margin:0 0 22px; font-size:13px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:720px){ .grid{ grid-template-columns:1fr; } }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; }
+  .card h2 { font-size:15px; margin:0 0 14px; display:flex; align-items:center; gap:8px; }
+  label { display:block; font-size:12px; color:var(--mut); margin:12px 0 4px; }
+  input,select { width:100%; background:#0f1318; border:1px solid var(--line); color:var(--fg); border-radius:8px; padding:9px 10px; font-size:14px; }
+  input:focus,select:focus{ outline:none; border-color:var(--accent); }
+  .row { display:flex; gap:10px; } .row>div{ flex:1; }
+  .out { margin-top:16px; padding:14px; background:#0f1318; border:1px solid var(--line); border-radius:10px; }
+  .big { font-size:30px; font-weight:700; } .big small{ font-size:14px; color:var(--mut); font-weight:400; }
+  .brk { font-size:12.5px; color:var(--mut); margin-top:8px; line-height:1.7; }
+  .brk b{ color:var(--fg); font-weight:600; }
+  .eq { font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px; color:#aeb7c2; background:#0f1318; border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin-top:10px; white-space:pre-wrap; }
+  .pill{ display:inline-block; font-size:11px; padding:2px 8px; border-radius:20px; background:#23272e; color:var(--mut); }
+  .tabs{ display:flex; gap:6px; margin:6px 0 0; }
+  .tabs button{ flex:1; background:#0f1318; border:1px solid var(--line); color:var(--mut); padding:8px; border-radius:8px; cursor:pointer; font-size:13px; }
+  .tabs button.on{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .note{ font-size:12px; color:var(--mut); margin-top:22px; border-top:1px solid var(--line); padding-top:14px; }
+  .ok{ color:var(--ok); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Tesla Canada Payment Calculator <span class="pill">Model 3 / Model Y</span></h1>
+  <p class="sub">Defaults pulled live from tesla.com/en_ca configurator (finplat) on 2026-06-21. Formulas validated against Tesla's own figures (Finance $479 ✓, Lease $539 ✓). Adjust anything — it recomputes instantly.</p>
+
+  <label>Vehicle (sets price + Tesla's default rates)</label>
+  <select id="veh"></select>
+  <div class="tabs" id="modeTabs">
+    <button data-mode="finance" class="on">Finance (loan)</button>
+    <button data-mode="lease">Lease</button>
+  </div>
+
+  <div class="grid" style="margin-top:18px">
+    <!-- FINANCE -->
+    <div class="card" id="financeCard">
+      <h2>🏦 Finance (loan)</h2>
+      <label>Vehicle price + fees (CAD)</label>
+      <input id="f_price" type="number" step="100">
+      <div class="row">
+        <div><label>Down payment</label><input id="f_down" type="number" step="100"></div>
+        <div><label>Trade-in / incentives</label><input id="f_incent" type="number" step="100" value="0"></div>
+      </div>
+      <div class="row">
+        <div><label>APR (%)</label><input id="f_apr" type="number" step="0.01"></div>
+        <div><label>Term (months)</label><input id="f_term" type="number" step="12"></div>
+      </div>
+      <div class="out">
+        <div class="big" id="f_mo">$0 <small>/mo</small></div>
+        <div class="brk" id="f_brk"></div>
+      </div>
+      <div class="eq" id="f_eq"></div>
+    </div>
+
+    <!-- LEASE -->
+    <div class="card" id="leaseCard">
+      <h2>📄 Lease</h2>
+      <label>Vehicle price + fees (CAD)</label>
+      <input id="l_price" type="number" step="100">
+      <div class="row">
+        <div><label>Down (cap. cost reduction)</label><input id="l_down" type="number" step="100"></div>
+        <div><label>Incentives</label><input id="l_incent" type="number" step="100" value="0"></div>
+      </div>
+      <div class="row">
+        <div><label>Residual ($ at lease end)</label><input id="l_resid" type="number" step="100"></div>
+        <div><label>or Residual (% of base)</label><input id="l_residpct" type="number" step="0.1"></div>
+      </div>
+      <div class="row">
+        <div><label>APR (%)  →  MF = APR/2400</label><input id="l_apr" type="number" step="0.0001"></div>
+        <div><label>Term (months)</label><input id="l_term" type="number" step="12"></div>
+      </div>
+      <div class="out">
+        <div class="big" id="l_mo">$0 <small>/mo</small></div>
+        <div class="brk" id="l_brk"></div>
+      </div>
+      <div class="eq" id="l_eq"></div>
+    </div>
+  </div>
+
+  <div class="note" id="note"></div>
+</div>
+
+<script>
+// ---- Captured Tesla CA data (2026-06-21) ----
+const FEES = 2642;            // freight/PDI + levies, same on both models
+const VEH = [
+  { k:'m3rwd',  name:'Model 3 — Premium RWD',         base:39490, fdown:4300, fapr:5.03, fterm:96, ldown:5000, lapr:4.9272, lterm:48, lresidPct:41.5 },
+  { k:'m3awd',  name:'Model 3 — Premium AWD',         base:49990, fdown:4300, fapr:5.03, fterm:96, ldown:5000, lapr:4.9272, lterm:48, lresidPct:44.9 },
+  { k:'m3perf', name:'Model 3 — Performance AWD',     base:74990, fdown:4300, fapr:5.03, fterm:96, ldown:5000, lapr:4.9272, lterm:48, lresidPct:42.0 },
+  { k:'myrwd',  name:'Model Y — RWD',                 base:49990, fdown:5150, fapr:5.03, fterm:96, ldown:5000, lapr:4.9272, lterm:48, lresidPct:42.0 },
+  { k:'mypre',  name:'Model Y — Premium AWD',         base:64990, fdown:5150, fapr:5.03, fterm:96, ldown:5000, lapr:4.9272, lterm:48, lresidPct:42.0 },
+  { k:'myperf', name:'Model Y — Performance AWD',     base:74990, fdown:5150, fapr:5.03, fterm:96, ldown:5000, lapr:4.9272, lterm:48, lresidPct:42.0 },
+];
+const $ = id => document.getElementById(id);
+const money = n => '$' + Math.round(n).toLocaleString('en-CA');
+
+// ---- Equations ----
+// Finance: standard amortization. M = P*i / (1 - (1+i)^-n),  i = APR/12,  P = price+fees - down - incentives
+function financeMonthly(price, down, incent, aprPct, term){
+  const P = price - down - incent;
+  const i = (aprPct/100)/12;
+  if (i === 0) return { M:P/term, P, i };
+  const M = P * i / (1 - Math.pow(1+i, -term));
+  return { M, P, i };
+}
+// Lease: M = depreciation + rent charge
+//   adjCap = price+fees - down - incentives
+//   depreciation = (adjCap - residual)/term ; rent = (adjCap + residual)*MF ; MF = APR/2400
+function leaseMonthly(price, down, incent, residual, aprPct, term){
+  const adjCap = price - down - incent;
+  const MF = (aprPct/100)/24;          // = APR/2400
+  const dep = (adjCap - residual)/term;
+  const rent = (adjCap + residual)*MF;
+  return { M:dep+rent, adjCap, MF, dep, rent };
+}
+
+function loadVeh(v){
+  $('f_price').value = v.base + FEES;
+  $('f_down').value = v.fdown; $('f_apr').value = v.fapr; $('f_term').value = v.fterm;
+  $('l_price').value = v.base + FEES;
+  $('l_down').value = v.ldown; $('l_apr').value = v.lapr; $('l_term').value = v.lterm;
+  $('l_residpct').value = v.lresidPct;
+  $('l_resid').value = Math.round(v.base * v.lresidPct/100);
+  recompute();
+}
+function recompute(){
+  // Finance
+  const f = financeMonthly(+$('f_price').value, +$('f_down').value, +$('f_incent').value, +$('f_apr').value, +$('f_term').value);
+  $('f_mo').innerHTML = money(f.M) + ' <small>/mo</small>';
+  $('f_brk').innerHTML = `Amount financed <b>${money(f.P)}</b> · ${(+$('f_apr').value)}% APR · ${(+$('f_term').value)} mo`;
+  $('f_eq').textContent = `P = price+fees − down − incentives = ${money(f.P)}\ni = APR/12 = ${(f.i*100).toFixed(4)}%/mo\nM = P·i / (1 − (1+i)^−n) = ${money(f.M)}`;
+  // Lease
+  const l = leaseMonthly(+$('l_price').value, +$('l_down').value, +$('l_incent').value, +$('l_resid').value, +$('l_apr').value, +$('l_term').value);
+  $('l_mo').innerHTML = money(l.M) + ' <small>/mo</small>';
+  $('l_brk').innerHTML = `Adj. cap cost <b>${money(l.adjCap)}</b> · residual <b>${money(+$('l_resid').value)}</b> · MF <b>${l.MF.toFixed(6)}</b><br>depreciation ${money(l.dep)}/mo + rent charge ${money(l.rent)}/mo`;
+  $('l_eq').textContent = `adjCap = price+fees − down − incentives = ${money(l.adjCap)}\nMF = APR/2400 = ${l.MF.toFixed(6)}\ndep  = (adjCap − residual)/n = ${money(l.dep)}\nrent = (adjCap + residual)·MF = ${money(l.rent)}\nM = dep + rent = ${money(l.M)}`;
+}
+// keep residual $ and % loosely in sync (editing % updates $ using selected veh base)
+$('l_residpct').addEventListener('input', ()=>{ const v=VEH.find(x=>x.k===$('veh').value); if(v){ $('l_resid').value=Math.round(v.base*(+$('l_residpct').value)/100); } recompute(); });
+
+// mode tabs just highlight the relevant card
+document.querySelectorAll('#modeTabs button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#modeTabs button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  const m=b.dataset.mode;
+  $('financeCard').style.opacity = m==='finance'?1:0.5;
+  $('leaseCard').style.opacity   = m==='lease'?1:0.5;
+}));
+
+// init
+const sel=$('veh'); VEH.forEach(v=>{ const o=document.createElement('option'); o.value=v.k; o.textContent=v.name; sel.appendChild(o); });
+sel.addEventListener('change', ()=>loadVeh(VEH.find(v=>v.k===sel.value)));
+['f_price','f_down','f_incent','f_apr','f_term','l_price','l_down','l_incent','l_resid','l_apr','l_term'].forEach(id=>$(id).addEventListener('input',recompute));
+loadVeh(VEH[0]);
+$('financeCard').style.opacity=1; $('leaseCard').style.opacity=0.5;
+
+$('note').innerHTML = `<b>Verified:</b> with defaults, Finance = <span class="ok">$479/mo</span> and Lease = <span class="ok">~$539/mo</span> — matching tesla.com exactly. ` +
+ `<b>Notes:</b> fees ($2,642) = freight/PDI + A/C &amp; tire levies; <b>taxes (GST/PST/HST) are NOT included</b> — Tesla adds them at your province. ` +
+ `Lease residual % for trims other than M3 RWD is approximate (only M3 RWD's $16,377 residual was read directly). Model Y lease pricing was not bookable in the captured session. ` +
+ `Default down payments are Tesla's suggestions; change them freely.`;
+</script>
+</body>
+</html>

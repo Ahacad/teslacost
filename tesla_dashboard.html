@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tesla Canada — Cost Instrument</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2EEE4; --paper2:#FBF9F3; --card:#FCFAF5;
+    --ink:#171309; --ink2:#6E6757; --ink3:#9A9384;
+    --line:#E3DCCC; --line2:#D2C9B5;
+    --red:#E31937; --red-soft:#fbe1e5;
+    --fin:#0E766B; --lse:#C2701A; --csh:#3C3F47;     /* finance teal · lease amber · cash graphite */
+    --fin-soft:#dcefe9; --best:#e3f3ee;
+    --shadow:0 1px 2px rgba(40,33,15,.04),0 8px 26px rgba(40,33,15,.06);
+    --r:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Hanken Grotesk",system-ui,sans-serif;font-size:15px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.5;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");}
+  .num{font-family:"JetBrains Mono",ui-monospace,monospace;font-feature-settings:"tnum" 1;font-variant-numeric:tabular-nums;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px 110px;}
+  a{color:var(--red);}
+
+  /* ---------- masthead ---------- */
+  .mast{padding:34px 0 0;}
+  .mast .rail{display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    border-bottom:2px solid var(--ink);padding-bottom:9px;}
+  .mast .brand{font-family:"Bricolage Grotesque";font-weight:800;font-size:clamp(30px,6vw,58px);
+    letter-spacing:-.03em;line-height:.9;}
+  .mast .brand .ca{color:var(--red);}
+  .mast .meta{font-family:"JetBrains Mono";font-size:11px;color:var(--ink2);text-align:right;line-height:1.7;
+    text-transform:uppercase;letter-spacing:.08em;}
+  .mast .kick{font-family:"Instrument Serif";font-style:italic;font-size:clamp(17px,2.4vw,23px);color:var(--ink2);
+    margin:12px 0 0;}
+  .mast .kick b{color:var(--ink);font-style:normal;font-family:"Hanken Grotesk";font-weight:600;}
+
+  /* ---------- hero band ---------- */
+  .hero{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;
+    margin:30px 0 6px;}
+  .hero .lead{font-family:"Instrument Serif";font-style:italic;color:var(--ink2);font-size:18px;}
+  .hero .big{font-family:"Bricolage Grotesque";font-weight:800;letter-spacing:-.03em;
+    font-size:clamp(40px,8vw,82px);line-height:.92;}
+  .hero .big .u{font-size:.4em;color:var(--ink2);font-weight:600;letter-spacing:0;}
+  .hero .big .amt{color:var(--red);}
+
+  /* ---------- currency segmented switch ---------- */
+  .seg{display:inline-flex;background:var(--paper2);border:1px solid var(--line2);border-radius:999px;padding:4px;position:relative;}
+  .seg button{position:relative;z-index:2;border:0;background:transparent;cursor:pointer;
+    font-family:"JetBrains Mono";font-size:13px;font-weight:600;color:var(--ink2);padding:8px 18px;border-radius:999px;transition:color .25s;}
+  .seg button.on{color:#fff;}
+  .seg .thumb{position:absolute;z-index:1;top:4px;bottom:4px;border-radius:999px;background:var(--ink);
+    transition:transform .34s cubic-bezier(.6,.2,.1,1),width .34s cubic-bezier(.6,.2,.1,1);}
+
+  /* ---------- section heads ---------- */
+  section{scroll-margin-top:20px;}
+  .sec{display:flex;align-items:baseline;gap:16px;margin:54px 0 4px;padding-top:18px;border-top:1px solid var(--line2);}
+  .sec .no{font-family:"Bricolage Grotesque";font-weight:800;font-size:30px;color:var(--red);letter-spacing:-.04em;
+    min-width:48px;}
+  .sec h2{font-family:"Bricolage Grotesque";font-weight:700;font-size:23px;letter-spacing:-.02em;margin:0;}
+  .sec .kk{font-family:"Instrument Serif";font-style:italic;color:var(--ink2);font-size:15px;}
+  .ssub{color:var(--ink2);font-size:13.5px;margin:7px 0 16px;padding-left:64px;}
+  @media(max-width:620px){.ssub{padding-left:0;}}
+
+  /* ---------- cards / controls ---------- */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);}
+  .pad{padding:18px 20px;}
+  .controls{display:flex;flex-wrap:wrap;gap:18px 26px;align-items:flex-end;}
+  .ctrl label{display:block;font-family:"JetBrains Mono";font-size:10.5px;color:var(--ink2);margin:0 0 6px;
+    text-transform:uppercase;letter-spacing:.09em;}
+  select,input[type=number]{font-family:"JetBrains Mono";background:var(--paper2);border:1px solid var(--line2);
+    color:var(--ink);border-radius:9px;padding:9px 11px;font-size:13.5px;transition:border-color .2s,box-shadow .2s;}
+  select:focus,input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px var(--red-soft);}
+  select{appearance:none;-webkit-appearance:none;padding-right:30px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%236E6757' stroke-width='1.6'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 10px center;}
+
+  /* toggle switch */
+  .sw{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;}
+  .sw input{display:none;}
+  .sw .track{width:38px;height:22px;border-radius:999px;background:var(--line2);position:relative;transition:background .25s;flex:none;}
+  .sw .track::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;
+    box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .25s;}
+  .sw input:checked + .track{background:var(--fin);}
+  .sw input:checked + .track::after{transform:translateX(16px);}
+
+  /* ---------- takeaways ---------- */
+  .take{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  @media(max-width:780px){.take{grid-template-columns:1fr 1fr;}}
+  .take .k{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 17px;box-shadow:var(--shadow);
+    position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;}
+  .take .k:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(40,33,15,.10);}
+  .take .k::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--red);}
+  .take .k .lab{font-family:"JetBrains Mono";font-size:10px;color:var(--ink2);text-transform:uppercase;letter-spacing:.07em;}
+  .take .k .v{font-family:"Bricolage Grotesque";font-weight:800;font-size:27px;letter-spacing:-.02em;margin:7px 0 2px;}
+  .take .k .d{font-size:12px;color:var(--ink2);}
+
+  /* ---------- table ---------- */
+  .scroll{overflow-x:auto;border-radius:var(--r);}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{padding:9px 11px;text-align:right;white-space:nowrap;}
+  th:first-child,td:first-child{text-align:left;}
+  thead th{position:sticky;top:0;background:var(--paper);z-index:3;font-family:"JetBrains Mono";font-weight:600;
+    font-size:10px;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em;cursor:help;border-bottom:2px solid var(--ink);padding-bottom:11px;}
+  thead th .q{display:inline-block;width:14px;height:14px;line-height:14px;text-align:center;border-radius:50%;
+    background:var(--line);color:var(--ink2);font-size:9px;}
+  tbody td{border-bottom:1px solid var(--line);}
+  tbody tr:hover td{background:#f6f1e6;}
+  tr.grp td{border-top:2px solid var(--line2);}
+  td.num{font-family:"JetBrains Mono";}
+  td.allin{font-weight:600;}
+  td.best{background:var(--best);color:var(--fin);font-weight:700;border-radius:6px;}
+  .vname{font-family:"Bricolage Grotesque";font-weight:700;font-size:13.5px;}
+  .vname.m3{color:#1763a8;} .vname.my{color:#9a5a00;}
+  .mlabel{font-weight:600;}
+  .mlabel.fin{color:var(--fin);} .mlabel.lse{color:var(--lse);} .mlabel.csh{color:var(--ink2);}
+  .tag{font-family:"JetBrains Mono";font-size:9px;color:var(--lse);border:1px solid var(--lse);border-radius:9px;padding:0 5px;margin-left:6px;vertical-align:middle;}
+
+  /* ---------- legend / charts ---------- */
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin:0 0 12px;font-family:"JetBrains Mono";}
+  .legend span{display:inline-flex;gap:7px;align-items:center;}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block;}
+  svg{display:block;width:100%;height:auto;overflow:visible;}
+  .axislbl{font-family:"JetBrains Mono";font-size:10.5px;fill:var(--ink3);}
+  .barval{font-family:"JetBrains Mono";font-size:10px;fill:var(--ink2);}
+  .endlbl{font-family:"JetBrains Mono";font-size:11px;font-weight:600;}
+
+  /* chart tooltip */
+  #tip{position:fixed;z-index:9000;pointer-events:none;opacity:0;transform:translateY(-4px);
+    transition:opacity .12s;background:var(--ink);color:#fff;border-radius:9px;padding:9px 11px;font-size:12px;
+    box-shadow:0 8px 24px rgba(0,0,0,.25);min-width:120px;}
+  #tip .tt{font-family:"JetBrains Mono";font-size:10px;color:#c9c2b2;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+  #tip .tr{display:flex;justify-content:space-between;gap:14px;font-family:"JetBrains Mono";}
+  #tip .tr b{font-weight:600;}
+
+  /* decide grid */
+  .decide{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--card);box-shadow:var(--shadow);}
+  @media(max-width:760px){.decide{grid-template-columns:1fr;}}
+  .decide>div{padding:16px 18px;border-right:1px solid var(--line);}
+  .decide>div:last-child{border-right:none;}
+  .decide h4{margin:0 0 7px;font-family:"Bricolage Grotesque";font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px;}
+  .decide h4::before{content:"";width:9px;height:9px;border-radius:50%;}
+  .decide .f::before{background:var(--fin);} .decide .l::before{background:var(--lse);} .decide .c::before{background:var(--csh);}
+  .decide p{margin:0;font-size:12.5px;color:var(--ink2);line-height:1.62;}
+
+  /* glossary / details */
+  details{margin-top:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);overflow:hidden;}
+  summary{cursor:pointer;padding:15px 18px;font-family:"Bricolage Grotesque";font-weight:700;font-size:15px;list-style:none;display:flex;align-items:center;gap:10px;}
+  summary::-webkit-details-marker{display:none;}
+  summary .chev{color:var(--red);transition:transform .25s;}
+  details[open] summary .chev{transform:rotate(90deg);}
+  .dbody{padding:2px 18px 18px;font-size:13px;color:var(--ink2);line-height:1.85;}
+  code{font-family:"JetBrains Mono";background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:11.5px;color:var(--ink);}
+  hr{border:none;border-top:1px solid var(--line);margin:12px 0;}
+
+  .eqbox{font-family:"JetBrains Mono";font-size:12px;color:var(--ink2);background:var(--paper);border:1px solid var(--line);
+    border-radius:10px;padding:12px 14px;white-space:pre-wrap;margin-top:12px;line-height:1.7;}
+  .grid2{display:grid;grid-template-columns:1.05fr 1fr;gap:16px;}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr;}}
+  .wout{font-family:"Bricolage Grotesque";font-weight:800;font-size:34px;letter-spacing:-.02em;}
+  .wout small{font-family:"Hanken Grotesk";font-size:14px;color:var(--ink2);font-weight:400;}
+  .foot{margin-top:30px;padding-top:16px;border-top:2px solid var(--ink);font-size:12px;color:var(--ink2);line-height:1.7;}
+
+  /* ---------- animation ---------- */
+  @keyframes riseIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+  .reveal{animation:riseIn .65s cubic-bezier(.2,.7,.2,1) backwards;}
+  @keyframes growBar{from{transform:scaleY(0);}to{transform:scaleY(1);}}
+  rect.bar{transform-box:fill-box;transform-origin:bottom;}
+  rect.bar.anim{animation:growBar .7s cubic-bezier(.2,.8,.2,1) backwards;}
+  path.line.anim{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.15s cubic-bezier(.4,.5,.2,1) forwards;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  path.area.anim{opacity:0;animation:fadein .9s ease .3s forwards;}
+  @keyframes fadein{to{opacity:1;}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- MASTHEAD -->
+  <header class="mast reveal">
+    <div class="rail">
+      <div class="brand">TESLA<span class="ca">·</span>CA</div>
+      <div class="meta">Cost Instrument<br>Model 3 / Model Y<br><span id="mFx">1 CAD = 0.7068 USD</span></div>
+    </div>
+    <p class="kick">A field guide to what a Tesla <b>actually costs</b> in Canada — financed, leased, or paid in cash. Every number recomputes as you change the dials.</p>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero reveal" style="animation-delay:.06s">
+    <div>
+      <div class="lead">cheapest way in, all-in monthly</div>
+      <div class="big"><span class="amt num" id="heroAmt">$833</span> <span class="u">/mo</span></div>
+      <div class="lead" id="heroSub" style="margin-top:4px"></div>
+    </div>
+    <div class="seg" id="curSeg" role="tablist" aria-label="currency">
+      <span class="thumb" id="curThumb"></span>
+      <button class="on" data-cur="CAD">CAD&nbsp;$</button>
+      <button data-cur="USD">USD&nbsp;$</button>
+    </div>
+  </div>
+
+  <!-- DECIDE -->
+  <div class="decide reveal" style="animation-delay:.1s;margin-top:22px">
+    <div><h4 class="f">Finance</h4><p>Borrow, pay for <b>96 mo</b>, then you <b>own it</b>. Highest monthly, but the cheapest route to ownership once you bank the resale. Tax rolls into the loan.</p></div>
+    <div><h4 class="l">Lease</h4><p>Rent for <b>48 mo</b>, then hand it back. Lower commitment, always near-new under warranty, and you only pay tax on the <b>payments</b> — never the residual. You own nothing.</p></div>
+    <div><h4 class="c">Cash</h4><p>Pay once, no interest, own outright. But you tie up $48–88k and pay every dollar of tax up front.</p></div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="sec"><div class="no">⚙</div><h2>Your situation</h2><span class="kk">set the dials once</span></div>
+  <div class="ssub">Province, down payment and which running costs to count — the whole page follows.</div>
+  <div class="card pad controls reveal">
+    <div class="ctrl"><label>Province (tax)</label>
+      <select id="prov">
+        <option value="0.13">Ontario · 13% HST</option>
+        <option value="0.05">Alberta · 5% GST</option>
+        <option value="0.12">BC · 12%</option>
+        <option value="0.14975">Quebec · ~15%</option>
+        <option value="0.15">Maritimes · 15% HST</option>
+      </select>
+    </div>
+    <div class="ctrl"><label>Down payment</label>
+      <select id="downMode">
+        <option value="default">Tesla default</option>
+        <option value="0">$0 down</option>
+        <option value="10000">$10,000</option>
+        <option value="custom">Custom…</option>
+      </select>
+    </div>
+    <div class="ctrl" id="customDownWrap" style="display:none"><label>Custom down</label>
+      <input id="customDown" type="number" step="500" value="5000" style="width:108px">
+    </div>
+    <div class="ctrl"><label>FX · 1 CAD = USD</label>
+      <input id="fxRate" type="number" step="0.0001" value="0.7068" style="width:92px">
+    </div>
+    <div class="ctrl"><label>Running costs</label>
+      <label class="sw"><input type="checkbox" id="cRun" checked><span class="track"></span>charging + tires + connectivity</label>
+    </div>
+    <div class="ctrl"><label>Insurance (est.)</label>
+      <label class="sw"><input type="checkbox" id="cIns" checked><span class="track"></span>include</label>
+    </div>
+    <div class="ctrl"><label>FSD subscription</label>
+      <label class="sw"><input type="checkbox" id="cFsd"><span class="track"></span>$<input type="number" id="fsdPrice" value="99" step="1" style="width:56px;padding:5px 7px">/mo</label>
+    </div>
+  </div>
+  <div class="ssub" id="ctrlNote" style="padding-left:0;margin-top:12px"></div>
+
+  <!-- TAKEAWAYS -->
+  <div class="sec"><div class="no">★</div><h2>The bottom line</h2><span class="kk">recomputes live</span></div>
+  <div class="ssub">Four answers most people actually want, pulled from the full table below.</div>
+  <div class="take reveal" id="takeaways"></div>
+
+  <!-- TABLE -->
+  <section><div class="sec"><div class="no">1</div><h2>Every scenario</h2><span class="kk">monthly &amp; total</span></div></section>
+  <div class="ssub">Each row builds left → right to your true <b>all-in monthly</b>. Greenest cell in the last column = cheapest way to own that car. Hover a header for what it means. Figures in <b id="curLbl1">CAD</b>.</div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--fin)"></i>Finance · own it</span>
+    <span><i class="dot" style="background:var(--lse)"></i>Lease · return it</span>
+    <span><i class="dot" style="background:var(--csh)"></i>Cash · outright</span>
+  </div>
+  <div class="card scroll reveal">
+    <table id="scenTable">
+      <thead><tr>
+        <th title="The car: vehicle + mandatory fees.">Vehicle</th>
+        <th title="Finance = loan you own at the end · Lease = rent then return · Cash = pay once.">Method</th>
+        <th title="Tesla's financing payment with your province's sales tax included.">Payment/mo <span class="q">?</span></th>
+        <th title="+ running costs to keep it on the road: Premium Connectivity, home charging, tires/maintenance.">+ Running <span class="q">?</span></th>
+        <th title="+ an insurance estimate. Not a Tesla cost and varies a lot — get a real quote.">+ Insurance <span class="q">?</span></th>
+        <th title="+ FSD if toggled on. This is your true out-the-door monthly.">= All-in/mo <span class="q">?</span></th>
+        <th title="Cash needed up front: down payment (+ tax on a lease down), or full price for Cash.">Upfront <span class="q">?</span></th>
+        <th title="Every financing payment summed over the term (car only, tax in).">Total/term <span class="q">?</span></th>
+        <th title="Fair 8-year cost: finance keeps it, lease re-leases twice, cash keeps it — minus estimated resale where you keep the car. Lowest = best.">8-yr net <span class="q">?</span></th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="ssub" style="padding-left:0">The <b>8-yr net</b> column is the fairest one-look comparison. Lease rarely wins on pure cost — you're buying flexibility + a lower monthly. Running / insurance / FSD are excluded there because they're identical no matter how you pay.</div>
+
+  <!-- CHART A -->
+  <section><div class="sec"><div class="no">2</div><h2>All-in monthly by trim</h2><span class="kk">finance vs lease</span></div></section>
+  <div class="ssub">What actually leaves your account each month, with your toggles folded in. Hover any bar. <b class="curLbl">CAD</b>.</div>
+  <div class="card pad reveal"><div id="chartA"></div></div>
+
+  <!-- CHART B -->
+  <section><div class="sec"><div class="no">3</div><h2>Cumulative cash over 8 years</h2><span class="kk">where the lines cross</span></div></section>
+  <div class="ssub">How much has left your pocket as time passes. <b>Move your cursor across the chart</b> for the exact figure at any month.</div>
+  <div class="card pad reveal">
+    <div class="controls" style="margin-bottom:14px">
+      <div class="ctrl"><label>Vehicle</label><select id="vehB"></select></div>
+      <div class="ctrl"><label>Overlay</label><label class="sw"><input type="checkbox" id="bRun"><span class="track"></span>add running + insurance + FSD</label></div>
+    </div>
+    <div id="chartB"></div>
+  </div>
+  <div class="ssub" style="padding-left:0"><b>Cash</b> = one step then flat. <b>Finance</b> climbs for 8 yr then stops — you own it. <b>Lease</b> climbs forever (second lease begins at year 4, the little step) and owns nothing. Hollow ○ = net of resale.</div>
+
+  <!-- CHART C -->
+  <section><div class="sec"><div class="no">4</div><h2>8-year total cost</h2><span class="kk">net, apples to apples</span></div></section>
+  <div class="ssub">The bottom line per trim over a shared 8 years. Lower = cheaper. Hover a bar. <b class="curLbl">CAD</b>.</div>
+  <div class="card pad reveal"><div id="chartC"></div></div>
+
+  <!-- WHAT-IF -->
+  <section><div class="sec"><div class="no">5</div><h2>Custom what-if</h2><span class="kk">tweak one deal</span></div></section>
+  <div class="ssub">Your own numbers, with Tesla's live equation shown so you can see <i>why</i> the payment is what it is. Inputs in <b class="curLbl">CAD</b>.</div>
+  <div class="grid2 reveal">
+    <div class="card pad">
+      <div class="controls">
+        <div class="ctrl"><label>Vehicle</label><select id="vehW"></select></div>
+        <div class="ctrl"><label>Mode</label><select id="modeW"><option value="finance">Finance</option><option value="lease">Lease</option></select></div>
+      </div>
+      <div class="controls" style="margin-top:14px">
+        <div class="ctrl"><label>Price+fees</label><input id="wPrice" type="number" step="100" style="width:108px"></div>
+        <div class="ctrl"><label>Down</label><input id="wDown" type="number" step="100" style="width:88px"></div>
+        <div class="ctrl"><label>APR %</label><input id="wApr" type="number" step="0.01" style="width:76px"></div>
+        <div class="ctrl"><label>Term mo</label><input id="wTerm" type="number" step="12" style="width:66px"></div>
+        <div class="ctrl" id="wResidWrap"><label>Residual</label><input id="wResid" type="number" step="100" style="width:98px"></div>
+      </div>
+    </div>
+    <div class="card pad">
+      <div class="wout"><span class="num" id="wOut">$0</span> <small>/mo</small></div>
+      <div class="ssub" id="wBrk" style="padding-left:0;color:var(--ink);margin:8px 0 0"></div>
+      <div class="eqbox" id="wEq"></div>
+    </div>
+  </div>
+
+  <!-- GLOSSARY -->
+  <details>
+    <summary><span class="chev">▸</span>Glossary &amp; the formulas</summary>
+    <div class="dbody">
+      <b>APR</b> — annual loan interest. Monthly rate <code>i = APR / 12</code>.<br>
+      <b>Money Factor (MF)</b> — how leases state interest: <code>MF = APR / 2400</code> (4.93% → 0.002053).<br>
+      <b>Residual</b> — Tesla's predicted value at lease end. You finance only the <i>drop</i> in value — that's why leases cost less per month.<br>
+      <b>Adjusted cap cost</b> — the lease "price": <code>price + fees − down − incentives</code>.<br>
+      <b>Depreciation</b> (lease) — <code>(adjCap − residual) / term</code>.<br>
+      <b>Rent charge</b> (lease) — <code>(adjCap + residual) × MF</code> — the interest part.<br>
+      <b>HST / PST / GST</b> — provincial sales tax, added at checkout (not in Tesla's quote). Finance rolls it in; lease charges it per payment, so you skip tax on the residual.<br>
+      <b>Fees ($2,642)</b> — freight/PDI + A/C &amp; tire levies, in every quote.
+      <hr>
+      <b>Finance:</b> <code>M = P·i / (1 − (1+i)^−n)</code>, <code>P = price+fees+tax − down</code>.<br>
+      <b>Lease:</b> <code>M = (adjCap − residual)/n + (adjCap + residual)·MF</code>, then × (1 + tax).<br>
+      Both reproduce tesla.com's client-side "finplat" engine to the dollar.
+    </div>
+  </details>
+
+  <div class="foot" id="foot"></div>
+</div>
+<div id="tip"></div>
+
+<script>
+// ===================== DATA (captured tesla.com/en_ca 2026-06-21) =====================
+const FEES=2642, F_APR=5.03, F_TERM=96, L_APR=4.9272, L_TERM=48, RESALE8=0.28;
+const VEH=[
+  {k:'m3rwd', name:'Model 3 Premium RWD', model:'Model 3', base:39490, fdown:4300, rpct:41.5, conf:true},
+  {k:'m3awd', name:'Model 3 Premium AWD', model:'Model 3', base:49990, fdown:4300, rpct:44.9, conf:true},
+  {k:'m3perf',name:'Model 3 Performance', model:'Model 3', base:74990, fdown:4300, rpct:43.5, conf:true},
+  {k:'myrwd', name:'Model Y RWD',         model:'Model Y', base:49990, fdown:5150, rpct:46.0, conf:false},
+  {k:'mypre', name:'Model Y Premium AWD', model:'Model Y', base:64990, fdown:5150, rpct:45.0, conf:false},
+  {k:'myperf',name:'Model Y Performance', model:'Model Y', base:74990, fdown:5150, rpct:43.0, conf:false},
+];
+const EXTRAS = m => m==='Model 3'
+  ? {connectivity:14, charging:30, maint:40, insurance:200}
+  : {connectivity:14, charging:33, maint:40, insurance:210};
+const L_DOWN_DEFAULT = 5000;
+const COL={fin:'#0E766B',lse:'#C2701A',csh:'#3C3F47'};
+
+// ===================== EQUATIONS (match finplat) =====================
+function financeM(ppf, down, incent, apr, term, tr){
+  const tax=tr*ppf, P=ppf+tax-down-incent, i=apr/100/12;
+  const M=i?P*i/(1-Math.pow(1+i,-term)):P/term;
+  return {M,P,tax,pre:i?(ppf-down-incent)*i/(1-Math.pow(1+i,-term)):(ppf-down-incent)/term};
+}
+function leaseM(ppf, down, incent, resid, apr, term, tr){
+  const adjCap=ppf-down-incent, MF=apr/2400, dep=(adjCap-resid)/term, rent=(adjCap+resid)*MF, pre=dep+rent;
+  return {M:pre*(1+tr),pre,dep,rent,MF,adjCap,taxDown:down*tr};
+}
+
+// ===================== CURRENCY =====================
+let CUR='CAD', RATE=0.7068;
+const $=id=>document.getElementById(id);
+const cv=n=>CUR==='USD'?n*RATE:n;
+const toCAD=n=>CUR==='USD'?n/RATE:n;
+const money=n=>'$'+Math.round(cv(n)).toLocaleString('en-CA');
+const disp=n=>Math.round(cv(n));
+
+// ===================== STATE =====================
+function S(){return{
+  tr:+$('prov').value, downMode:$('downMode').value, customDown:toCAD(+$('customDown').value),
+  run:$('cRun').checked, ins:$('cIns').checked, fsd:$('cFsd').checked, fsdPrice:toCAD(+$('fsdPrice').value),
+};}
+function downFor(v,mode,custom,isLease){if(mode==='default')return isLease?L_DOWN_DEFAULT:v.fdown;if(mode==='custom')return custom;return +mode;}
+function compute(v,s){
+  const ppf=v.base+FEES, resid=Math.round(v.base*v.rpct/100);
+  const fDown=downFor(v,s.downMode,s.customDown,false), lDown=downFor(v,s.downMode,s.customDown,true);
+  const f=financeM(ppf,fDown,0,F_APR,F_TERM,s.tr), l=leaseM(ppf,lDown,0,resid,L_APR,L_TERM,s.tr);
+  const cashTotal=ppf*(1+s.tr), e=EXTRAS(v.model);
+  const run=s.run?(e.connectivity+e.charging+e.maint):0, ins=s.ins?e.insurance:0, fsd=s.fsd?s.fsdPrice:0;
+  const extra=run+ins+fsd, resale8=v.base*RESALE8;
+  return {ppf,resid,fDown,lDown,f,l,cashTotal,run,ins,fsd,extra,resale8,
+    finance:{pay:f.M,allin:f.M+extra,upfront:fDown,totalTerm:fDown+f.M*F_TERM,net8:(fDown+f.M*F_TERM)-resale8},
+    lease:{pay:l.M,allin:l.M+extra,upfront:lDown+l.taxDown,totalTerm:lDown+l.taxDown+l.M*L_TERM,net8:(lDown+l.taxDown+l.M*L_TERM)*2},
+    cash:{pay:0,allin:extra,upfront:cashTotal,totalTerm:cashTotal,net8:cashTotal-resale8}};
+}
+
+// ===================== animated numbers =====================
+function animNum(el, toCADval, suffix){
+  const from = +(el.dataset.cad||0), to=toCADval;
+  el.dataset.cad=to;
+  const t0=performance.now(), dur=620;
+  function step(t){
+    const p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3);
+    el.textContent=money(from+(to-from)*e)+(suffix||'');
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ===================== takeaways =====================
+function renderTakeaways(s){
+  let lowMo={v:'',m:'',val:1e9}, cheapOwn={v:'',m:'',val:1e9}, gapMax={v:'',val:0,sign:1};
+  for(const v of VEH){
+    const c=compute(v,s);
+    [['Finance',c.finance],['Lease',c.lease]].forEach(([m,d])=>{if(d.pay>0&&d.allin<lowMo.val)lowMo={v:v.name,m,val:d.allin};});
+    if(c.finance.net8<cheapOwn.val)cheapOwn={v:v.name,m:'Finance',val:c.finance.net8};
+    if(c.cash.net8<cheapOwn.val)cheapOwn={v:v.name,m:'Cash',val:c.cash.net8};
+    const gap=c.lease.pay-c.finance.pay; if(Math.abs(gap)>gapMax.val)gapMax={v:v.name,val:Math.abs(gap),sign:gap};
+  }
+  const c0=compute(VEH[0],s);
+  // hero
+  animNum($('heroAmt'), lowMo.val);
+  $('heroSub').textContent=`${lowMo.v} · ${lowMo.m} · ${money(c0.finance.upfront)} down to start`;
+  const items=[
+    {lab:'Lowest all-in / month',val:lowMo.val,d:`${lowMo.v} · ${lowMo.m}`},
+    {lab:'Cheapest to OWN · 8-yr net',val:cheapOwn.val,d:`${cheapOwn.v} · ${cheapOwn.m}`},
+    {lab:'Entry point · M3 RWD',val:c0.finance.allin,d:`Finance all-in · ${money(c0.finance.upfront)} down`,suffix:'/mo'},
+    {lab:'Lease vs Finance gap',val:gapMax.val,d:`${gapMax.v} · lease ${gapMax.sign>0?'pricier':'cheaper'}`,suffix:'/mo'},
+  ];
+  const box=$('takeaways');
+  if(box.children.length!==4){
+    box.innerHTML=items.map(i=>`<div class="k"><div class="lab">${i.lab}</div><div class="v num"></div><div class="d"></div></div>`).join('');
+  }
+  [...box.children].forEach((k,i)=>{
+    animNum(k.querySelector('.v'), items[i].val, items[i].suffix||'');
+    k.querySelector('.lab').textContent=items[i].lab;
+    k.querySelector('.d').textContent=items[i].d;
+  });
+}
+
+// ===================== table =====================
+function renderTable(s){
+  const tb=$('scenTable').querySelector('tbody'); tb.innerHTML='';
+  for(const v of VEH){
+    const c=compute(v,s), mcls=v.model==='Model 3'?'m3':'my';
+    const bestNet=Math.min(c.finance.net8,c.lease.net8,c.cash.net8);
+    [['Finance 96mo','fin',c.finance],['Lease 48mo','lse',c.lease],['Cash','csh',c.cash]].forEach(([label,cls,d],idx)=>{
+      const tr=document.createElement('tr'); if(idx===0)tr.className='grp';
+      const name=idx===0?`<span class="vname ${mcls}">${v.name}</span>${v.conf?'':'<span class="tag">lease est</span>'}`:'';
+      const plusRun=d.pay+c.run, plusIns=plusRun+c.ins, isBest=Math.abs(d.net8-bestNet)<1;
+      tr.innerHTML=`<td>${name}</td><td><span class="mlabel ${cls}">${label}</span></td>`+
+        `<td class="num">${d.pay?money(d.pay):'—'}</td>`+
+        `<td class="num">${d.pay?money(plusRun):money(c.run)}</td>`+
+        `<td class="num">${d.pay?money(plusIns):money(c.run+c.ins)}</td>`+
+        `<td class="num allin">${money(d.allin)}</td>`+
+        `<td class="num">${money(d.upfront)}</td>`+
+        `<td class="num">${money(d.totalTerm)}</td>`+
+        `<td class="num ${isBest?'best':''}">${money(d.net8)}</td>`;
+      tb.appendChild(tr);
+    });
+  }
+}
+
+// ===================== tooltip =====================
+const tip=$('tip');
+function showTip(html,x,y){tip.innerHTML=html;tip.style.opacity='1';
+  const w=tip.offsetWidth,h=tip.offsetHeight; let l=x+14,t=y-h-10;
+  if(l+w>innerWidth-8)l=x-w-14; if(t<8)t=y+18; tip.style.left=l+'px';tip.style.top=t+'px';}
+function hideTip(){tip.style.opacity='0';}
+
+// ===================== SVG helpers =====================
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+function niceMax(v){if(v<=0)return 1;const p=Math.pow(10,Math.floor(Math.log10(v))),n=v/p;return (n<=1?1:n<=2?2:n<=2.5?2.5:n<=5?5:10)*p;}
+const shortName=n=>n.replace('Model ','M').replace(' Premium',' Prm');
+
+function barChart(host, groups, series, anim, h=300){
+  host.innerHTML='';
+  const w=1000, padL=58,padR=14,padT=24,padB=46, iw=w-padL-padR, ih=h-padT-padB;
+  let max=0; groups.forEach(g=>g.vals.forEach(v=>max=Math.max(max,v))); max=niceMax(max);
+  const svg=el('svg',{viewBox:`0 0 ${w} ${h}`},host);
+  for(let t=0;t<=4;t++){const yv=max*t/4,y=padT+ih-ih*t/4;
+    el('line',{x1:padL,y1:y,x2:w-padR,y2:y,stroke:'#E3DCCC','stroke-width':1},svg);
+    const tx=el('text',{x:padL-9,y:y+4,'text-anchor':'end',class:'axislbl'},svg); tx.textContent=money(yv);}
+  const gW=iw/groups.length, bw=Math.min(gW/(series.length+0.7),48);
+  groups.forEach((g,gi)=>{const gx=padL+gi*gW, totW=series.length*bw+(series.length-1)*7, sx=gx+(gW-totW)/2;
+    series.forEach((se,si)=>{const v=g.vals[si], bh=ih*v/max, x=sx+si*(bw+7), y=padT+ih-bh;
+      const r=el('rect',{x,y,width:bw,height:Math.max(bh,0.5),rx:4,fill:se.color,class:'bar'+(anim?' anim':'')},svg);
+      if(anim)r.style.animationDelay=(gi*0.05+si*0.04)+'s';
+      r.addEventListener('mousemove',ev=>{r.style.filter='brightness(1.12)';
+        showTip(`<div class="tt">${g.full||g.label}</div><div class="tr"><span>${se.name}</span><b>${money(v)}</b></div>`,ev.clientX,ev.clientY);});
+      r.addEventListener('mouseleave',()=>{r.style.filter='';hideTip();});
+      const vl=el('text',{x:x+bw/2,y:y-6,'text-anchor':'middle',class:'barval'},svg); vl.textContent=money(v);
+    });
+    const gl=el('text',{x:gx+gW/2,y:h-padB+18,'text-anchor':'middle',class:'axislbl'},svg); gl.textContent=g.label;});
+}
+
+let chartBCtx=null;
+function lineChart(host, lines, anim, h=330){
+  host.innerHTML='';
+  const w=1000, padL=64,padR=16,padT=18,padB=44, iw=w-padL-padR, ih=h-padT-padB, xmax=96;
+  let ymax=0; lines.forEach(l=>l.pts.forEach(p=>ymax=Math.max(ymax,p[1]))); ymax=niceMax(ymax);
+  const X=x=>padL+iw*x/xmax, Y=y=>padT+ih-ih*y/ymax;
+  const svg=el('svg',{viewBox:`0 0 ${w} ${h}`},host);
+  const defs=el('defs',{},svg);
+  lines.forEach((l,i)=>{const g=el('linearGradient',{id:'g'+i,x1:0,y1:0,x2:0,y2:1},defs);
+    el('stop',{offset:0,'stop-color':l.color,'stop-opacity':.16},g);
+    el('stop',{offset:1,'stop-color':l.color,'stop-opacity':0},g);});
+  for(let t=0;t<=4;t++){const yv=ymax*t/4,y=padT+ih-ih*t/4;
+    el('line',{x1:padL,y1:y,x2:w-padR,y2:y,stroke:'#E3DCCC'},svg);
+    const tx=el('text',{x:padL-9,y:y+4,'text-anchor':'end',class:'axislbl'},svg); tx.textContent=money(yv);}
+  for(let m=0;m<=xmax;m+=12){const x=X(m);
+    el('line',{x1:x,y1:padT,x2:x,y2:padT+ih,stroke:'#EEE7D8'},svg);
+    const tx=el('text',{x,y:h-padB+18,'text-anchor':'middle',class:'axislbl'},svg); tx.textContent=(m/12)+'y';}
+  lines.forEach((l,i)=>{
+    const area='M'+X(l.pts[0][0])+' '+Y(0)+l.pts.map(p=>'L'+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join('')+'L'+X(l.pts[l.pts.length-1][0])+' '+Y(0)+'Z';
+    el('path',{d:area,fill:'url(#g'+i+')',class:'area'+(anim?' anim':'')},svg);
+    const d=l.pts.map((p,j)=>(j?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)).join(' ');
+    el('path',{d,fill:'none',stroke:l.color,'stroke-width':2.6,'stroke-linejoin':'round',class:'line'+(anim?' anim':''),pathLength:1},svg);
+    const last=l.pts[l.pts.length-1];
+    el('circle',{cx:X(last[0]),cy:Y(last[1]),r:3.8,fill:l.color},svg);
+    const lb=el('text',{x:X(last[0])-6,y:Y(last[1])-9,'text-anchor':'end',class:'endlbl',fill:l.color},svg); lb.textContent=money(last[1]);
+    if(l.dashEnd!=null){el('circle',{cx:X(last[0]),cy:Y(l.dashEnd),r:3,fill:'none',stroke:l.color,'stroke-dasharray':'2 2'},svg);}
+  });
+  // hover crosshair
+  const guide=el('line',{x1:padL,y1:padT,x2:padL,y2:padT+ih,stroke:'#171309','stroke-width':1,opacity:0},svg);
+  const dots=lines.map(l=>el('circle',{r:4,fill:'#fff',stroke:l.color,'stroke-width':2,opacity:0},svg));
+  const hit=el('rect',{x:padL,y:padT,width:iw,height:ih,fill:'transparent'},svg);
+  chartBCtx={lines,X,Y,padL,iw,xmax,guide,dots,padT,ih};
+  hit.addEventListener('mousemove',ev=>{
+    const r=svg.getBoundingClientRect(), sx=(ev.clientX-r.left)/r.width*w;
+    let m=Math.round((sx-padL)/iw*xmax); m=Math.max(0,Math.min(xmax,m));
+    guide.setAttribute('x1',X(m));guide.setAttribute('x2',X(m));guide.setAttribute('opacity',.4);
+    let rows='';
+    lines.forEach((l,i)=>{const val=l.pts[m][1];dots[i].setAttribute('cx',X(m));dots[i].setAttribute('cy',Y(val));dots[i].setAttribute('opacity',1);
+      rows+=`<div class="tr"><span style="color:${l.color}">●</span><span>${l.name}</span><b>${money(val)}</b></div>`;});
+    showTip(`<div class="tt">Year ${(m/12).toFixed(1)} · month ${m}</div>${rows}`,ev.clientX,ev.clientY);
+  });
+  hit.addEventListener('mouseleave',()=>{guide.setAttribute('opacity',0);dots.forEach(d=>d.setAttribute('opacity',0));hideTip();});
+}
+
+// ===================== chart renders =====================
+function renderA(s,anim){
+  const groups=VEH.map(v=>{const c=compute(v,s);return{label:shortName(v.name),full:v.name,vals:[c.finance.allin,c.lease.allin]};});
+  legendInto('chartA',[['Finance all-in/mo',COL.fin],['Lease all-in/mo',COL.lse]]);
+  barChart($('chartA'+'_c'),groups,[{name:'Finance',color:COL.fin},{name:'Lease',color:COL.lse}],anim);
+}
+function cumPts(kind,c,s,addExtra){
+  const ex=addExtra?c.extra:0, pts=[[0,kind==='cash'?c.cash.upfront:(kind==='finance'?c.fDown:c.lDown+c.l.taxDown)]];
+  if(kind==='cash'){for(let m=1;m<=96;m++)pts.push([m,c.cash.upfront+ex*m]);}
+  else if(kind==='finance'){for(let m=1;m<=96;m++)pts.push([m,c.fDown+c.f.M*m+ex*m]);}
+  else{let acc=c.lDown+c.l.taxDown;for(let m=1;m<=96;m++){acc+=c.l.M;if(m===48)acc+=c.lDown+c.l.taxDown;pts.push([m,acc+ex*m]);}}
+  return pts;
+}
+function renderB(anim){
+  const s=S(), v=VEH.find(x=>x.k===$('vehB').value)||VEH[0], c=compute(v,s), ax=$('bRun').checked;
+  const lines=[
+    {name:'Cash',color:COL.csh,pts:cumPts('cash',c,s,ax),dashEnd:c.cash.net8+(ax?c.extra*96:0)},
+    {name:'Finance',color:COL.fin,pts:cumPts('finance',c,s,ax),dashEnd:c.finance.net8+(ax?c.extra*96:0)},
+    {name:'Lease ×2',color:COL.lse,pts:cumPts('lease',c,s,ax)},
+  ];
+  legendInto('chartB',[['Cash',COL.csh],['Finance · keep',COL.fin],['Lease ×2 · return',COL.lse]]);
+  lineChart($('chartB'+'_c'),lines,anim);
+}
+function renderC(s,anim){
+  const groups=VEH.map(v=>{const c=compute(v,s);return{label:shortName(v.name),full:v.name,vals:[c.finance.net8,c.lease.net8,c.cash.net8]};});
+  legendInto('chartC',[['Finance · net of resale',COL.fin],['Lease ×2 · gross',COL.lse],['Cash · net',COL.csh]]);
+  barChart($('chartC'+'_c'),groups,[{name:'Finance',color:COL.fin},{name:'Lease',color:COL.lse},{name:'Cash',color:COL.csh}],anim,320);
+}
+function legendInto(id,items){
+  let host=$(id+'_l'); if(!host){const wrap=$(id);wrap.innerHTML=`<div id="${id}_l" class="legend"></div><div id="${id}_c"></div>`;host=$(id+'_l');}
+  host.innerHTML=items.map(([t,c])=>`<span><i class="dot" style="background:${c}"></i>${t}</span>`).join('');
+}
+
+// ===================== what-if =====================
+function loadW(){
+  const v=VEH.find(x=>x.k===$('vehW').value), mode=$('modeW').value, s=S();
+  $('wPrice').value=disp(v.base+FEES);
+  if(mode==='finance'){$('wDown').value=disp(downFor(v,s.downMode,s.customDown,false));$('wApr').value=F_APR;$('wTerm').value=F_TERM;$('wResidWrap').style.display='none';}
+  else{$('wDown').value=disp(downFor(v,s.downMode,s.customDown,true));$('wApr').value=L_APR;$('wTerm').value=L_TERM;$('wResidWrap').style.display='';$('wResid').value=disp(Math.round(v.base*v.rpct/100));}
+  calcW();
+}
+function calcW(){
+  const mode=$('modeW').value, tr=+$('prov').value;
+  const price=toCAD(+$('wPrice').value), down=toCAD(+$('wDown').value), apr=+$('wApr').value, term=+$('wTerm').value;
+  if(mode==='finance'){
+    const r=financeM(price,down,0,apr,term,0), rt=financeM(price,down,0,apr,term,tr);
+    $('wOut').textContent=money(rt.M); $('wOut').nextElementSibling;
+    $('wBrk').innerHTML=`<b>${money(rt.M)}/mo</b> incl tax · ${money(r.M)} pre-tax · financed <b>${money(rt.P)}</b> · ${apr}% · ${term} mo`;
+    $('wEq').textContent=`P = price+fees+tax − down = ${money(rt.P)}\ni = APR/12 = ${(apr/12).toFixed(4)}%/mo\nM = P·i / (1 − (1+i)^−n) = ${money(rt.M)}`;
+  }else{
+    const resid=toCAD(+$('wResid').value), r=leaseM(price,down,0,resid,apr,term,0), rt=leaseM(price,down,0,resid,apr,term,tr);
+    $('wOut').textContent=money(rt.M);
+    $('wBrk').innerHTML=`<b>${money(rt.M)}/mo</b> incl tax · ${money(r.pre)} pre-tax · adjCap <b>${money(r.adjCap)}</b> · residual ${money(resid)}`;
+    $('wEq').textContent=`adjCap = price+fees − down = ${money(r.adjCap)}\nMF = APR/2400 = ${r.MF.toFixed(6)}\ndep  = (adjCap − residual)/n = ${money(r.dep)}\nrent = (adjCap + residual)·MF = ${money(r.rent)}\nM = (dep+rent) × (1+tax) = ${money(rt.M)}`;
+  }
+}
+
+// ===================== currency segmented control =====================
+function moveCurThumb(){
+  const seg=$('curSeg'), on=seg.querySelector('button.on'), thumb=$('curThumb');
+  thumb.style.width=on.offsetWidth+'px'; thumb.style.transform=`translateX(${on.offsetLeft-4}px)`;
+}
+$('curSeg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+  $('curSeg').querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  CUR=b.dataset.cur; moveCurThumb(); renderAll(true); loadW();
+}));
+
+// ===================== orchestration =====================
+function setCurLabels(){document.querySelectorAll('.curLbl').forEach(e=>e.textContent=CUR);$('curLbl1').textContent=CUR;}
+function renderAll(anim){
+  RATE=+$('fxRate').value||0.7068;
+  const s=S(); $('customDownWrap').style.display=s.downMode==='custom'?'':'none';
+  setCurLabels(); renderTakeaways(s); renderTable(s); renderA(s,anim); renderB(anim); renderC(s,anim);
+  $('mFx').textContent=`1 CAD = ${RATE.toFixed(4)} USD`;
+  const e=EXTRAS('Model 3'), run=s.run?(e.connectivity+e.charging+e.maint):0, ins=s.ins?e.insurance:0;
+  $('ctrlNote').innerHTML=`Running + insurance ≈ <b>${money(run+ins)}/mo</b> on a Model 3`+(s.fsd?` · + FSD ${money(s.fsdPrice)}`:'')+
+    ` · tax ${(+$('prov').value*100).toFixed(2)}% · showing <b>${CUR}</b>${CUR==='USD'?` @ ${RATE.toFixed(4)}`:''}.`;
+}
+// discrete changes animate; typing doesn't
+['prov','downMode'].forEach(id=>$(id).addEventListener('change',()=>{renderAll(true);loadW();}));
+['cRun','cIns','cFsd'].forEach(id=>$(id).addEventListener('change',()=>{renderAll(true);loadW();}));
+['customDown','fsdPrice','fxRate'].forEach(id=>$(id).addEventListener('input',()=>{renderAll(false);loadW();}));
+$('vehB').addEventListener('change',()=>renderB(true));
+$('bRun').addEventListener('change',()=>renderB(true));
+['vehW','modeW'].forEach(id=>$(id).addEventListener('change',loadW));
+['wPrice','wDown','wApr','wTerm','wResid'].forEach(id=>$(id).addEventListener('input',calcW));
+[['vehB'],['vehW']].forEach(([id])=>{const sel=$(id);VEH.forEach(v=>{const o=document.createElement('option');o.value=v.k;o.textContent=v.name;sel.appendChild(o);});});
+
+$('foot').innerHTML=`<b>Trust:</b> finance matches tesla.com to the dollar; Model 3 lease matches ($539). `+
+ `Model Y lease is an estimate (residual assumed — <span class="tag">lease est</span>). Tax, insurance, charging, resale% are overridable estimates. `+
+ `FSD $99/mo + Premium Connectivity $13.99/mo are current CA prices (one-time FSD purchase ended Feb 2026). `+
+ `Companion files: <code>tesla_scenarios.md</code> · <code>tesla_other_costs.md</code> · <code>tesla_scenarios.csv</code> · <code>tesla_finance_notes.md</code>. Snapshot 2026-06-21.`;
+
+// live FX
+async function loadFx(){
+  try{
+    const r=await fetch('https://open.er-api.com/v6/latest/CAD',{cache:'no-store'}); const j=await r.json();
+    if(j&&j.rates&&j.rates.USD){RATE=+j.rates.USD;$('fxRate').value=RATE.toFixed(4);renderAll(false);loadW();}
+  }catch(e){}
+}
+
+window.addEventListener('load',()=>{moveCurThumb();});
+renderAll(true); loadW(); moveCurThumb(); loadFx();
+</script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+model,group,option_code,option_name,price_cad
+Model 3,AUTOPILOT,$APBS,Basic Autopilot,0
+Model 3,AUTOPILOT,$APF2,Full Self-Driving (Supervised),11000
+Model 3,AUTOPILOT,$APF3,Full Self-Driving (Supervised),11000
+Model 3,AUTOPILOT,$APFA,Traffic-Aware Cruise Control,0
+Model 3,AUTOPILOT,$APFS,Traffic-Aware Cruise Control with Autosteer,
+Model 3,AUTOPILOT,$APPB,Enhanced Autopilot,7800
+Model 3,BRAKES,$BC3R,Performance Brakes,
+Model 3,CONNECTIVITY,$CPF0,Standard Connectivity,0
+Model 3,CONNECTIVITY,$CPF1,Premium Connectivity,0
+Model 3,COLD_WEATHER,$CW03,Cold Weather Feature,0
+Model 3,DRIVE_MODE,$DV2W,Rear-Wheel Drive,
+Model 3,DRIVE_MODE,$DV4W,Dual Motor All-Wheel Drive,
+Model 3,PERF_FIRMWARE,$FM3U,Acceleration Boost,2700
+Model 3,INTERIOR,$IPB2,Black Premium Interior,0
+Model 3,INTERIOR,$IPB3,Black Premium Interior,0
+Model 3,INTERIOR,$IPB4,Black Premium Interior,0
+Model 3,INTERIOR,$IPW2,Black and White Premium Interior,1300
+Model 3,INTERIOR,$IPW3,Black and White Premium Interior,1300
+Model 3,INTERIOR,$IPW4,Black and White Premium Interior,1300
+Model 3,MODEL,$MDL3,Model 3,20000
+Model 3,PAINT,$PB00,Frost Blue Metallic Paint,2600
+Model 3,PAINT,$PB02,Marine Blue Paint,1300
+Model 3,PEDALS,$PL31,Performance Pedals,
+Model 3,PAINT,$PN00,Quicksilver Paint,2600
+Model 3,PAINT,$PN01,Stealth Gray Paint,0
+Model 3,PAINT,$PPSW,Pearl White Paint,1300
+Model 3,PAINT,$PR01,Ultra Red Paint,2600
+Model 3,PAINT,$PX02,Diamond Black Paint,2000
+Model 3,HEATED_SEAT,$RSF0,No Rear Heated Seats,0
+Model 3,HEATED_SEAT,$RSF1,Rear Heated Seats,0
+Model 3,SUPER_CHARGER,$SC00,No access to supercharger network,
+Model 3,SUPER_CHARGER,$SC04,Supercharger Network Access + Pay-as-you-go,0
+Model 3,SUPER_CHARGER,$SC05,Free Supercharging,
+Model 3,SUPER_CHARGER,$SC06,Time-bound Supercharging,
+Model 3,SPOILER,$SLR1,Carbon Fiber Spoiler,
+Model 3,WHEELS,$W30A,20’’ Warp Wheels,0
+Model 3,WHEELS,$W38A,18’’ Photon Wheels,0
+Model 3,WHEELS,$W39G,19’’ Nova Wheels,2000
+Model 3,WHEELS,$W39S,19’’ Nova Wheels,2000
+Model 3,TRIM,$MT368,Model 3 Premium Rear-Wheel Drive,19490
+Model 3,TRIM,$MT370,Model 3 Premium All-Wheel Drive,29990
+Model 3,TRIM,$MT379,Model 3 Performance All-Wheel Drive,54990
+Model 3,PREMIUM_PACKAGE,$PRM30,Partial Premium Interior,
+Model 3,PREMIUM_PACKAGE,$PRM31,Premium Interior,
+Model 3,PREMIUM_PACKAGE,$PRM3S,Standard Interior,
+Model 3,SPORT_PACKAGE,$SPT31,Performance Upgrade,0
+Model 3,,$MT301,,
+Model 3,,$MT302,,
+Model 3,,$MT303,,
+Model 3,,$MT304,,
+Model 3,,$MT305,,
+Model 3,,$MT306,,
+Model 3,,$MT308,,
+Model 3,,$MT309,,
+Model 3,,$MT310,,
+Model 3,,$MT311,,
+Model 3,,$MT313,,
+Model 3,,$MT314,,
+Model 3,,$MT315,,
+Model 3,,$MT317,,
+Model 3,,$MT319,,
+Model 3,,$MT321,,
+Model 3,,$MT322,,
+Model 3,,$MT324,,
+Model 3,,$MT326,,
+Model 3,,$MT328,,
+Model 3,,$MT329,,
+Model 3,,$MT337,,
+Model 3,,$MT351,,
+Model 3,,$MT352,,
+Model 3,,$MT353,,
+Model 3,,$MT356,,
+Model 3,,$MT357,,
+Model 3,,$MT360,,
+Model 3,,$MT371,,
+Model Y,AUTOPILOT,$APBS,Autopilot,0
+Model Y,AUTOPILOT,$APF2,Full Self-Driving (Supervised),11000
+Model Y,AUTOPILOT,$APF3,Full Self-Driving (Supervised),11000
+Model Y,AUTOPILOT,$APFA,Traffic-Aware Cruise Control,0
+Model Y,AUTOPILOT,$APFS,Traffic-Aware Cruise Control with Autosteer,
+Model Y,AUTOPILOT,$APPB,Enhanced Autopilot,7800
+Model Y,BRAKES,$BCYR,Performance Brakes,
+Model Y,CONNECTIVITY,$CPF0,Standard Connectivity,0
+Model Y,CONNECTIVITY,$CPF1,Premium Connectivity,0
+Model Y,CONNECTIVITY,$CPF2,Free Premium Connectivity,
+Model Y,DRIVE_MODE,$DV2W,Rear-Wheel Drive,
+Model Y,DRIVE_MODE,$DV4W,Dual Motor All-Wheel Drive,
+Model Y,PERF_FIRMWARE,$FM3U,Acceleration Boost,2700
+Model Y,INTERIOR,$IBB6,All Black Interior,0
+Model Y,MODEL,$MDLY,Model Y,45000
+Model Y,PAINT,$PB02,Marine Blue Paint,1300
+Model Y,PEDALS,$PL31,Performance Pedals,
+Model Y,PAINT,$PN00,Quicksilver Paint,2600
+Model Y,PAINT,$PN01,Stealth Grey Paint,0
+Model Y,PAINT,$PPSW,Pearl White Paint,1300
+Model Y,PAINT,$PR01,Ultra Red Paint,2600
+Model Y,PAINT,$PX02,Diamond Black Paint,2000
+Model Y,SUPER_CHARGER,$SC00,No access to supercharger network,
+Model Y,SUPER_CHARGER,$SC04,Supercharger Network Access + Pay-as-you-go,
+Model Y,SUPER_CHARGER,$SC05,Free Supercharging,
+Model Y,SUPER_CHARGER,$SC06,Time-bound Supercharging,
+Model Y,SPOILER,$SLR1,Carbon Fiber Spoiler,
+Model Y,TOWING,$TW01,Tow Hitch,1300
+Model Y,INTERIOR,$IPB12,All Black Premium Interior,0
+Model Y,INTERIOR,$IPB14,All Black Premium Interior,0
+Model Y,INTERIOR,$IPW12,Black and White Premium Interior,1300
+Model Y,INTERIOR,$IPW14,Black and White Premium Interior,1300
+Model Y,TRIM,$MTY67,Model Y Premium All-Wheel Drive,19990
+Model Y,TRIM,$MTY68,Model Y Rear-Wheel Drive,4990
+Model Y,TRIM,$MTY70,Model Y Performance All-Wheel Drive,29990
+Model Y,PILOT,$PILOT,,
+Model Y,PREMIUM_PACKAGE,$PRMY0,Premium Interior,0
+Model Y,PREMIUM_PACKAGE,$PRMY1,Premium Interior,
+Model Y,SPORT_PACKAGE,$SPTY1,Performance Upgrade,0
+Model Y,REAR_SEATS,$STY5B,Five Seat Interior,
+Model Y,REAR_SEATS,$STY5S,Five Seat Interior,0
+Model Y,REAR_SEATS,$STY7S,Seven Seat Interior,3000
+Model Y,WHEELS,$WY18P,18’’ Aperture Wheels,0
+Model Y,WHEELS,$WY19P,19’’ Crossflow Wheels,0
+Model Y,WHEELS,$WY20B,20’’ Helix 2.0 Wheels,2600
+Model Y,WHEELS,$WY21A,21’’ Arachnid 2.0 Wheels,0
+Model Y,,$MTY01,,
+Model Y,,$MTY03,,
+Model Y,,$MTY04,,
+Model Y,,$MTY05,,
+Model Y,,$MTY06,,
+Model Y,,$MTY09,,
+Model Y,,$MTY10,,
+Model Y,,$MTY11,,
+Model Y,,$MTY13,,
+Model Y,,$MTY36,,
+Model Y,,$MTY37,,
+Model Y,,$MTY38,,
+Model Y,,$MTY42,,
+Model Y,,$MTY48,,

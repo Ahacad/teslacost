@@ -1,0 +1,43 @@
+vehicle,model,method,down,term_mo,pay_pretax,pay_incltax,run_noins,insurance,fsd,allin_mo_nofsd,allin_mo_fsd,upfront,total_term_caronly,owns_after,resid_confirmed,note
+Model 3 Premium RWD,Model 3,Cash,47609,0,0,0,84,200,99,284,383,47609,47609,own outright,True,ON 13.0% HST incl; running costs ongoing
+Model 3 Premium RWD,Model 3,Finance 96mo ($0 down),0,96,534,603,84,200,99,887,986,0,57927,own outright,True,tax $5477 financed into loan
+Model 3 Premium RWD,Model 3,Finance 96mo (default down),4300,96,479,549,84,200,99,833,932,4300,56995,own outright,True,tax $5477 financed into loan
+Model 3 Premium RWD,Model 3,Finance 96mo ($10k down),10000,96,407,477,84,200,99,761,860,10000,55760,own outright,True,tax $5477 financed into loan
+Model 3 Premium RWD,Model 3,Lease 48mo ($0 down),0,48,656,742,84,200,99,1026,1125,0,35607,return car (or buy out at residual+tax),True,resid $16388 (41.5%); tax on payments only
+Model 3 Premium RWD,Model 3,Lease 48mo (default down),5000,48,542,613,84,200,99,897,996,5650,35050,return car (or buy out at residual+tax),True,resid $16388 (41.5%); tax on payments only
+Model 3 Premium RWD,Model 3,Lease 48mo ($10k down),10000,48,428,483,84,200,99,767,866,11300,34494,return car (or buy out at residual+tax),True,resid $16388 (41.5%); tax on payments only
+Model 3 Premium AWD,Model 3,Cash,59474,0,0,0,84,200,99,284,383,59474,59474,own outright,True,ON 13.0% HST incl; running costs ongoing
+Model 3 Premium AWD,Model 3,Finance 96mo ($0 down),0,96,667,754,84,200,99,1038,1137,0,72364,own outright,True,tax $6842 financed into loan
+Model 3 Premium AWD,Model 3,Finance 96mo (default down),4300,96,613,699,84,200,99,983,1082,4300,71432,own outright,True,tax $6842 financed into loan
+Model 3 Premium AWD,Model 3,Finance 96mo ($10k down),10000,96,540,627,84,200,99,911,1010,10000,70196,own outright,True,tax $6842 financed into loan
+Model 3 Premium AWD,Model 3,Lease 48mo ($0 down),0,48,783,885,84,200,99,1169,1268,0,42470,return car (or buy out at residual+tax),True,resid $22446 (44.9%); tax on payments only
+Model 3 Premium AWD,Model 3,Lease 48mo (default down),5000,48,669,755,84,200,99,1039,1138,5650,41914,return car (or buy out at residual+tax),True,resid $22446 (44.9%); tax on payments only
+Model 3 Premium AWD,Model 3,Lease 48mo ($10k down),10000,48,554,626,84,200,99,910,1009,11300,41357,return car (or buy out at residual+tax),True,resid $22446 (44.9%); tax on payments only
+Model 3 Performance,Model 3,Cash,87724,0,0,0,84,200,99,284,383,87724,87724,own outright,True,ON 13.0% HST incl; running costs ongoing
+Model 3 Performance,Model 3,Finance 96mo ($0 down),0,96,984,1112,84,200,99,1396,1495,0,106736,own outright,True,tax $10092 financed into loan
+Model 3 Performance,Model 3,Finance 96mo (default down),4300,96,929,1057,84,200,99,1341,1440,4300,105804,own outright,True,tax $10092 financed into loan
+Model 3 Performance,Model 3,Finance 96mo ($10k down),10000,96,857,985,84,200,99,1269,1368,10000,104569,own outright,True,tax $10092 financed into loan
+Model 3 Performance,Model 3,Lease 48mo ($0 down),0,48,1164,1315,84,200,99,1599,1698,0,63140,return car (or buy out at residual+tax),True,resid $32621 (43.5%); tax on payments only
+Model 3 Performance,Model 3,Lease 48mo (default down),5000,48,1050,1186,84,200,99,1470,1569,5650,62583,return car (or buy out at residual+tax),True,resid $32621 (43.5%); tax on payments only
+Model 3 Performance,Model 3,Lease 48mo ($10k down),10000,48,935,1057,84,200,99,1341,1440,11300,62026,return car (or buy out at residual+tax),True,resid $32621 (43.5%); tax on payments only
+Model Y RWD,Model Y,Cash,59474,0,0,0,87,210,99,297,396,59474,59474,own outright,False,ON 13.0% HST incl; running costs ongoing
+Model Y RWD,Model Y,Finance 96mo ($0 down),0,96,667,754,87,210,99,1051,1150,0,72364,own outright,False,tax $6842 financed into loan
+Model Y RWD,Model Y,Finance 96mo (default down),5150,96,602,689,87,210,99,986,1085,5150,71248,own outright,False,tax $6842 financed into loan
+Model Y RWD,Model Y,Finance 96mo ($10k down),10000,96,540,627,87,210,99,924,1023,10000,70196,own outright,False,tax $6842 financed into loan
+Model Y RWD,Model Y,Lease 48mo ($0 down),0,48,773,873,87,210,99,1170,1269,0,41911,return car (or buy out at residual+tax),False,"resid $22995 (46.0%, ESTIMATE); tax on payments only"
+Model Y RWD,Model Y,Lease 48mo (default down),5000,48,658,744,87,210,99,1041,1140,5650,41354,return car (or buy out at residual+tax),False,"resid $22995 (46.0%, ESTIMATE); tax on payments only"
+Model Y RWD,Model Y,Lease 48mo ($10k down),10000,48,544,615,87,210,99,912,1011,11300,40798,return car (or buy out at residual+tax),False,"resid $22995 (46.0%, ESTIMATE); tax on payments only"
+Model Y Premium AWD,Model Y,Cash,76424,0,0,0,87,210,99,297,396,76424,76424,own outright,False,ON 13.0% HST incl; running costs ongoing
+Model Y Premium AWD,Model Y,Finance 96mo ($0 down),0,96,857,969,87,210,99,1266,1365,0,92987,own outright,False,tax $8792 financed into loan
+Model Y Premium AWD,Model Y,Finance 96mo (default down),5150,96,792,903,87,210,99,1200,1299,5150,91871,own outright,False,tax $8792 financed into loan
+Model Y Premium AWD,Model Y,Finance 96mo ($10k down),10000,96,730,842,87,210,99,1139,1238,10000,90820,own outright,False,tax $8792 financed into loan
+Model Y Premium AWD,Model Y,Lease 48mo ($0 down),0,48,999,1128,87,210,99,1425,1524,0,54164,return car (or buy out at residual+tax),False,"resid $29246 (45.0%, ESTIMATE); tax on payments only"
+Model Y Premium AWD,Model Y,Lease 48mo (default down),5000,48,884,999,87,210,99,1296,1395,5650,53607,return car (or buy out at residual+tax),False,"resid $29246 (45.0%, ESTIMATE); tax on payments only"
+Model Y Premium AWD,Model Y,Lease 48mo ($10k down),10000,48,770,870,87,210,99,1167,1266,11300,53050,return car (or buy out at residual+tax),False,"resid $29246 (45.0%, ESTIMATE); tax on payments only"
+Model Y Performance,Model Y,Cash,87724,0,0,0,87,210,99,297,396,87724,87724,own outright,False,ON 13.0% HST incl; running costs ongoing
+Model Y Performance,Model Y,Finance 96mo ($0 down),0,96,984,1112,87,210,99,1409,1508,0,106736,own outright,False,tax $10092 financed into loan
+Model Y Performance,Model Y,Finance 96mo (default down),5150,96,919,1047,87,210,99,1344,1443,5150,105620,own outright,False,tax $10092 financed into loan
+Model Y Performance,Model Y,Finance 96mo ($10k down),10000,96,857,985,87,210,99,1282,1381,10000,104569,own outright,False,tax $10092 financed into loan
+Model Y Performance,Model Y,Lease 48mo ($0 down),0,48,1171,1323,87,210,99,1620,1719,0,63522,return car (or buy out at residual+tax),False,"resid $32246 (43.0%, ESTIMATE); tax on payments only"
+Model Y Performance,Model Y,Lease 48mo (default down),5000,48,1057,1194,87,210,99,1491,1590,5650,62965,return car (or buy out at residual+tax),False,"resid $32246 (43.0%, ESTIMATE); tax on payments only"
+Model Y Performance,Model Y,Lease 48mo ($10k down),10000,48,942,1065,87,210,99,1362,1461,11300,62408,return car (or buy out at residual+tax),False,"resid $32246 (43.0%, ESTIMATE); tax on payments only"

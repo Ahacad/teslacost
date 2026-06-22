@@ -1,0 +1,7 @@
+model,trim_code,variant_code,trim_name,category,drive,start_price_cad,range_km,range_alt_km,accel_0_100_s,topspeed_kmh,seating,cargo_l,is_default
+Model 3,$MT368,RWD_PRM_NV35,Model 3 Premium Rear-Wheel Drive,Premium,Rear-Wheel Drive,39490,463,413,6.2,201,5,682,yes
+Model 3,$MT370,LR_AWD_NV35,Model 3 Premium All-Wheel Drive,Premium,Dual Motor All-Wheel Drive,49990,570,520,4.4,201,5,649,
+Model 3,$MT379,PERF_NV35,Model 3 Performance All-Wheel Drive,Performance,Dual Motor All-Wheel Drive,74990,505,,3.1,262,5,649,
+Model Y,$MTY67,LR_AWD_NV36,Model Y Premium All-Wheel Drive,Premium,Dual Motor All-Wheel Drive,64990,542,488,4.8,201,5,2150,
+Model Y,$MTY68,SR_RWD_NV36_STANDARD,Model Y Rear-Wheel Drive,,Rear-Wheel Drive,49990,463,488,7.2,201,5,2150,yes
+Model Y,$MTY70,PERF_NV36,Model Y Performance All-Wheel Drive,Performance,Dual Motor All-Wheel Drive,74990,494,,3.5,250,5,2138,

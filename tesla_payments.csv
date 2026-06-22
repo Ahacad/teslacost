@@ -1,0 +1,7 @@
+model,trim,base_price_cad,fees_cad,cash_incl_fees_cad,finance_monthly_cad,finance_down_cad,finance_apr_pct,finance_term_mo,lease_monthly_cad,lease_down_cad,lease_apr_pct,lease_term_mo,lease_km_per_yr,lease_residual_cad,source
+Model 3,Premium RWD,39490,2642,42132,479,4300,5.03,96,539,5000,4.9272,48,16000,16377,captured
+Model 3,Premium AWD,49990,2642,52632,613,4300,5.03,96,669,5000,4.9272,48,16000,,captured(finance+lease monthly); residual=derived
+Model 3,Performance AWD,74990,2642,77632,929,4300,5.03,96,1049,5000,4.9272,48,16000,,captured(finance+lease monthly); residual=derived
+Model Y,RWD,49990,2642,52632,602,5150,5.03,96,,,4.9272,48,16000,,finance captured; lease tab present but did not activate
+Model Y,Premium AWD,64990,2642,67632,792,5150,5.03,96,,,4.9272,48,16000,,finance=computed(formula); lease n/a
+Model Y,Performance AWD,74990,2642,77632,919,5150,5.03,96,,,4.9272,48,16000,,finance=computed(formula); lease n/a
