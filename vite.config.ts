@@ -5,6 +5,8 @@ import { fileURLToPath } from 'node:url';
 const r = (p: string) => fileURLToPath(new URL(p, import.meta.url));
 
 export default defineConfig({
+  // relative asset paths → the dist works from file:// or any hosting subpath
+  base: './',
   plugins: [preact()],
   resolve: {
     alias: {
