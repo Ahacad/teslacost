@@ -39,8 +39,9 @@ function Toggle({
 export function Controls() {
   const dm = downMode.value;
   const m3 = RUNNING_COSTS['Model 3'];
-  const run = includeRunning.value ? m3.connectivity + m3.charging + m3.maintenance : 0;
-  const ins = includeInsurance.value ? m3.insurance : 0;
+  const my = RUNNING_COSTS['Model Y'];
+  const runM3 = m3.connectivity + m3.charging + m3.maintenance;
+  const runMY = my.connectivity + my.charging + my.maintenance;
   const usd = rates.value.USD ?? 0.7068;
 
   return (
@@ -98,36 +99,39 @@ export function Controls() {
         <div class="ctrl">
           <label>Running costs</label>
           <Toggle checked={includeRunning.value} onChange={(v) => (includeRunning.value = v)}>
-            charging + tires + connectivity
+            <span class="swsub">charging + connectivity + tires</span>
+            <b class="swnum">{money(runM3)}/mo</b>
           </Toggle>
         </div>
 
         <div class="ctrl">
           <label>Insurance (est.)</label>
           <Toggle checked={includeInsurance.value} onChange={(v) => (includeInsurance.value = v)}>
-            include
+            <b class="swnum">{money(m3.insurance)}/mo</b>
           </Toggle>
         </div>
 
         <div class="ctrl">
           <label>FSD subscription</label>
           <Toggle checked={includeFsd.value} onChange={(v) => (includeFsd.value = v)}>
-            ${' '}
-            <input
-              type="number"
-              value={display(fsdPrice.value)}
-              step="1"
-              style={{ width: '56px', padding: '5px 7px' }}
-              onInput={(e) => (fsdPrice.value = toBaseValue(numVal(e)))}
-            />
-            /mo
+            <span class="swnum" style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+              $
+              <input
+                type="number"
+                value={display(fsdPrice.value)}
+                step="1"
+                style={{ width: '56px', padding: '5px 7px' }}
+                onInput={(e) => (fsdPrice.value = toBaseValue(numVal(e)))}
+              />
+              /mo
+            </span>
           </Toggle>
         </div>
       </div>
 
       <div class="ssub" style={{ paddingLeft: 0, marginTop: '12px' }}>
-        Running + insurance ≈ <b>{money(run + ins)}/mo</b> on a Model 3
-        {includeFsd.value ? ` · + FSD ${money(fsdPrice.value)}` : ''} · tax{' '}
+        Estimates — running <b>{money(runM3)}/mo</b> + insurance <b>{money(m3.insurance)}/mo</b> on a Model 3
+        {' '}(Model Y {money(runMY)} + {money(my.insurance)}) · FSD <b>{money(fsdPrice.value)}/mo</b> · tax{' '}
         {(taxRate.value * 100).toFixed(2)}% · showing <b>{currencyCode.value}</b>
         {currencyCode.value !== 'CAD' ? ` @ ${usd.toFixed(4)}` : ''}.
       </div>
