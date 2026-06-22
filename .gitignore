@@ -1,4 +1,14 @@
+# dependencies & build output
 node_modules/
 dist/
+coverage/
+.vite/
+
+# logs & local env
 *.log
+*.local
+
+# editor / OS
+.idea/
+.vscode/
 .DS_Store

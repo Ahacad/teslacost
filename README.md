@@ -64,5 +64,16 @@ the M3 RWD lease lands within ~$3 of tesla.com's shown payment (documented in
 
 Numbers are a snapshot of tesla.com/en_ca, 2026-06-21 (CAD). Insurance, charging,
 resale %, and the Model Y lease residuals are overridable estimates — flagged in
-the UI. See `tesla_other_costs.md` and `tesla_scenarios.md` for the line-item
-sources.
+the UI. See `reference/tesla_other_costs.md` and `reference/tesla_scenarios.md`
+for the line-item sources.
+
+## Layout
+
+```
+src/         application (domain · data · state · ui)
+test/        Vitest suites (domain + ui)
+docs/        design.md
+reference/   captured Tesla data + generated notes/CSVs (snapshot 2026-06-21)
+legacy/      the original single-file dashboard, kept for reference
+dist/        build output (gitignored)
+```
