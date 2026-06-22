@@ -12,3 +12,6 @@ coverage/
 .idea/
 .vscode/
 .DS_Store
+
+# Claude Code local state (worktrees, caches)
+.claude/worktrees/
