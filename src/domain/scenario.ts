@@ -40,9 +40,11 @@ export function computeScenario(
   const residual = vehicle.residual ?? Math.round((residualBasis * vehicle.residualPct) / 100);
 
   // Finance: a manual override wins; else the trim's own rate (US), else the
-  // market default (CA). Term follows the trim when it carries one.
+  // market default (CA). Same precedence for the term — a chosen length applies
+  // to every trim, else the trim's own term, else the market default.
   const financeApr = settings.aprOverride ?? vehicle.finance?.apr ?? config.finance.apr;
-  const financeTerm = vehicle.finance?.termMonths ?? config.finance.termMonths;
+  const financeTerm =
+    settings.financeTermOverride ?? vehicle.finance?.termMonths ?? config.finance.termMonths;
   // Tax is rolled into the loan only where the market finances it (CA).
   const finance = financeMonthly(
     priceWithFees,
@@ -97,6 +99,7 @@ export function computeScenario(
     finance,
     lease,
     financeApr,
+    financeTerm,
     extra,
     running,
     insurance,

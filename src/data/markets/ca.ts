@@ -12,4 +12,5 @@ export const CA_MARKET: Market = {
   vehicles: VEHICLES,
   config: CONFIG,
   taxRegions: PROVINCES,
+  defaultTaxRegionCode: 'BC',
 };
