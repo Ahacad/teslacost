@@ -91,6 +91,8 @@ export interface ScenarioResult {
   lease: LeaseResult;
   /** effective finance APR used (after any manual override), in percent */
   financeApr: number;
+  /** effective finance term used (after any manual override), in months */
+  financeTerm: number;
   /** sum of the monthly extras the user chose to count */
   extra: number;
   running: number;
@@ -115,6 +117,8 @@ export interface ScenarioSettings {
   fsdPrice: number;
   /** manual APR override in percent; null = use each trim's real rate */
   aprOverride: number | null;
+  /** manual finance term override in months; null = use each trim's own term */
+  financeTermOverride: number | null;
 }
 
 export interface CostConfig {
@@ -160,8 +164,10 @@ export interface Market {
   baseCurrencyCode: string;
   vehicles: Vehicle[];
   config: CostConfig;
-  /** selectable tax regions; the first is the default when this market loads */
+  /** selectable tax regions */
   taxRegions: TaxRegion[];
+  /** region code selected when this market loads; falls back to taxRegions[0] */
+  defaultTaxRegionCode?: string;
 }
 
 /** A currency definition. Rates are expressed as units per 1 unit of base. */

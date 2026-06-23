@@ -16,6 +16,7 @@ function settings(over: Partial<ScenarioSettings> = {}): ScenarioSettings {
     includeFsd: false,
     fsdPrice: CONFIG.fsdPrice,
     aprOverride: null,
+    financeTermOverride: null,
     ...over,
   };
 }
@@ -92,5 +93,24 @@ describe('computeScenario — down sensitivity', () => {
     const lo = computeScenario(m3rwd, settings({ financeDown: 0 }), CONFIG);
     const hi = computeScenario(m3rwd, settings({ financeDown: 10000 }), CONFIG);
     expect(hi.methods.finance.pay).toBeLessThan(lo.methods.finance.pay);
+  });
+});
+
+describe('computeScenario — finance term override', () => {
+  it('reports the market term when no override is set', () => {
+    expect(computeScenario(m3rwd, settings(), CONFIG).financeTerm).toBe(96);
+  });
+  it('a chosen term overrides the default and raises the monthly', () => {
+    const long = computeScenario(m3rwd, settings(), CONFIG);
+    const short = computeScenario(m3rwd, settings({ financeTermOverride: 36 }), CONFIG);
+    expect(short.financeTerm).toBe(36);
+    expect(short.methods.finance.pay).toBeGreaterThan(long.methods.finance.pay);
+  });
+  it('total over the loan sums exactly the override term of payments', () => {
+    const r = computeScenario(m3rwd, settings({ financeTermOverride: 60 }), CONFIG);
+    expect(r.methods.finance.totalTerm).toBeCloseTo(
+      r.methods.finance.upfront + r.methods.finance.pay * 60,
+      6,
+    );
   });
 });

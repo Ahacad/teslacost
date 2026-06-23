@@ -28,9 +28,9 @@ a{color:var(--red);}
 .mast .brand .ca{color:var(--red);}
 .mast .meta{font-family:"JetBrains Mono";font-size:11px;color:var(--ink2);text-align:right;line-height:1.7;
   text-transform:uppercase;letter-spacing:.08em;}
-.mast .kick{font-family:"Instrument Serif";font-style:italic;font-size:clamp(17px,2.4vw,23px);color:var(--ink2);
-  margin:12px 0 0;}
-.mast .kick b{color:var(--ink);font-style:normal;font-family:"Hanken Grotesk";font-weight:600;}
+.mast .kick{font-family:"Hanken Grotesk",system-ui,sans-serif;font-size:clamp(15px,1.7vw,18px);color:var(--ink2);
+  line-height:1.55;max-width:64ch;margin:14px 0 0;}
+.mast .kick b{color:var(--ink);font-weight:600;}
 
 /* ---------- market tabs ---------- */
 .mtabs{display:flex;gap:8px;margin:28px 0 -6px;border-bottom:1px solid var(--line);}
@@ -83,7 +83,8 @@ select{appearance:none;-webkit-appearance:none;padding-right:30px;
 
 /* toggle switch */
 .sw{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;}
-.sw input{display:none;}
+/* hide only the toggle's own checkbox — not number inputs nested in the label (e.g. FSD price) */
+.sw > input{display:none;}
 .sw .track{width:38px;height:22px;border-radius:999px;background:var(--line2);position:relative;transition:background .25s;flex:none;}
 .sw .track::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;
   box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .25s;}
