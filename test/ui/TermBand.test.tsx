@@ -25,6 +25,16 @@ describe('<TermBand>', () => {
     expect(chip(container, '8 yr').className).not.toContain('on');
   });
 
+  it('shows the per-term APR in every chip (estimated rungs marked)', () => {
+    const { container } = render(<TermBand />);
+    for (const c of container.querySelectorAll('.termchip')) {
+      expect(c.querySelector('.termchip-apr')?.textContent).toMatch(/\d\.\d{2}%/);
+    }
+    // the confirmed 96-mo rung carries no "est" marker; a shorter rung does
+    expect(chip(container, '8 yr').querySelector('.termchip-apr')!.textContent).not.toContain('est');
+    expect(chip(container, '5 yr').querySelector('.termchip-apr')!.textContent).toContain('est');
+  });
+
   it('flags the 8-yr chip as Tesla’s default', () => {
     const { container } = render(<TermBand />);
     expect(chip(container, '8 yr').querySelector('.termchip-note')?.textContent).toBe(

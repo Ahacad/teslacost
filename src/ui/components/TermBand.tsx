@@ -42,6 +42,9 @@ export function TermBand() {
                 {money(q.monthly)}
                 <small>/mo</small>
               </span>
+              <span class="termchip-apr">
+                {q.apr.toFixed(2)}%{q.confirmed ? '' : ' est'}
+              </span>
               {q.months === 96 && <span class="termchip-note">Tesla default</span>}
             </button>
           );
