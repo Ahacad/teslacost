@@ -4,7 +4,7 @@
   --line:#E3DCCC; --line2:#D2C9B5;
   --red:#E31937; --red-soft:#fbe1e5;
   --fin:#0E766B; --lse:#C2701A; --csh:#3C3F47;     /* finance teal · lease amber · cash graphite */
-  --fin-soft:#dcefe9; --best:#e3f3ee;
+  --fin-soft:#dcefe9; --best:#e3f3ee; --sel:#ece4d2;   /* selected-row parchment */
   --shadow:0 1px 2px rgba(40,33,15,.04),0 8px 26px rgba(40,33,15,.06);
   --r:14px;
 }
@@ -234,5 +234,5 @@ path.area.anim{opacity:0;animation:fadein .9s ease .3s forwards;}
 .carfocus-num .d{font-size:11.5px;color:var(--ink2);}
 /* selected vehicle highlighted in the scenario table */
 #scenTable tbody tr{cursor:pointer;}
-#scenTable tr.sel td{background:var(--red-soft);}
-#scenTable tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--red);}
+#scenTable tr.sel td:not(.best){background:var(--sel);}
+#scenTable tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--ink);}
