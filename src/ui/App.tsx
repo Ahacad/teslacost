@@ -2,6 +2,7 @@ import { currencyCode } from '@state/settings';
 import { MarketTabs } from './components/MarketTabs';
 import { Masthead } from './components/Masthead';
 import { CarFocus } from './components/CarFocus';
+import { TermBand } from './components/TermBand';
 import { Decide } from './components/Decide';
 import { Controls } from './components/Controls';
 import { Takeaways } from './components/Takeaways';
@@ -28,6 +29,7 @@ export function App() {
         <MarketTabs />
         <Masthead />
         <CarFocus />
+        <TermBand />
         <Decide />
 
         <SectionHead no="⚙" title="Your situation" kicker="set the dials once" />
@@ -60,12 +62,11 @@ export function App() {
         </div>
 
         <section>
-          <SectionHead no="2" title="Your finance terms" kicker="3 to 8 years · real rates" />
+          <SectionHead no="2" title="Every finance term, side by side" kicker="the full breakdown" />
         </section>
         <div class="ssub">
-          Tesla's configurator defaults to <b>96 mo (8 yr)</b>: the lowest monthly, but the highest
-          rate and the most interest. Pick a length for the car selected up top and weigh the
-          trade-off — most buyers land at 5–6 years. Figures in <Cur />.
+          The deep-dive behind the term picker up top: every length for the selected car, with its
+          real rate, total interest, and what you save against the 8-yr default. Figures in <Cur />.
         </div>
         <FinanceTerms />
 

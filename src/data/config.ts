@@ -24,6 +24,7 @@ export const CONFIG: CostConfig = {
     { months: 84, apr: 4.53, confirmed: false },
     { months: 96, apr: 5.03, confirmed: true },
   ],
+  recommendedTermMonths: 60, // open on 5 yr, not Tesla's 96-mo default
   lease: { apr: 4.9272, termMonths: 48, defaultDown: 5000, annualDistance: 16000 },
   distanceUnit: 'km',
   taxInFinancedPrincipal: true, // Canada finances provincial tax into the loan

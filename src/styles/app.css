@@ -214,6 +214,24 @@ path.area.anim{opacity:0;animation:fadein .9s ease .3s forwards;}
 .carfocus-num .lab{font-family:"JetBrains Mono";font-size:10px;color:var(--ink2);text-transform:uppercase;letter-spacing:.06em;}
 .carfocus-num .v{font-family:"Bricolage Grotesque";font-weight:800;font-size:23px;letter-spacing:-.02em;margin:6px 0 2px;}
 .carfocus-num .d{font-size:11.5px;color:var(--ink2);}
+/* ---------- term band (primary finance-length control) ---------- */
+.termband{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 20px;margin:14px 0;}
+.termband-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.termband .lead{font-family:"Instrument Serif";font-style:italic;color:var(--ink2);font-size:18px;}
+.termband-sub{font-family:"JetBrains Mono";font-size:11px;color:var(--ink2);}
+.termchips{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin-top:13px;}
+@media(max-width:680px){.termchips{grid-template-columns:repeat(3,1fr);}}
+.termchip{position:relative;display:flex;flex-direction:column;gap:3px;align-items:flex-start;cursor:pointer;
+  border:1px solid var(--line2);background:var(--paper2);border-radius:12px;padding:11px 12px;transition:.12s;}
+.termchip:hover{border-color:var(--ink2);transform:translateY(-2px);}
+.termchip.on{background:var(--ink);border-color:var(--ink);box-shadow:0 6px 18px rgba(40,33,15,.16);}
+.termchip-yr{font-family:"JetBrains Mono";font-size:11px;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em;}
+.termchip.on .termchip-yr{color:rgba(255,255,255,.72);}
+.termchip-mo{font-family:"Bricolage Grotesque";font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--ink);}
+.termchip-mo small{font-weight:500;font-size:11px;color:var(--ink2);margin-left:1px;}
+.termchip.on .termchip-mo,.termchip.on .termchip-mo small{color:#fff;}
+.termchip-note{font-family:"JetBrains Mono";font-size:8.5px;color:var(--lse);border:1px solid var(--lse);border-radius:8px;padding:0 5px;margin-top:2px;}
+.termchip.on .termchip-note{color:#fff;border-color:rgba(255,255,255,.5);}
 /* selected vehicle highlighted in the scenario table */
 #scenTable tbody tr{cursor:pointer;}
 #scenTable tr.sel td{background:var(--red-soft);}

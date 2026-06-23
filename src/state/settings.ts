@@ -34,8 +34,14 @@ export const includeFsd = signal(false);
 export const fsdPrice = signal(DEFAULT_MARKET.config.fsdPrice);
 /** manual finance APR override in percent; null = use each trim's real rate */
 export const aprOverride = signal<number | null>(null);
-/** manual finance term override in months; null = use each trim's own term */
-export const financeTermOverride = signal<number | null>(null);
+/**
+ * The page-wide loan term, in months. Opens on the market's realistic
+ * recommended term (CA = 60 mo / 5 yr), NOT Tesla's 96-mo default. null falls
+ * back to each trim's own term (US, which prices terms per trim).
+ */
+export const financeTermOverride = signal<number | null>(
+  DEFAULT_MARKET.config.recommendedTermMonths ?? null,
+);
 /** Common finance lengths Tesla offers; the shortest/longest bracket reality. */
 export const FINANCE_TERMS = [36, 48, 60, 72, 84, 96];
 
@@ -80,7 +86,7 @@ export function setMarket(id: string): void {
   downMode.value = 'default';
   fsdPrice.value = m.config.fsdPrice;
   aprOverride.value = null;
-  financeTermOverride.value = null;
+  financeTermOverride.value = m.config.recommendedTermMonths ?? null;
   selectedVehicleKey.value = m.vehicles[0].key;
 }
 

@@ -166,6 +166,12 @@ export interface CostConfig {
    * each trim carries its own promo `finance.apr` regardless of term.
    */
   financeSchedule?: FinanceTermRate[];
+  /**
+   * The loan term the app opens on — a realistic length, NOT Tesla's 96-mo
+   * configurator default (`finance.termMonths`). Absent where the market prices
+   * each trim's term individually (US), so it opens on the trim's own term.
+   */
+  recommendedTermMonths?: number;
   lease: LoanTerms & { defaultDown: number; annualDistance: number };
   /** distance-allowance unit for the lease line */
   distanceUnit: 'km' | 'mi';

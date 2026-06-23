@@ -13,7 +13,6 @@ import {
   fsdPrice,
   aprOverride,
   financeTermOverride,
-  FINANCE_TERMS,
   rates,
   currencyCode,
   setRate,
@@ -130,22 +129,6 @@ export function Controls() {
         </div>
 
         <div class="ctrl">
-          <label>Finance term</label>
-          <select
-            value={financeTermOverride.value ?? ''}
-            onChange={(e) => {
-              const v = (e.currentTarget as HTMLSelectElement).value;
-              financeTermOverride.value = v === '' ? null : +v;
-            }}
-          >
-            <option value="">Tesla default</option>
-            {FINANCE_TERMS.map((t) => (
-              <option value={String(t)}>{t} mo</option>
-            ))}
-          </select>
-        </div>
-
-        <div class="ctrl">
           <label>FX · 1 CAD = USD</label>
           <input
             type="number"
@@ -193,8 +176,12 @@ export function Controls() {
         Estimates — running <b>{money(runRef)}/mo</b> + insurance <b>{money(rc.insurance)}/mo</b> on a{' '}
         {refModel} · FSD <b>{money(fsdPrice.value)}/mo</b> · tax {(taxRate.value * 100).toFixed(2)}%
         {!overriding && activeTaxRegion.value.rateFor ? ' (+luxury PST >$55k)' : ''}
-        {aprOverride.value != null ? ` · APR forced ${aprOverride.value}%` : ' · live promo APRs'}
-        {financeTermOverride.value != null ? ` · finance ${financeTermOverride.value} mo` : ''} · showing{' '}
+        {aprOverride.value != null
+          ? ` · APR forced ${aprOverride.value}%`
+          : market.config.financeSchedule
+            ? ' · rate by term'
+            : ' · per-trim promo APRs'}
+        {financeTermOverride.value != null ? ` · ${financeTermOverride.value} mo loan` : ''} · showing{' '}
         <b>{currencyCode.value}</b>
         {currencyCode.value !== market.baseCurrencyCode ? ` @ ${usd.toFixed(4)}` : ''}.
       </div>
