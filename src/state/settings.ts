@@ -1,11 +1,16 @@
 import { signal, computed } from '@preact/signals';
 import type { Currency, ScenarioSettings, Vehicle } from '@domain/types';
 import { computeScenario, resolveDown, type DownMode } from '@domain/scenario';
+import type { Market } from '@domain/types';
 import { MARKETS, DEFAULT_MARKET, marketById } from '@data/markets';
 import { regionByCode, regionRate } from '@data/tax';
 import { CURRENCIES, FALLBACK_RATES, currencyByCode } from '@data/currencies';
 
 export { MARKETS };
+
+/** The tax region a market opens on: its declared default, else the first listed. */
+const defaultRegionCode = (m: Market): string =>
+  m.defaultTaxRegionCode ?? m.taxRegions[0].code;
 
 // ---- market ----
 export const marketId = signal(DEFAULT_MARKET.id);
@@ -15,7 +20,7 @@ export const activeMarket = computed(() => marketById(marketId.value));
 // Tax: pick a region (its rate may be price-tiered, e.g. BC's luxury PST) or
 // type a manual % that wins for every trim. The effective rate is resolved per
 // vehicle in settingsFor; `taxRate` here is the headline shown in the UI.
-export const taxRegionCode = signal(DEFAULT_MARKET.taxRegions[0].code);
+export const taxRegionCode = signal(defaultRegionCode(DEFAULT_MARKET));
 export const taxOverride = signal<number | null>(null);
 export const activeTaxRegion = computed(() =>
   regionByCode(activeMarket.value.taxRegions, taxRegionCode.value),
@@ -29,6 +34,10 @@ export const includeFsd = signal(false);
 export const fsdPrice = signal(DEFAULT_MARKET.config.fsdPrice);
 /** manual finance APR override in percent; null = use each trim's real rate */
 export const aprOverride = signal<number | null>(null);
+/** manual finance term override in months; null = use each trim's own term */
+export const financeTermOverride = signal<number | null>(null);
+/** Common finance lengths Tesla offers; the shortest/longest bracket reality. */
+export const FINANCE_TERMS = [36, 48, 60, 72, 84, 96];
 
 // ---- currency / FX ----
 export const currencyCode = signal(DEFAULT_MARKET.baseCurrencyCode);
@@ -65,12 +74,13 @@ export function setRate(code: string, rate: number): void {
 export function setMarket(id: string): void {
   const m = marketById(id);
   marketId.value = id;
-  taxRegionCode.value = m.taxRegions[0].code;
+  taxRegionCode.value = defaultRegionCode(m);
   taxOverride.value = null;
   currencyCode.value = m.baseCurrencyCode;
   downMode.value = 'default';
   fsdPrice.value = m.config.fsdPrice;
   aprOverride.value = null;
+  financeTermOverride.value = null;
   selectedVehicleKey.value = m.vehicles[0].key;
 }
 
@@ -86,6 +96,7 @@ export function settingsFor(vehicle: Vehicle): ScenarioSettings {
     includeFsd: includeFsd.value,
     fsdPrice: fsdPrice.value,
     aprOverride: aprOverride.value,
+    financeTermOverride: financeTermOverride.value,
   };
 }
 

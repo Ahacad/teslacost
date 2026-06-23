@@ -17,7 +17,7 @@ export function CumulativeChart() {
     months: cfg.horizonMonths,
     includeExtra: overlay,
     leaseTermMonths: cfg.lease.termMonths,
-    financeTermMonths: cfg.finance.termMonths,
+    financeTermMonths: s.financeTerm,
   };
   const leaseRepeats = Math.round((cfg.horizonMonths / cfg.lease.termMonths) * 10) / 10;
   const leaseLabel = `Lease ×${leaseRepeats}`;

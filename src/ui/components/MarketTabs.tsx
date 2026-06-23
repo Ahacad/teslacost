@@ -1,4 +1,5 @@
 import { marketId, setMarket, MARKETS } from '@state/settings';
+import { Flag } from './Flag';
 
 /** Top-level market switch (Canada / US). Swaps the whole dashboard's data. */
 export function MarketTabs() {
@@ -12,7 +13,7 @@ export function MarketTabs() {
           class={`mtab${marketId.value === m.id ? ' on' : ''}`}
           onClick={() => setMarket(m.id)}
         >
-          <span class="flag">{m.flag}</span>
+          <Flag code={m.id} class="mtab-flag" />
           {m.label}
         </button>
       ))}

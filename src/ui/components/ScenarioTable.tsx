@@ -76,10 +76,9 @@ export function ScenarioTable() {
         <tbody>
           {scenarios.value.map((s) => {
             const cfg = activeMarket.value.config;
-            const finTerm = s.vehicle.finance?.termMonths ?? cfg.finance.termMonths;
             const bestNet = Math.min(s.methods.finance.net8, s.methods.lease.net8, s.methods.cash.net8);
             const rows: Array<[string, string, MethodResult]> = [
-              [`Finance ${finTerm}mo`, 'fin', s.methods.finance],
+              [`Finance ${s.financeTerm}mo`, 'fin', s.methods.finance],
               [`Lease ${cfg.lease.termMonths}mo`, 'lse', s.methods.lease],
               ['Cash', 'csh', s.methods.cash],
             ];

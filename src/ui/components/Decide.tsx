@@ -1,11 +1,11 @@
-import { activeMarket } from '@state/settings';
+import { activeMarket, financeTermOverride } from '@state/settings';
 import { money } from '@state/format';
 
 /** The three-up explainer of finance vs lease vs cash. Copy follows the market. */
 export function Decide() {
   const m = activeMarket.value;
   const cfg = m.config;
-  const finTerm = cfg.finance.termMonths;
+  const finTerm = financeTermOverride.value ?? cfg.finance.termMonths;
   const leaseTerm = cfg.lease.termMonths;
   const bases = m.vehicles.map((v) => v.base);
   const lo = money(Math.min(...bases));

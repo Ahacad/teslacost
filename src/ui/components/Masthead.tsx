@@ -1,4 +1,5 @@
 import { activeMarket, activeCurrency, activeRate } from '@state/settings';
+import { Flag } from './Flag';
 
 export function Masthead() {
   const m = activeMarket.value;
@@ -22,7 +23,7 @@ export function Masthead() {
           Model 3 / Model Y
           <br />
           <span>
-            {m.flag} {m.label} · {fxNote}
+            <Flag code={m.id} class="meta-flag" /> {m.label} · {fxNote}
           </span>
         </div>
       </div>

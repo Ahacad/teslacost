@@ -17,6 +17,7 @@ function settings(v: Vehicle, over: Partial<ScenarioSettings> = {}): ScenarioSet
     includeFsd: false,
     fsdPrice: cfg.fsdPrice,
     aprOverride: null,
+    financeTermOverride: null,
     ...over,
   };
 }
@@ -73,6 +74,13 @@ describe('US market — structure', () => {
     const over = computeScenario(v, settings(v, { aprOverride: 10 }), cfg);
     expect(over.financeApr).toBe(10);
     expect(over.methods.finance.pay).toBeGreaterThan(base.methods.finance.pay);
+  });
+
+  it('a term override wins over the trim’s own term', () => {
+    const v = byKey('m3std'); // carries an 84-month term
+    expect(computeScenario(v, settings(v), cfg).financeTerm).toBe(84);
+    const over = computeScenario(v, settings(v, { financeTermOverride: 60 }), cfg);
+    expect(over.financeTerm).toBe(60);
   });
 
   it('sales tax is paid up front (not financed): monthly stays pre-tax', () => {

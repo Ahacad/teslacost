@@ -42,10 +42,10 @@ const US_STATES: TaxRegion[] = [
 export const US_MARKET: Market = {
   id: 'US',
   label: 'United States',
-  flag: '🇺🇸',
   baseCurrencyCode: 'USD',
   vehicles: US_VEHICLES,
   taxRegions: US_STATES,
+  defaultTaxRegionCode: 'WA',
   config: {
     fees: 1390, // destination fee, rolled into price
     orderFee: 250, // separate non-refundable order fee, paid up front

@@ -76,9 +76,9 @@ export function App() {
         </div>
         <CumulativeChart />
         <div class="ssub" style={{ paddingLeft: 0 }}>
-          <b>Cash</b> = one step then flat. <b>Finance</b> climbs for 8 yr then stops — you own it.{' '}
-          <b>Lease</b> climbs forever (second lease begins at year 4, the little step) and owns
-          nothing. Hollow ○ = net of resale.
+          <b>Cash</b> = one step then flat. <b>Finance</b> climbs until the loan is paid off, then
+          stops — you own it. <b>Lease</b> climbs forever (a fresh lease begins each term, the little
+          step) and owns nothing. Hollow ○ = net of resale.
         </div>
 
         <section>
