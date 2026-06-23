@@ -30,6 +30,9 @@ export interface Vehicle {
    * absent the market lease APR is converted (`apr / 2400`).
    */
   moneyFactor?: number;
+  /** optional per-trim 3D asset overrides; absent → the model-family default */
+  glb?: string;
+  poster?: string;
 }
 
 /** Recurring monthly extras for a model family, in base currency. */
