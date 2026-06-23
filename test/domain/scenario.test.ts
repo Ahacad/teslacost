@@ -39,7 +39,7 @@ describe('computeScenario — Model 3 RWD, Ontario, default down', () => {
 
   it('prices fees in', () => {
     expect(r.priceWithFees).toBe(39490 + 2642);
-    expect(r.residual).toBe(Math.round(39490 * 0.415));
+    expect(r.residual).toBe(16377); // Tesla's read-off residual, not round(base*41.5%)
   });
   it('finance tax-incl monthly ≈ $549', () => {
     expect(Math.abs(r.methods.finance.pay - 549)).toBeLessThan(1.5);

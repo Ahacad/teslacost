@@ -2,7 +2,8 @@ import { useState } from 'preact/hooks';
 import { financeMonthly } from '@domain/finance';
 import { leaseMonthly, aprToMoneyFactor } from '@domain/lease';
 import { resolveDown } from '@domain/scenario';
-import { activeMarket, taxRate, downMode, customDown, activeCurrency } from '@state/settings';
+import { activeMarket, taxOverride, activeTaxRegion, downMode, customDown, activeCurrency } from '@state/settings';
+import { regionRate } from '@data/tax';
 import { money, display, toBaseValue } from '@state/format';
 
 type Mode = 'finance' | 'lease';
@@ -28,7 +29,6 @@ export function WhatIf() {
   }
   const v = market.vehicles.find((x) => x.key === key) ?? market.vehicles[0];
   const isLease = mode === 'lease';
-  const tax = taxRate.value;
   const financesTax = config.taxInFinancedPrincipal;
 
   // Default field values for the current context, in the active currency.
@@ -41,10 +41,10 @@ export function WhatIf() {
       : config.lease.apr
     : v.finance?.apr ?? config.finance.apr;
   const dTerm = isLease ? config.lease.termMonths : v.finance?.termMonths ?? config.finance.termMonths;
-  const dResid = display(Math.round((residBasis * v.residualPct) / 100));
+  const dResid = display(v.residual ?? Math.round((residBasis * v.residualPct) / 100));
 
   // Reset the editable fields when the context changes (set-state-during-render).
-  const nextSig = `${market.id}|${v.key}|${mode}|${activeCurrency.value.code}|${tax}|${downMode.value}|${customDown.value}`;
+  const nextSig = `${market.id}|${v.key}|${mode}|${activeCurrency.value.code}|${activeTaxRegion.value.code}|${taxOverride.value}|${downMode.value}|${customDown.value}`;
   if (nextSig !== sig) {
     setSig(nextSig);
     setPrice(dPrice);
@@ -56,6 +56,8 @@ export function WhatIf() {
 
   const priceBase = toBaseValue(price);
   const downBase = toBaseValue(down);
+  // BC's rate is price-tiered, so resolve it against the edited price.
+  const tax = taxOverride.value ?? regionRate(activeTaxRegion.value, priceBase);
 
   let out: string;
   let brk: string;

@@ -2,6 +2,9 @@ import type { JSX } from 'preact';
 import {
   activeMarket,
   taxRate,
+  taxRegionCode,
+  taxOverride,
+  activeTaxRegion,
   downMode,
   customDown,
   includeRunning,
@@ -45,20 +48,24 @@ export function Controls() {
   const usd = rates.value.USD ?? 0.7068;
 
   const taxLabel = market.id === 'US' ? 'State (tax)' : 'Province (tax)';
-  const knownTax = market.taxRegions.some((r) => r.rate === taxRate.value);
+  const overriding = taxOverride.value != null;
 
   return (
     <>
       <div class="card pad controls reveal">
         <div class="ctrl">
           <label>{taxLabel}</label>
-          <select value={String(taxRate.value)} onChange={(e) => (taxRate.value = numVal(e))}>
+          <select
+            value={overriding ? '' : taxRegionCode.value}
+            onChange={(e) => {
+              taxRegionCode.value = (e.currentTarget as HTMLSelectElement).value;
+              taxOverride.value = null;
+            }}
+          >
             {market.taxRegions.map((r) => (
-              <option value={String(r.rate)}>{r.label}</option>
+              <option value={r.code}>{r.label}</option>
             ))}
-            {!knownTax && (
-              <option value={String(taxRate.value)}>Custom · {(taxRate.value * 100).toFixed(2)}%</option>
-            )}
+            {overriding && <option value="">Custom · {(taxRate.value * 100).toFixed(2)}%</option>}
           </select>
         </div>
 
@@ -69,7 +76,10 @@ export function Controls() {
             step="0.25"
             style={{ width: '78px' }}
             value={(taxRate.value * 100).toFixed(2)}
-            onInput={(e) => (taxRate.value = (numVal(e) || 0) / 100)}
+            onInput={(e) => {
+              const raw = (e.currentTarget as HTMLInputElement).value;
+              taxOverride.value = raw === '' ? null : (numVal(e) || 0) / 100;
+            }}
           />
         </div>
 
@@ -164,6 +174,7 @@ export function Controls() {
       <div class="ssub" style={{ paddingLeft: 0, marginTop: '12px' }}>
         Estimates — running <b>{money(runRef)}/mo</b> + insurance <b>{money(rc.insurance)}/mo</b> on a{' '}
         {refModel} · FSD <b>{money(fsdPrice.value)}/mo</b> · tax {(taxRate.value * 100).toFixed(2)}%
+        {!overriding && activeTaxRegion.value.rateFor ? ' (+luxury PST >$55k)' : ''}
         {aprOverride.value != null ? ` · APR forced ${aprOverride.value}%` : ' · live promo APRs'} · showing{' '}
         <b>{currencyCode.value}</b>
         {currencyCode.value !== market.baseCurrencyCode ? ` @ ${usd.toFixed(4)}` : ''}.

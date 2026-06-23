@@ -37,7 +37,7 @@ export function computeScenario(
 ): ScenarioResult {
   const priceWithFees = vehicle.base + config.fees;
   const residualBasis = config.residualBasis === 'priceWithFees' ? priceWithFees : vehicle.base;
-  const residual = Math.round((residualBasis * vehicle.residualPct) / 100);
+  const residual = vehicle.residual ?? Math.round((residualBasis * vehicle.residualPct) / 100);
 
   // Finance: a manual override wins; else the trim's own rate (US), else the
   // market default (CA). Term follows the trim when it carries one.
@@ -75,7 +75,7 @@ export function computeScenario(
   const cashTotal = priceWithFees * (1 + settings.taxRate);
   const orderFee = config.orderFee;
 
-  const rc = config.running[vehicle.model] ?? ZERO_RUNNING;
+  const rc = config.running[vehicle.model] ?? config.defaultRunning ?? ZERO_RUNNING;
   const running = settings.includeRunning ? rc.connectivity + rc.charging + rc.maintenance : 0;
   const insurance = settings.includeInsurance ? rc.insurance : 0;
   const fsd = settings.includeFsd ? settings.fsdPrice : 0;

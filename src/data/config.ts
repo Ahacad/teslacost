@@ -1,5 +1,5 @@
 import type { CostConfig } from '@domain/types';
-import { RUNNING_COSTS } from './costs';
+import { RUNNING_COSTS, DEFAULT_RUNNING } from './costs';
 
 /**
  * Snapshot of Tesla Canada terms, 2026-06-21 (CAD). Editing these re-prices the
@@ -17,4 +17,5 @@ export const CONFIG: CostConfig = {
   horizonMonths: 96, // shared apples-to-apples comparison window
   fsdPrice: 99, // FSD (Supervised) subscription/mo; one-time purchase ended Feb 2026
   running: RUNNING_COSTS,
+  defaultRunning: DEFAULT_RUNNING,
 };

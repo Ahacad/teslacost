@@ -1,8 +1,11 @@
 import type { FinanceResult } from './types';
 
 /**
- * Tesla-style finance (amortizing loan). Provincial tax, when present, is
- * rolled into the financed principal — matching tesla.com's finplat engine.
+ * Tesla-style finance (amortizing loan). `monthlyPreTax` reproduces tesla.com's
+ * finplat engine to the dollar (Tesla quotes the payment tax-free). `monthly`
+ * additionally amortizes whatever `taxRate` is passed: markets that finance the
+ * sales tax into the loan (CA) pass the real rate, so interest accrues on the
+ * tax; markets that collect it up front (US) pass 0 and the two coincide.
  *
  * @param priceWithFees base price + mandatory fees, pre-tax
  * @param down          down payment

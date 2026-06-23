@@ -17,7 +17,7 @@ const base: ScenarioSettings = {
   aprOverride: null,
 };
 const scn = computeScenario(m3rwd, base, CONFIG);
-const opts = { months: 96, includeExtra: false, leaseTermMonths: 48 };
+const opts = { months: 96, includeExtra: false, leaseTermMonths: 48, financeTermMonths: 96 };
 
 describe('cumulativePoints — shape', () => {
   it('returns months 0..N inclusive', () => {
@@ -44,6 +44,13 @@ describe('cumulativePoints — shape', () => {
     expect(pts[0].total).toBeCloseTo(scn.financeDown, 6);
     for (let m = 1; m <= 96; m++) expect(pts[m].total).toBeGreaterThan(pts[m - 1].total);
     expect(pts[96].total).toBeCloseTo(scn.financeDown + scn.methods.finance.pay * 96, 6);
+  });
+
+  it('flattens once the loan is paid off (horizon past the term)', () => {
+    const pts = cumulativePoints('finance', scn, { ...opts, months: 120 });
+    const paidOff = scn.financeDown + scn.methods.finance.pay * 96;
+    expect(pts[96].total).toBeCloseTo(paidOff, 6);
+    expect(pts[120].total).toBeCloseTo(paidOff, 6); // no phantom payments past month 96
   });
 });
 

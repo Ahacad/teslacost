@@ -14,6 +14,8 @@ export interface CumulativeOptions {
   includeExtra: boolean;
   /** lease length — a new lease starts again at this month */
   leaseTermMonths: number;
+  /** finance loan length — payments stop once the loan is paid off */
+  financeTermMonths: number;
 }
 
 /**
@@ -41,7 +43,11 @@ export function cumulativePoints(
     const down = scenario.financeDown;
     const pay = scenario.methods.finance.pay;
     pts.push({ month: 0, total: down });
-    for (let m = 1; m <= opts.months; m++) pts.push({ month: m, total: down + pay * m + ex * m });
+    // Payments stop at the loan term; past payoff only the extras keep climbing.
+    for (let m = 1; m <= opts.months; m++) {
+      const paid = Math.min(m, opts.financeTermMonths);
+      pts.push({ month: m, total: down + pay * paid + ex * m });
+    }
     return pts;
   }
 

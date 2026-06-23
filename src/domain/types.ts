@@ -15,6 +15,8 @@ export interface Vehicle {
   financeDown: number;
   /** lease residual as a percentage of the market's residual basis (e.g. 41.5) */
   residualPct: number;
+  /** exact residual read off Tesla's lease tab, in dollars; overrides residualPct */
+  residual?: number;
   /** false when the residual is an estimate (flag in the UI) */
   residualConfirmed: boolean;
   /**
@@ -133,6 +135,8 @@ export interface CostConfig {
   fsdPrice: number;
   /** running costs keyed by model family */
   running: Record<string, RunningCosts>;
+  /** fallback running costs for a model family with no explicit row */
+  defaultRunning?: RunningCosts;
 }
 
 /** A taxing region — a Canadian province or a US state. */
@@ -140,6 +144,8 @@ export interface TaxRegion {
   code: string;
   label: string;
   rate: number;
+  /** price-dependent combined rate (e.g. BC's luxury PST); overrides `rate` */
+  rateFor?: (priceWithFees: number) => number;
 }
 
 /** A self-contained market: its own lineup, terms, taxes, and base currency. */
@@ -154,9 +160,8 @@ export interface Market {
   baseCurrencyCode: string;
   vehicles: Vehicle[];
   config: CostConfig;
+  /** selectable tax regions; the first is the default when this market loads */
   taxRegions: TaxRegion[];
-  /** default tax region rate when this market is selected */
-  defaultTaxRate: number;
 }
 
 /** A currency definition. Rates are expressed as units per 1 unit of base. */

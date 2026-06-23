@@ -2,6 +2,7 @@ import { signal, computed } from '@preact/signals';
 import type { Currency, ScenarioSettings, Vehicle } from '@domain/types';
 import { computeScenario, resolveDown, type DownMode } from '@domain/scenario';
 import { MARKETS, DEFAULT_MARKET, marketById } from '@data/markets';
+import { regionByCode, regionRate } from '@data/tax';
 import { CURRENCIES, FALLBACK_RATES, currencyByCode } from '@data/currencies';
 
 export { MARKETS };
@@ -11,7 +12,15 @@ export const marketId = signal(DEFAULT_MARKET.id);
 export const activeMarket = computed(() => marketById(marketId.value));
 
 // ---- raw UI state (money values are in the active market's base currency) ----
-export const taxRate = signal(DEFAULT_MARKET.defaultTaxRate);
+// Tax: pick a region (its rate may be price-tiered, e.g. BC's luxury PST) or
+// type a manual % that wins for every trim. The effective rate is resolved per
+// vehicle in settingsFor; `taxRate` here is the headline shown in the UI.
+export const taxRegionCode = signal(DEFAULT_MARKET.taxRegions[0].code);
+export const taxOverride = signal<number | null>(null);
+export const activeTaxRegion = computed(() =>
+  regionByCode(activeMarket.value.taxRegions, taxRegionCode.value),
+);
+export const taxRate = computed(() => taxOverride.value ?? activeTaxRegion.value.rate);
 export const downMode = signal<DownMode>('default');
 export const customDown = signal(5000);
 export const includeRunning = signal(true);
@@ -56,7 +65,8 @@ export function setRate(code: string, rate: number): void {
 export function setMarket(id: string): void {
   const m = marketById(id);
   marketId.value = id;
-  taxRate.value = m.defaultTaxRate;
+  taxRegionCode.value = m.taxRegions[0].code;
+  taxOverride.value = null;
   currencyCode.value = m.baseCurrencyCode;
   downMode.value = 'default';
   fsdPrice.value = m.config.fsdPrice;
@@ -67,7 +77,7 @@ export function setMarket(id: string): void {
 export function settingsFor(vehicle: Vehicle): ScenarioSettings {
   const config = activeMarket.value.config;
   return {
-    taxRate: taxRate.value,
+    taxRate: taxOverride.value ?? regionRate(activeTaxRegion.value, vehicle.base + config.fees),
     financeDown: resolveDown(vehicle, downMode.value, customDown.value, false, config),
     leaseDown: resolveDown(vehicle, downMode.value, customDown.value, true, config),
     includeRunning: includeRunning.value,

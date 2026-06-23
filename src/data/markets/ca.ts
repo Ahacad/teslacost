@@ -1,7 +1,7 @@
 import type { Market } from '@domain/types';
 import { CONFIG } from '../config';
 import { VEHICLES } from '../vehicles';
-import { PROVINCES, DEFAULT_PROVINCE } from '../tax';
+import { PROVINCES } from '../tax';
 
 /** Canada — the original market. Data lives in ../{config,vehicles,tax,costs}. */
 export const CA_MARKET: Market = {
@@ -12,5 +12,4 @@ export const CA_MARKET: Market = {
   vehicles: VEHICLES,
   config: CONFIG,
   taxRegions: PROVINCES,
-  defaultTaxRate: DEFAULT_PROVINCE.rate,
 };
