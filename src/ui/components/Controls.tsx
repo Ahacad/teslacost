@@ -1,7 +1,6 @@
 import type { JSX } from 'preact';
-import { PROVINCES } from '@data/tax';
-import { RUNNING_COSTS } from '@data/costs';
 import {
+  activeMarket,
   taxRate,
   downMode,
   customDown,
@@ -9,6 +8,7 @@ import {
   includeInsurance,
   includeFsd,
   fsdPrice,
+  aprOverride,
   rates,
   currencyCode,
   setRate,
@@ -37,23 +37,40 @@ function Toggle({
 }
 
 export function Controls() {
+  const market = activeMarket.value;
   const dm = downMode.value;
-  const m3 = RUNNING_COSTS['Model 3'];
-  const my = RUNNING_COSTS['Model Y'];
-  const runM3 = m3.connectivity + m3.charging + m3.maintenance;
-  const runMY = my.connectivity + my.charging + my.maintenance;
+  const refModel = market.vehicles[0].model;
+  const rc = market.config.running[refModel] ?? { connectivity: 0, charging: 0, maintenance: 0, insurance: 0 };
+  const runRef = rc.connectivity + rc.charging + rc.maintenance;
   const usd = rates.value.USD ?? 0.7068;
+
+  const taxLabel = market.id === 'US' ? 'State (tax)' : 'Province (tax)';
+  const knownTax = market.taxRegions.some((r) => r.rate === taxRate.value);
 
   return (
     <>
       <div class="card pad controls reveal">
         <div class="ctrl">
-          <label>Province (tax)</label>
+          <label>{taxLabel}</label>
           <select value={String(taxRate.value)} onChange={(e) => (taxRate.value = numVal(e))}>
-            {PROVINCES.map((p) => (
-              <option value={String(p.rate)}>{p.label}</option>
+            {market.taxRegions.map((r) => (
+              <option value={String(r.rate)}>{r.label}</option>
             ))}
+            {!knownTax && (
+              <option value={String(taxRate.value)}>Custom · {(taxRate.value * 100).toFixed(2)}%</option>
+            )}
           </select>
+        </div>
+
+        <div class="ctrl">
+          <label>Tax % override</label>
+          <input
+            type="number"
+            step="0.25"
+            style={{ width: '78px' }}
+            value={(taxRate.value * 100).toFixed(2)}
+            onInput={(e) => (taxRate.value = (numVal(e) || 0) / 100)}
+          />
         </div>
 
         <div class="ctrl">
@@ -67,7 +84,7 @@ export function Controls() {
           >
             <option value="default">Tesla default</option>
             <option value="0">$0 down</option>
-            <option value="10000">$10,000</option>
+            <option value="10000">{money(10000)}</option>
             <option value="custom">Custom…</option>
           </select>
         </div>
@@ -86,6 +103,21 @@ export function Controls() {
         )}
 
         <div class="ctrl">
+          <label>APR % override</label>
+          <input
+            type="number"
+            step="0.1"
+            placeholder="auto"
+            style={{ width: '84px' }}
+            value={aprOverride.value ?? ''}
+            onInput={(e) => {
+              const raw = (e.currentTarget as HTMLInputElement).value;
+              aprOverride.value = raw === '' ? null : +raw;
+            }}
+          />
+        </div>
+
+        <div class="ctrl">
           <label>FX · 1 CAD = USD</label>
           <input
             type="number"
@@ -100,14 +132,14 @@ export function Controls() {
           <label>Running costs</label>
           <Toggle checked={includeRunning.value} onChange={(v) => (includeRunning.value = v)}>
             <span class="swsub">charging + connectivity + tires</span>
-            <b class="swnum">{money(runM3)}/mo</b>
+            <b class="swnum">{money(runRef)}/mo</b>
           </Toggle>
         </div>
 
         <div class="ctrl">
           <label>Insurance (est.)</label>
           <Toggle checked={includeInsurance.value} onChange={(v) => (includeInsurance.value = v)}>
-            <b class="swnum">{money(m3.insurance)}/mo</b>
+            <b class="swnum">{money(rc.insurance)}/mo</b>
           </Toggle>
         </div>
 
@@ -130,10 +162,11 @@ export function Controls() {
       </div>
 
       <div class="ssub" style={{ paddingLeft: 0, marginTop: '12px' }}>
-        Estimates — running <b>{money(runM3)}/mo</b> + insurance <b>{money(m3.insurance)}/mo</b> on a Model 3
-        {' '}(Model Y {money(runMY)} + {money(my.insurance)}) · FSD <b>{money(fsdPrice.value)}/mo</b> · tax{' '}
-        {(taxRate.value * 100).toFixed(2)}% · showing <b>{currencyCode.value}</b>
-        {currencyCode.value !== 'CAD' ? ` @ ${usd.toFixed(4)}` : ''}.
+        Estimates — running <b>{money(runRef)}/mo</b> + insurance <b>{money(rc.insurance)}/mo</b> on a{' '}
+        {refModel} · FSD <b>{money(fsdPrice.value)}/mo</b> · tax {(taxRate.value * 100).toFixed(2)}%
+        {aprOverride.value != null ? ` · APR forced ${aprOverride.value}%` : ' · live promo APRs'} · showing{' '}
+        <b>{currencyCode.value}</b>
+        {currencyCode.value !== market.baseCurrencyCode ? ` @ ${usd.toFixed(4)}` : ''}.
       </div>
     </>
   );
