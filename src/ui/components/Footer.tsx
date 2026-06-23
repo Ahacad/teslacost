@@ -1,4 +1,23 @@
 import { activeMarket } from '@state/settings';
+import { MODEL_ASSETS } from '@data/models3d';
+
+/** CC-BY mesh credits (when present) + the non-affiliation disclaimer. */
+function MeshCredit() {
+  const credits = [
+    ...new Set(
+      Object.values(MODEL_ASSETS)
+        .map((a) => a.attribution)
+        .filter((a): a is NonNullable<typeof a> => Boolean(a))
+        .map((a) => `${a.author} (${a.license})`),
+    ),
+  ];
+  return (
+    <div style={{ marginTop: '8px' }}>
+      {credits.length > 0 && <>3D models: {credits.join(' · ')}. </>}
+      Not affiliated with or endorsed by Tesla, Inc.
+    </div>
+  );
+}
 
 /** Trust note + provenance, per market. */
 export function Footer() {
@@ -14,6 +33,7 @@ export function Footer() {
         your state or type a custom % — it's added up front for finance/cash and per-payment for a lease.
         Insurance, charging, and resale% are overridable estimates. FSD $99/mo. Source:{' '}
         <code>reference/tesla_us_data_2026-06-22.md</code>. Snapshot 2026-06-22 (USD).
+        <MeshCredit />
       </div>
     );
   }
@@ -27,6 +47,7 @@ export function Footer() {
       purchase ended Feb 2026). Companion files in <code>reference/</code>:{' '}
       <code>tesla_scenarios.md</code> · <code>tesla_other_costs.md</code> ·{' '}
       <code>tesla_scenarios.csv</code> · <code>tesla_finance_notes.md</code>. Snapshot 2026-06-21.
+      <MeshCredit />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import type { MethodResult, ScenarioResult } from '@domain/types';
-import { scenarios, activeMarket } from '@state/settings';
+import { scenarios, activeMarket, selectedVehicleKey } from '@state/settings';
 import { money } from '@state/format';
 
 const HEADERS: Array<[string, string]> = [
@@ -34,7 +34,10 @@ function Row({
   const plusIns = plusRun + s.insurance;
   const isBest = Math.abs(d.net8 - bestNet) < 1;
   return (
-    <tr class={first ? 'grp' : ''}>
+    <tr
+      class={`${first ? 'grp ' : ''}${s.vehicle.key === selectedVehicleKey.value ? 'sel' : ''}`}
+      onClick={() => (selectedVehicleKey.value = s.vehicle.key)}
+    >
       <td>
         {first && (
           <>

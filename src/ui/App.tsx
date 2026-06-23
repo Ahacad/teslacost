@@ -1,7 +1,7 @@
 import { currencyCode } from '@state/settings';
 import { MarketTabs } from './components/MarketTabs';
 import { Masthead } from './components/Masthead';
-import { Hero } from './components/Hero';
+import { CarFocus } from './components/CarFocus';
 import { Decide } from './components/Decide';
 import { Controls } from './components/Controls';
 import { Takeaways } from './components/Takeaways';
@@ -26,7 +26,7 @@ export function App() {
       <div class="wrap">
         <MarketTabs />
         <Masthead />
-        <Hero />
+        <CarFocus />
         <Decide />
 
         <SectionHead no="⚙" title="Your situation" kicker="set the dials once" />
