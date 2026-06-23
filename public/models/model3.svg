@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Model 3 — 3D preview loading">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="0%" r="120%">
+      <stop offset="0%" stop-color="#FBF9F3"/>
+      <stop offset="100%" stop-color="#FCFAF5"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <g fill="#D2C9B5">
+    <path d="M250 560 q34 -118 168 -150 q70 -16 150 -18 l70 0 q170 0 270 76 q70 10 112 60 q26 32 24 66 q-2 26 -28 32 l-820 0 q-26 -6 -26 -44 q0 -42 34 -86 z"/>
+  </g>
+  <g fill="#FBF9F3" stroke="#D2C9B5" stroke-width="7">
+    <circle cx="438" cy="584" r="66"/>
+    <circle cx="812" cy="584" r="66"/>
+  </g>
+  <text x="600" y="742" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="28" fill="#6E6757" letter-spacing="4">MODEL 3 · DRAG TO SPIN</text>
+</svg>

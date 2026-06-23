@@ -19,10 +19,20 @@ export interface ModelAsset {
 // so model paths resolve under GitHub Pages subpaths too.
 const BASE = import.meta.env.BASE_URL;
 
+// NOTE: the GLBs are currently a placeholder car (three.js Ferrari demo asset) —
+// the viewer/recolor/swap path is real; the meshes are pending licensed low-poly
+// Tesla 3/Y models. Swapping is data-only: drop a new GLB in public/models/ and
+// point the URL here. See the design spec's asset-sourcing section.
+const PLACEHOLDER_CREDIT: ModelAttribution = {
+  author: 'Ferrari 458 (three.js demo asset — placeholder)',
+  url: 'https://github.com/mrdoob/three.js',
+  license: 'placeholder, pending licensed Tesla mesh',
+};
+
 /** Low-poly assets per model family, keyed by `Vehicle.model`. */
 export const MODEL_ASSETS: Record<string, ModelAsset> = {
-  'Model 3': { glb: `${BASE}models/model3.glb`, poster: `${BASE}models/model3.webp` },
-  'Model Y': { glb: `${BASE}models/modely.glb`, poster: `${BASE}models/modely.webp` },
+  'Model 3': { glb: `${BASE}models/model3.glb`, poster: `${BASE}models/model3.svg`, attribution: PLACEHOLDER_CREDIT },
+  'Model Y': { glb: `${BASE}models/modely.glb`, poster: `${BASE}models/modely.svg`, attribution: PLACEHOLDER_CREDIT },
 };
 
 /** Used when a vehicle's model family has no registered asset. */
