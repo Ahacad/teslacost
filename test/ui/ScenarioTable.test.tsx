@@ -5,7 +5,15 @@ import { ScenarioTable } from '@ui/components/ScenarioTable';
 import { taxRegionCode, taxOverride } from '@state/settings';
 import { VEHICLES } from '@data/vehicles';
 
-afterEach(cleanup);
+// Capture the module defaults so a test that pins a region can't leak into the
+// next one (these signals are module-global, untouched by render cleanup).
+const region0 = taxRegionCode.peek();
+const override0 = taxOverride.peek();
+afterEach(() => {
+  cleanup();
+  taxRegionCode.value = region0;
+  taxOverride.value = override0;
+});
 
 describe('<ScenarioTable>', () => {
   it('renders three method rows per vehicle', () => {
