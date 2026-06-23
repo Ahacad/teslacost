@@ -1,17 +1,17 @@
 import type { MethodResult, ScenarioResult } from '@domain/types';
-import { scenarios } from '@state/settings';
+import { scenarios, activeMarket } from '@state/settings';
 import { money } from '@state/format';
 
 const HEADERS: Array<[string, string]> = [
   ['Vehicle', 'The car: vehicle + mandatory fees.'],
   ['Method', 'Finance = loan you own at the end · Lease = rent then return · Cash = pay once.'],
-  ['Payment/mo', "Tesla's financing payment with your province's sales tax included."],
+  ['Payment/mo', "Tesla's financing payment, with sales tax where your market applies it to the payment."],
   ['+ Running', '+ running costs: Premium Connectivity, home charging, tires/maintenance.'],
   ['+ Insurance', '+ an insurance estimate. Not a Tesla cost and varies a lot — get a real quote.'],
   ['= All-in/mo', '+ FSD if toggled on. This is your true out-the-door monthly.'],
-  ['Upfront', 'Cash needed up front: down payment (+ tax on a lease down), or full price for Cash.'],
-  ['Total/term', 'Every financing payment summed over the term (car only, tax in).'],
-  ['8-yr net', 'Fair 8-year cost: finance keeps it, lease re-leases twice, cash keeps it — minus estimated resale where you keep the car. Lowest = best.'],
+  ['Upfront', 'Cash needed up front: down payment (+ tax on a lease down / up-front sales tax), or full price for Cash.'],
+  ['Total/term', 'Every financing payment summed over the term (car only).'],
+  ['8-yr net', 'Fair 8-year cost: finance keeps it, lease re-leases to fill the window, cash keeps it — minus estimated resale where you keep the car. Lowest = best.'],
 ];
 
 function Row({
@@ -72,10 +72,12 @@ export function ScenarioTable() {
         </thead>
         <tbody>
           {scenarios.value.map((s) => {
+            const cfg = activeMarket.value.config;
+            const finTerm = s.vehicle.finance?.termMonths ?? cfg.finance.termMonths;
             const bestNet = Math.min(s.methods.finance.net8, s.methods.lease.net8, s.methods.cash.net8);
             const rows: Array<[string, string, MethodResult]> = [
-              ['Finance 96mo', 'fin', s.methods.finance],
-              ['Lease 48mo', 'lse', s.methods.lease],
+              [`Finance ${finTerm}mo`, 'fin', s.methods.finance],
+              [`Lease ${cfg.lease.termMonths}mo`, 'lse', s.methods.lease],
               ['Cash', 'csh', s.methods.cash],
             ];
             return rows.map(([label, cls, d], idx) => (

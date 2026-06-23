@@ -1,6 +1,5 @@
 import { useState } from 'preact/hooks';
-import { scenarios } from '@state/settings';
-import { CONFIG } from '@data/config';
+import { scenarios, activeMarket } from '@state/settings';
 import { cumulativePoints } from '@domain/cumulative';
 import { COL } from '../colors';
 import { LineChart } from '../charts/LineChart';
@@ -8,21 +7,24 @@ import { Legend } from '../components/Legend';
 
 /** Chart B: cumulative cash over 8 years for one vehicle, with an extras overlay. */
 export function CumulativeChart() {
+  const cfg = activeMarket.value.config;
   const list = scenarios.value;
   const [key, setKey] = useState(list[0].vehicle.key);
   const [overlay, setOverlay] = useState(false);
 
   const s = list.find((x) => x.vehicle.key === key) ?? list[0];
   const opts = {
-    months: CONFIG.horizonMonths,
+    months: cfg.horizonMonths,
     includeExtra: overlay,
-    leaseTermMonths: CONFIG.lease.termMonths,
+    leaseTermMonths: cfg.lease.termMonths,
   };
-  const extraTotal = overlay ? s.extra * CONFIG.horizonMonths : 0;
+  const leaseRepeats = Math.round((cfg.horizonMonths / cfg.lease.termMonths) * 10) / 10;
+  const leaseLabel = `Lease ×${leaseRepeats}`;
+  const extraTotal = overlay ? s.extra * cfg.horizonMonths : 0;
   const lines = [
     { name: 'Cash', color: COL.csh, pts: cumulativePoints('cash', s, opts), dashEnd: s.methods.cash.net8 + extraTotal },
     { name: 'Finance', color: COL.fin, pts: cumulativePoints('finance', s, opts), dashEnd: s.methods.finance.net8 + extraTotal },
-    { name: 'Lease ×2', color: COL.lse, pts: cumulativePoints('lease', s, opts) },
+    { name: leaseLabel, color: COL.lse, pts: cumulativePoints('lease', s, opts) },
   ];
 
   return (
@@ -52,7 +54,7 @@ export function CumulativeChart() {
       <Legend items={[
         ['Cash', COL.csh],
         ['Finance · keep', COL.fin],
-        ['Lease ×2 · return', COL.lse],
+        [`${leaseLabel} · return`, COL.lse],
       ]} />
       <LineChart lines={lines} />
     </div>
