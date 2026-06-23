@@ -1,4 +1,5 @@
 import { currencyCode } from '@state/settings';
+import { MarketTabs } from './components/MarketTabs';
 import { Masthead } from './components/Masthead';
 import { Hero } from './components/Hero';
 import { Decide } from './components/Decide';
@@ -23,13 +24,14 @@ export function App() {
   return (
     <>
       <div class="wrap">
+        <MarketTabs />
         <Masthead />
         <Hero />
         <Decide />
 
         <SectionHead no="⚙" title="Your situation" kicker="set the dials once" />
         <div class="ssub">
-          Province, down payment and which running costs to count — the whole page follows.
+          Market, tax region, down payment and which running costs to count — the whole page follows.
         </div>
         <Controls />
 

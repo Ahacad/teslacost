@@ -32,6 +32,15 @@ a{color:var(--red);}
   margin:12px 0 0;}
 .mast .kick b{color:var(--ink);font-style:normal;font-family:"Hanken Grotesk";font-weight:600;}
 
+/* ---------- market tabs ---------- */
+.mtabs{display:flex;gap:8px;margin:28px 0 -6px;border-bottom:1px solid var(--line);}
+.mtab{font-family:"JetBrains Mono";font-size:12.5px;font-weight:600;letter-spacing:.02em;color:var(--ink2);
+  background:transparent;border:0;border-bottom:2px solid transparent;cursor:pointer;padding:10px 14px 12px;
+  margin-bottom:-1px;display:inline-flex;align-items:center;gap:8px;transition:color .18s,border-color .18s;}
+.mtab:hover{color:var(--ink);}
+.mtab.on{color:var(--ink);border-bottom-color:var(--red);}
+.mtab .flag{font-size:16px;line-height:1;}
+
 /* ---------- hero band ---------- */
 .hero{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;
   margin:30px 0 6px;}
