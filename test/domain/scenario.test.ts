@@ -15,6 +15,7 @@ function settings(over: Partial<ScenarioSettings> = {}): ScenarioSettings {
     includeInsurance: false,
     includeFsd: false,
     fsdPrice: CONFIG.fsdPrice,
+    aprOverride: null,
     ...over,
   };
 }

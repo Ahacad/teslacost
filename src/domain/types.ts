@@ -1,5 +1,6 @@
-// Domain types. Pure data — no DOM, no framework. All monetary amounts are in
-// the base currency (CAD) unless a `*Display` name says otherwise.
+// Domain types. Pure data — no DOM, no framework. All monetary amounts are in a
+// market's base currency (CAD for Canada, USD for the US) unless a `*Display`
+// name says otherwise.
 
 export interface Vehicle {
   /** stable id, e.g. "m3rwd" */
@@ -12,10 +13,21 @@ export interface Vehicle {
   base: number;
   /** Tesla's default finance down payment */
   financeDown: number;
-  /** lease residual as a percentage of `base` (e.g. 41.5) */
+  /** lease residual as a percentage of the market's residual basis (e.g. 41.5) */
   residualPct: number;
   /** false when the residual is an estimate (flag in the UI) */
   residualConfirmed: boolean;
+  /**
+   * Per-trim finance terms. When present (US), overrides the market's finance
+   * config — markets like the US price each trim's APR/term individually
+   * (promos). When absent (CA), the market `config.finance` applies.
+   */
+  finance?: LoanTerms;
+  /**
+   * Per-trim lease money factor (US). When present it is used directly; when
+   * absent the market lease APR is converted (`apr / 2400`).
+   */
+  moneyFactor?: number;
 }
 
 /** Recurring monthly extras for a model family, in base currency. */
@@ -33,10 +45,10 @@ export interface LoanTerms {
 }
 
 export interface FinanceResult {
-  /** tax-inclusive monthly payment */
+  /** tax-inclusive monthly payment (equals pre-tax when tax isn't financed) */
   monthly: number;
   monthlyPreTax: number;
-  /** amount financed, incl. rolled-in tax */
+  /** amount financed, incl. rolled-in tax where the market finances it */
   principal: number;
   tax: number;
 }
@@ -75,6 +87,8 @@ export interface ScenarioResult {
   leaseDown: number;
   finance: FinanceResult;
   lease: LeaseResult;
+  /** effective finance APR used (after any manual override), in percent */
+  financeApr: number;
   /** sum of the monthly extras the user chose to count */
   extra: number;
   running: number;
@@ -97,17 +111,52 @@ export interface ScenarioSettings {
   includeInsurance: boolean;
   includeFsd: boolean;
   fsdPrice: number;
+  /** manual APR override in percent; null = use each trim's real rate */
+  aprOverride: number | null;
 }
 
 export interface CostConfig {
+  /** mandatory fees rolled into the price (CA freight/PDI; US destination) */
   fees: number;
+  /** separate non-refundable upfront fee not rolled into price (US order fee) */
+  orderFee: number;
   finance: LoanTerms;
-  lease: LoanTerms & { defaultDown: number; annualKm: number };
+  lease: LoanTerms & { defaultDown: number; annualDistance: number };
+  /** distance-allowance unit for the lease line */
+  distanceUnit: 'km' | 'mi';
+  /** whether sales tax is financed into the loan (CA) or paid separately (US) */
+  taxInFinancedPrincipal: boolean;
+  /** what the lease residual percentage is taken on */
+  residualBasis: 'base' | 'priceWithFees';
   resale8Pct: number;
   horizonMonths: number;
   fsdPrice: number;
   /** running costs keyed by model family */
   running: Record<string, RunningCosts>;
+}
+
+/** A taxing region — a Canadian province or a US state. */
+export interface TaxRegion {
+  code: string;
+  label: string;
+  rate: number;
+}
+
+/** A self-contained market: its own lineup, terms, taxes, and base currency. */
+export interface Market {
+  /** stable id, e.g. "CA" | "US" */
+  id: string;
+  /** short label, e.g. "Canada" */
+  label: string;
+  /** flag emoji for the tab */
+  flag: string;
+  /** ISO code of the currency all this market's amounts are stored in */
+  baseCurrencyCode: string;
+  vehicles: Vehicle[];
+  config: CostConfig;
+  taxRegions: TaxRegion[];
+  /** default tax region rate when this market is selected */
+  defaultTaxRate: number;
 }
 
 /** A currency definition. Rates are expressed as units per 1 unit of base. */

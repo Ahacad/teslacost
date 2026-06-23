@@ -14,6 +14,7 @@ const base: ScenarioSettings = {
   includeInsurance: false,
   includeFsd: false,
   fsdPrice: 99,
+  aprOverride: null,
 };
 const scn = computeScenario(m3rwd, base, CONFIG);
 const opts = { months: 96, includeExtra: false, leaseTermMonths: 48 };
