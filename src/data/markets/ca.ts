@@ -7,7 +7,6 @@ import { PROVINCES } from '../tax';
 export const CA_MARKET: Market = {
   id: 'CA',
   label: 'Canada',
-  flag: '🇨🇦',
   baseCurrencyCode: 'CAD',
   vehicles: VEHICLES,
   config: CONFIG,

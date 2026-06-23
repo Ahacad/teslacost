@@ -158,8 +158,6 @@ export interface Market {
   id: string;
   /** short label, e.g. "Canada" */
   label: string;
-  /** flag emoji for the tab */
-  flag: string;
   /** ISO code of the currency all this market's amounts are stored in */
   baseCurrencyCode: string;
   vehicles: Vehicle[];

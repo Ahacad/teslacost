@@ -39,7 +39,10 @@ a{color:var(--red);}
   margin-bottom:-1px;display:inline-flex;align-items:center;gap:8px;transition:color .18s,border-color .18s;}
 .mtab:hover{color:var(--ink);}
 .mtab.on{color:var(--ink);border-bottom-color:var(--red);}
-.mtab .flag{font-size:16px;line-height:1;}
+/* inline SVG flags: hairline ring so the white CA field reads against the page */
+.flag-svg{width:auto;border-radius:2px;box-shadow:0 0 0 .5px rgba(0,0,0,.18);}
+.mtab-flag{height:13px;}
+.meta-flag{height:9px;vertical-align:-1px;}
 
 /* ---------- hero band ---------- */
 .hero{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;

@@ -42,7 +42,6 @@ const US_STATES: TaxRegion[] = [
 export const US_MARKET: Market = {
   id: 'US',
   label: 'United States',
-  flag: '🇺🇸',
   baseCurrencyCode: 'USD',
   vehicles: US_VEHICLES,
   taxRegions: US_STATES,
