@@ -1,5 +1,7 @@
 # Tesla — Cost Instrument
 
+**Live:** <https://ahacad.github.io/teslacost/> — deployed from `master` by GitHub Actions.
+
 An interactive dashboard for what a Tesla Model 3 / Model Y **actually costs** —
 financed, leased, or paid in cash — with running costs, FSD, multi-currency
 display, and live charts. Switch markets (🇨🇦 Canada · 🇺🇸 United States) from the
