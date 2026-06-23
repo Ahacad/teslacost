@@ -16,9 +16,9 @@ const PAINTS: Array<[string, string]> = [
   ['Ultra Red', '#a31212'],
 ];
 
-function Num({ lab, val, sub, suffix }: { lab: string; val: number; sub: string; suffix?: string }) {
+function Num({ lab, val, sub, suffix, kind }: { lab: string; val: number; sub: string; suffix?: string; kind?: 'fin' | 'lse' | 'csh' }) {
   return (
-    <div class="carfocus-num">
+    <div class={`carfocus-num ${kind ?? ''}`}>
       <div class="lab">{lab}</div>
       <div class="v num"><AnimatedMoney value={val} suffix={suffix} /></div>
       <div class="d">{sub}</div>
@@ -28,7 +28,7 @@ function Num({ lab, val, sub, suffix }: { lab: string; val: number; sub: string;
 
 /** The "your car" focus panel: selector + 3D car + that trim's numbers. */
 export function CarFocus() {
-  const [paint, setPaint] = useState(PAINTS[0][1]);
+  const [paint, setPaint] = useState(PAINTS[0]);
   const s = selectedScenario.value;
   const asset = assetFor(s.vehicle);
   const m = s.methods;
@@ -51,26 +51,27 @@ export function CarFocus() {
             src={asset.glb}
             poster={asset.poster}
             alt={`${s.vehicle.name} 3D model`}
-            paintHex={paint}
+            paintHex={paint[1]}
           />
           <div class="paints" role="listbox" aria-label="paint">
-            {PAINTS.map(([name, hex]) => (
+            {PAINTS.map((p) => (
               <button
-                class={`swatch ${paint === hex ? 'on' : ''}`}
-                title={name}
-                aria-label={name}
-                style={{ background: hex }}
-                onClick={() => setPaint(hex)}
+                class={`swatch ${paint[1] === p[1] ? 'on' : ''}`}
+                title={p[0]}
+                aria-label={p[0]}
+                style={{ background: p[1] }}
+                onClick={() => setPaint(p)}
               />
             ))}
           </div>
+          <div class="paint-name">{paint[0]}</div>
         </div>
 
         <div class="carfocus-nums">
-          <Num lab="Finance · all-in / mo" val={m.finance.allIn} suffix="/mo" sub={`${money(m.finance.upfront)} down`} />
-          <Num lab="Lease · all-in / mo" val={m.lease.allIn} suffix="/mo" sub={`${money(m.lease.upfront)} to start`} />
-          <Num lab="Cash · drive-off" val={m.cash.upfront} sub="full price, taxes in" />
-          <Num lab="8-yr net · finance" val={m.finance.net8} sub="net of resale" />
+          <Num kind="fin" lab="Finance · all-in / mo" val={m.finance.allIn} suffix="/mo" sub={`${money(m.finance.upfront)} down`} />
+          <Num kind="lse" lab="Lease · all-in / mo" val={m.lease.allIn} suffix="/mo" sub={`${money(m.lease.upfront)} to start`} />
+          <Num kind="csh" lab="Cash · drive-off" val={m.cash.upfront} sub="full price, taxes in" />
+          <Num kind="fin" lab="8-yr net · finance" val={m.finance.net8} sub="net of resale" />
         </div>
       </div>
     </div>

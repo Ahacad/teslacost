@@ -9,7 +9,7 @@ export function TrimSelector() {
 
   return (
     <div class="trimsel">
-      <div class="seg" role="tablist" aria-label="model">
+      <div class="modelseg" role="tablist" aria-label="model">
         {models.map((m) => {
           const firstOfModel = vehicles.find((v) => v.model === m)!;
           return (
