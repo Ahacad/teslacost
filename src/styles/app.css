@@ -243,16 +243,14 @@ path.area.anim{opacity:0;animation:fadein .9s ease .3s forwards;}
 .termchip{position:relative;display:flex;flex-direction:column;gap:3px;align-items:flex-start;cursor:pointer;
   border:1px solid var(--line2);background:var(--paper2);border-radius:12px;padding:11px 12px;transition:.12s;}
 .termchip:hover{border-color:var(--ink2);transform:translateY(-2px);}
-.termchip.on{background:var(--red);border-color:var(--red);box-shadow:0 6px 18px rgba(227,25,55,.22);}
+/* selected = the site's parchment + ink-bar idiom (matches the table row), not a loud fill */
+.termchip.on{background:var(--sel);border-color:var(--line2);box-shadow:inset 3px 0 0 var(--ink);}
 .termchip-yr{font-family:"JetBrains Mono";font-size:11px;color:var(--ink2);text-transform:uppercase;letter-spacing:.05em;}
-.termchip.on .termchip-yr{color:rgba(255,255,255,.78);}
+.termchip.on .termchip-yr{color:var(--ink);}
 .termchip-mo{font-family:"Bricolage Grotesque";font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--ink);}
 .termchip-mo small{font-weight:500;font-size:11px;color:var(--ink2);margin-left:1px;}
-.termchip.on .termchip-mo,.termchip.on .termchip-mo small{color:#fff;}
 .termchip-apr{font-family:"JetBrains Mono";font-size:10.5px;color:var(--ink2);}
-.termchip.on .termchip-apr{color:rgba(255,255,255,.82);}
 .termchip-note{font-family:"JetBrains Mono";font-size:8.5px;color:var(--lse);border:1px solid var(--lse);border-radius:8px;padding:0 5px;margin-top:2px;}
-.termchip.on .termchip-note{color:#fff;border-color:rgba(255,255,255,.5);}
 /* selected vehicle highlighted in the scenario table */
 #scenTable tbody tr{cursor:pointer;}
 /* whole selected row shares --sel; the best cell keeps its own teal bold text as the cue */
