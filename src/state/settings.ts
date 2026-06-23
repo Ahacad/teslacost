@@ -71,6 +71,7 @@ export function setMarket(id: string): void {
   downMode.value = 'default';
   fsdPrice.value = m.config.fsdPrice;
   aprOverride.value = null;
+  selectedVehicleKey.value = m.vehicles[0].key;
 }
 
 // ---- derived scenario settings + results ----
@@ -97,3 +98,7 @@ export const scenarios = computed(() =>
 
 export const scenarioByKey = (key: string) =>
   scenarios.value.find((s) => s.vehicle.key === key) ?? scenarios.value[0];
+
+// ---- selected trim (the "your car" focus) ----
+export const selectedVehicleKey = signal(DEFAULT_MARKET.vehicles[0].key);
+export const selectedScenario = computed(() => scenarioByKey(selectedVehicleKey.value));
