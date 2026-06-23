@@ -12,6 +12,7 @@ import { Footer } from './components/Footer';
 import { Legend } from './components/Legend';
 import { SectionHead } from './components/SectionHead';
 import { MonthlyByTrim } from './sections/MonthlyByTrim';
+import { FinanceTerms } from './sections/FinanceTerms';
 import { CumulativeChart } from './sections/CumulativeChart';
 import { EightYearChart } from './sections/EightYearChart';
 import { Tooltip } from './charts/Tooltip';
@@ -59,7 +60,17 @@ export function App() {
         </div>
 
         <section>
-          <SectionHead no="2" title="All-in monthly by trim" kicker="finance vs lease" />
+          <SectionHead no="2" title="Your finance terms" kicker="3 to 8 years · real rates" />
+        </section>
+        <div class="ssub">
+          Tesla's configurator defaults to <b>96 mo (8 yr)</b>: the lowest monthly, but the highest
+          rate and the most interest. Pick a length for the car selected up top and weigh the
+          trade-off — most buyers land at 5–6 years. Figures in <Cur />.
+        </div>
+        <FinanceTerms />
+
+        <section>
+          <SectionHead no="3" title="All-in monthly by trim" kicker="finance vs lease" />
         </section>
         <div class="ssub">
           What actually leaves your account each month, with your toggles folded in. Hover any bar.{' '}
@@ -68,7 +79,7 @@ export function App() {
         <MonthlyByTrim />
 
         <section>
-          <SectionHead no="3" title="Cumulative cash over 8 years" kicker="where the lines cross" />
+          <SectionHead no="4" title="Cumulative cash over 8 years" kicker="where the lines cross" />
         </section>
         <div class="ssub">
           How much has left your pocket as time passes. <b>Move your cursor across the chart</b> for
@@ -82,7 +93,7 @@ export function App() {
         </div>
 
         <section>
-          <SectionHead no="4" title="8-year total cost" kicker="net, apples to apples" />
+          <SectionHead no="5" title="8-year total cost" kicker="net, apples to apples" />
         </section>
         <div class="ssub">
           The bottom line per trim over a shared 8 years. Lower = cheaper. Hover a bar. <Cur />.
@@ -90,7 +101,7 @@ export function App() {
         <EightYearChart />
 
         <section>
-          <SectionHead no="5" title="Custom what-if" kicker="tweak one deal" />
+          <SectionHead no="6" title="Custom what-if" kicker="tweak one deal" />
         </section>
         <div class="ssub">
           Your own numbers, with Tesla's live equation shown so you can see <i>why</i> the payment is

@@ -15,6 +15,25 @@ M = P · i / (1 − (1 + i)^(−n))                              (monthly paymen
 ```
 Tesla defaults: **APR 5.03%**, **term 96 mo**, down **$4,300** (Model 3) / **$5,150** (Model Y).
 
+### Rate by term — APR is NOT flat across terms
+Tesla CA tiers the finance APR by loan length: a longer term carries a higher
+rate (so a long loan costs more two ways — more months of interest *and* a worse
+rate). Only the **96 mo = 5.03%** rung was read directly off the configurator
+2026-06-21; the shorter rungs in `config.financeSchedule` are **estimates**
+(`confirmed: false` → "est" in the UI), built by holding the 5.03% anchor and
+stepping down by Tesla CA's *published* bracket shape (terms ≤60 / 72–84 / 96 in
+~0.5% steps; e.g. driveteslacanada's standard Model-Y ladder 2.99/3.49/3.99).
+
+| Term | APR | Source |
+|---|---|---|
+| 36 / 48 / 60 mo | 4.03% | est (anchor − 1.00, ≤60 bracket) |
+| 72 / 84 mo | 4.53% | est (anchor − 0.50, mid bracket) |
+| 96 mo | **5.03%** | ✓ read off tesla.com 2026-06-21 |
+
+**TODO (live pull):** read the exact standard APR for each term off the
+configurator's finance modal (click the term selector, §4) and replace the
+estimated rungs — Akamai-walled, needs the headful-Chrome CDP path (§0–3).
+
 | Config | P (financed) | Monthly | Site |
 |---|---|---|---|
 | M3 Premium RWD ($39,490) | $37,832 | **$479** | $479 ✓ |

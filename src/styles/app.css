@@ -122,6 +122,7 @@ tr.grp td{border-top:2px solid var(--line2);}
 td.num{font-family:"JetBrains Mono";}
 td.allin{font-weight:600;}
 td.best{background:var(--best);color:var(--fin);font-weight:700;border-radius:6px;}
+td.worst{background:var(--red-soft);color:var(--red);font-weight:700;border-radius:6px;}
 .vname{font-family:"Bricolage Grotesque";font-weight:700;font-size:13.5px;}
 .vname.m3{color:#1763a8;} .vname.my{color:#9a5a00;}
 .mlabel{font-weight:600;}

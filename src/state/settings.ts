@@ -1,6 +1,6 @@
 import { signal, computed } from '@preact/signals';
 import type { Currency, ScenarioSettings, Vehicle } from '@domain/types';
-import { computeScenario, resolveDown, type DownMode } from '@domain/scenario';
+import { computeScenario, resolveDown, financeTermQuotes, type DownMode } from '@domain/scenario';
 import type { Market } from '@domain/types';
 import { MARKETS, DEFAULT_MARKET, marketById } from '@data/markets';
 import { regionByCode, regionRate } from '@data/tax';
@@ -113,3 +113,9 @@ export const scenarioByKey = (key: string) =>
 // ---- selected trim (the "your car" focus) ----
 export const selectedVehicleKey = signal(DEFAULT_MARKET.vehicles[0].key);
 export const selectedScenario = computed(() => scenarioByKey(selectedVehicleKey.value));
+
+/** Finance quotes for the selected car across every term — the rate-by-term view. */
+export const selectedTermQuotes = computed(() => {
+  const v = selectedScenario.value.vehicle;
+  return financeTermQuotes(v, settingsFor(v), activeMarket.value.config, FINANCE_TERMS);
+});

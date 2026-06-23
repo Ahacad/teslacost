@@ -3,6 +3,7 @@ import type {
   RunningCosts,
   ScenarioResult,
   ScenarioSettings,
+  TermQuote,
   Vehicle,
 } from './types';
 import { financeMonthly } from './finance';
@@ -10,6 +11,34 @@ import { leaseMonthly, aprToMoneyFactor } from './lease';
 
 /** How the user chose the down payment. A bare number is an explicit amount. */
 export type DownMode = 'default' | 'custom' | number;
+
+/**
+ * Resolve the finance APR for a given term. Precedence: a manual override wins,
+ * then the trim's own promo rate (US), then the market's rate-by-term ladder for
+ * this term (CA), then the flat market default. `confirmed` is false only when
+ * the value came from an estimated ladder rung.
+ */
+function resolveFinanceApr(
+  vehicle: Vehicle,
+  settings: ScenarioSettings,
+  config: CostConfig,
+  term: number,
+): { apr: number; confirmed: boolean } {
+  if (settings.aprOverride != null) return { apr: settings.aprOverride, confirmed: true };
+  if (vehicle.finance) return { apr: vehicle.finance.apr, confirmed: true };
+  const rung = config.financeSchedule?.find((r) => r.months === term);
+  if (rung) return { apr: rung.apr, confirmed: rung.confirmed };
+  return { apr: config.finance.apr, confirmed: true };
+}
+
+/** Resolve the effective finance term: a chosen length, else the trim's, else market. */
+function resolveFinanceTerm(
+  vehicle: Vehicle,
+  settings: ScenarioSettings,
+  config: CostConfig,
+): number {
+  return settings.financeTermOverride ?? vehicle.finance?.termMonths ?? config.finance.termMonths;
+}
 
 /** Map a UI down-payment choice to a concrete amount for finance or lease. */
 export function resolveDown(
@@ -39,12 +68,14 @@ export function computeScenario(
   const residualBasis = config.residualBasis === 'priceWithFees' ? priceWithFees : vehicle.base;
   const residual = vehicle.residual ?? Math.round((residualBasis * vehicle.residualPct) / 100);
 
-  // Finance: a manual override wins; else the trim's own rate (US), else the
-  // market default (CA). Same precedence for the term — a chosen length applies
-  // to every trim, else the trim's own term, else the market default.
-  const financeApr = settings.aprOverride ?? vehicle.finance?.apr ?? config.finance.apr;
-  const financeTerm =
-    settings.financeTermOverride ?? vehicle.finance?.termMonths ?? config.finance.termMonths;
+  // Term first, since the CA rate depends on it; then the APR for that term.
+  const financeTerm = resolveFinanceTerm(vehicle, settings, config);
+  const { apr: financeApr, confirmed: financeAprConfirmed } = resolveFinanceApr(
+    vehicle,
+    settings,
+    config,
+    financeTerm,
+  );
   // Tax is rolled into the loan only where the market finances it (CA).
   const finance = financeMonthly(
     priceWithFees,
@@ -99,6 +130,7 @@ export function computeScenario(
     finance,
     lease,
     financeApr,
+    financeAprConfirmed,
     financeTerm,
     extra,
     running,
@@ -130,4 +162,33 @@ export function computeScenario(
       },
     },
   };
+}
+
+/**
+ * Finance the same car over each of `terms`, so the rate/monthly/interest
+ * trade-off across loan lengths can be shown side by side. Uses the market's
+ * rate-by-term ladder (CA), so a longer term carries its real, higher APR — the
+ * lower monthly comes at the cost of more interest at a worse rate.
+ */
+export function financeTermQuotes(
+  vehicle: Vehicle,
+  settings: ScenarioSettings,
+  config: CostConfig,
+  terms: number[],
+): TermQuote[] {
+  const priceWithFees = vehicle.base + config.fees;
+  const taxRate = config.taxInFinancedPrincipal ? settings.taxRate : 0;
+  return terms.map((months) => {
+    const { apr, confirmed } = resolveFinanceApr(vehicle, settings, config, months);
+    const r = financeMonthly(priceWithFees, settings.financeDown, 0, apr, months, taxRate);
+    const totalPaid = r.monthly * months;
+    return {
+      months,
+      apr,
+      confirmed,
+      monthly: r.monthly,
+      totalPaid,
+      interest: totalPaid - r.principal,
+    };
+  });
 }

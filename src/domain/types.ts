@@ -49,6 +49,34 @@ export interface LoanTerms {
   termMonths: number;
 }
 
+/**
+ * One rung of a market's finance rate-by-term ladder. Tesla Canada prices the
+ * APR by loan length (longer term → higher rate), so the rate depends on the
+ * term you pick — not one flat number across all terms. `confirmed` is false for
+ * a rung estimated rather than read off tesla.com (flagged "est" in the UI),
+ * mirroring `Vehicle.residualConfirmed`.
+ */
+export interface FinanceTermRate {
+  months: number;
+  /** annual percentage rate, in percent */
+  apr: number;
+  confirmed: boolean;
+}
+
+/** A finance quote for one term length, for the rate-by-term comparison. */
+export interface TermQuote {
+  months: number;
+  apr: number;
+  /** false when the APR is an estimate (rung not yet read off tesla.com) */
+  confirmed: boolean;
+  /** monthly payment, on the same tax basis as the main table */
+  monthly: number;
+  /** every payment summed over the term (car only, excl. down) */
+  totalPaid: number;
+  /** total interest handed to the lender over the term */
+  interest: number;
+}
+
 export interface FinanceResult {
   /** tax-inclusive monthly payment (equals pre-tax when tax isn't financed) */
   monthly: number;
@@ -94,6 +122,8 @@ export interface ScenarioResult {
   lease: LeaseResult;
   /** effective finance APR used (after any manual override), in percent */
   financeApr: number;
+  /** false when `financeApr` came from an estimated rate-ladder rung */
+  financeAprConfirmed: boolean;
   /** effective finance term used (after any manual override), in months */
   financeTerm: number;
   /** sum of the monthly extras the user chose to count */
@@ -130,6 +160,12 @@ export interface CostConfig {
   /** separate non-refundable upfront fee not rolled into price (US order fee) */
   orderFee: number;
   finance: LoanTerms;
+  /**
+   * CA: standard finance APR by term length. When present, the chosen term's
+   * rate is used instead of the flat `finance.apr`. Absent for the US, where
+   * each trim carries its own promo `finance.apr` regardless of term.
+   */
+  financeSchedule?: FinanceTermRate[];
   lease: LoanTerms & { defaultDown: number; annualDistance: number };
   /** distance-allowance unit for the lease line */
   distanceUnit: 'km' | 'mi';
