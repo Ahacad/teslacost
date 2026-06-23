@@ -15,3 +15,4 @@ coverage/
 
 # Claude Code local state (worktrees, caches)
 .claude/worktrees/
+.superpowers/
