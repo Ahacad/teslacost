@@ -144,11 +144,14 @@ for (const mat of root.listMaterials()) {
   if (n !== 'body' && RECOLOR.test(n)) mat.setName(n.replace(/body|paint|car|exterior/gi, 'z'));
 }
 
-// 3) weld + decimate
+// 3) weld + decimate. Keep the error bound TIGHT: a loose bound (0.0015) lets meshopt
+//    collapse interior edges of the big curved body panels into a lumpy, "dented" surface
+//    — most visible on the rear quarters. 0.0004 preserves the shell (smooth) and still
+//    sheds the dense interior/underbody/wheel tris.
 await doc.transform(weld(), dedup());
 const target = mode === 'modely' ? 70000 : 0;
 if (target && tris() > target) {
-  await doc.transform(simplify({ simplifier: MeshoptSimplifier, ratio: target / tris(), error: 0.0015 }));
+  await doc.transform(simplify({ simplifier: MeshoptSimplifier, ratio: target / tris(), error: 0.0004 }));
   await doc.transform(weld(), dedup());
 }
 await doc.transform(prune());
