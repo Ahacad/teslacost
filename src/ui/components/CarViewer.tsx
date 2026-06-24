@@ -81,8 +81,11 @@ export function CarViewer({ src, poster, alt, paintHex, autoRotate = true }: Pro
           touch-action="pan-y"
           auto-rotate={autoRotate && !reduced}
           interaction-prompt="none"
+          camera-orbit="-28deg 78deg 105%"
+          environment-image="neutral"
           shadow-intensity="1"
-          exposure="0.9"
+          shadow-softness="1"
+          exposure="1"
           reveal="auto"
           style={{ width: '100%', height: '100%' }}
         />

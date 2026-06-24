@@ -19,20 +19,25 @@ export interface ModelAsset {
 // so model paths resolve under GitHub Pages subpaths too.
 const BASE = import.meta.env.BASE_URL;
 
-// NOTE: the GLBs are currently a placeholder car (three.js Ferrari demo asset) —
-// the viewer/recolor/swap path is real; the meshes are pending licensed low-poly
-// Tesla 3/Y models. Swapping is data-only: drop a new GLB in public/models/ and
-// point the URL here. See the design spec's asset-sourcing section.
-const PLACEHOLDER_CREDIT: ModelAttribution = {
-  author: 'Ferrari 458 (three.js demo asset — placeholder)',
-  url: 'https://github.com/mrdoob/three.js',
-  license: 'placeholder, pending licensed Tesla mesh',
+// Real, recognizable Tesla meshes, web-prepped by scripts/process-meshes.mjs
+// (provenance + license there and in docs/superpowers/ASSETS.md). Each is decimated
+// and reduced to a single `body` material so the paint recolor binds the shell
+// alone. Posters are front-3/4 renders of the actual mesh. Swap stays data-only.
+const M3_CREDIT: ModelAttribution = {
+  author: 'Tesla Model 3 by OneSteven (Sketchfab)',
+  url: 'https://sketchfab.com/3d-models/tesla-model-3-117d7dbdd6f94df9886c42995cdd06db',
+  license: 'CC-BY-NC 4.0',
+};
+const MY_CREDIT: ModelAttribution = {
+  author: 'Tesla Model Y by 3D Hawk (downloadfree3d)',
+  url: 'https://downloadfree3d.com/3d-models/vehicles/car/tesla-model-y/',
+  license: 'free, non-commercial',
 };
 
-/** Low-poly assets per model family, keyed by `Vehicle.model`. */
+/** Real Tesla assets per model family, keyed by `Vehicle.model`. */
 export const MODEL_ASSETS: Record<string, ModelAsset> = {
-  'Model 3': { glb: `${BASE}models/model3.glb`, poster: `${BASE}models/model3.svg`, attribution: PLACEHOLDER_CREDIT },
-  'Model Y': { glb: `${BASE}models/modely.glb`, poster: `${BASE}models/modely.svg`, attribution: PLACEHOLDER_CREDIT },
+  'Model 3': { glb: `${BASE}models/model3.glb`, poster: `${BASE}models/model3.png`, attribution: M3_CREDIT },
+  'Model Y': { glb: `${BASE}models/modely.glb`, poster: `${BASE}models/modely.png`, attribution: MY_CREDIT },
 };
 
 /** Used when a vehicle's model family has no registered asset. */
