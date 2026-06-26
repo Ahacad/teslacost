@@ -3,6 +3,7 @@ node_modules/
 dist/
 coverage/
 .vite/
+.turbo/
 
 # logs & local env
 *.log

@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "baseUrl": ".",
+    "paths": {
+      "@domain/*": ["src/domain/*"],
+      "@data/*": ["src/data/*"],
+      "@state/*": ["src/state/*"],
+      "@ui/*": ["src/ui/*"]
+    }
+  },
+  "include": ["src", "test", "vite.config.ts"]
+}
