@@ -127,13 +127,22 @@ manufacturer sites before signing** — prices, APRs, and offers move week to we
 
 ## 7. Charging & the Seattle↔Vancouver corridor (the crux)
 
+> **CORRECTION (supersedes the DC-charging framing below).** The round trip is
+> **~280 mi, less than a Model Y's ~298 mi real-highway range**, so it fits on
+> roughly **one charge** — no routine DC needed. The user tops up on **L2 at the
+> destination** (parked anyway). The office L2 governs only the ~36% weekday miles.
+> Realistic EV energy is **~$50/mo** (cheap destination L2), **~$120/mo** winter/paid,
+> **~$184/mo** only if the office charger is lost — not the `$58/$184` band below.
+> Winter (cold range ~186 mi) needs an overnight L2 top-up or one DC splash on a
+> same-day trip; confirm the Vancouver side is real 240V L2. See
+> [`ev-switch-cost-model-2026-06.md`](ev-switch-cost-model-2026-06.md).
+
 - **Corridor is the densest fast-charge route in North America.** Tesla
   Superchargers chain all of I-5 (<60 mi spacing); **Burlington WA** (32+ stalls)
   is the natural mid-trip top-up. Native-NACS Hyundai/Kia/BMW share it.
-- **Weekend round trip (~285–290 mi) needs exactly ONE DC top-up** — charge cheap
-  on the US side (off-peak), arrive in Vancouver with buffer to skip its
-  scarcer/pricier chargers. **Winter makes the top-up mandatory** (cold-highway
-  range falls toward ~186 mi).
+- **Weekend round trip (~280 mi) fits ~one charge** (see correction) — destination
+  L2 covers any top-up; a US-side DC splash is the winter same-day fallback, not the
+  routine. Cold-highway range falls toward ~186 mi.
 - **Weekdays (~160 mi) are covered FREE by office L2** — the de-facto home charger.
 - **Supercharger pricing:** WA ~$0.18–0.36/kWh (time-of-use); BC ~$0.29–0.48 CAD/kWh
   (cheapest Canadian province; central Vancouver cheapest).
