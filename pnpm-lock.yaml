@@ -51,6 +51,9 @@ importers:
 
   apps/cost-model:
     devDependencies:
+      '@types/node':
+        specifier: ^22.10.5
+        version: 22.20.0
       typescript:
         specifier: ^5.7.3
         version: 5.9.3
