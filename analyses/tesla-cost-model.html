@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kia vs the alternatives — what each world actually costs you</title>
+<style>
+  :root{
+    --paper:#f3efe6; --paper2:#efe9dc; --card:#fcfaf5; --ink:#23211c; --muted:#6b6557;
+    --line:#ddd6c6; --accent:#9c3b2e; --good:#2f7d56; --warn:#a9791f;
+    --kia:#5c6470; --my099:#c0392b; --my627:#e08e86; --usedmy:#2a8a8a;
+    --ioniq:#2f7d56; --lease:#b07d1a; --phev:#7a5aa3;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:radial-gradient(120% 120% at 50% 0%,var(--paper2),var(--paper));color:var(--ink);
+    font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
+  .wrap{max-width:1060px;margin:0 auto;padding:28px 20px 64px}
+  h1{font-size:25px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:0 0 18px;font-size:14px}
+  .verdict{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--good);
+    border-radius:10px;padding:12px 16px;margin:0 0 20px;font-size:14.5px}
+  .verdict b{color:var(--good)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 18px;
+    box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  .card h2{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 12px;font-weight:700}
+  /* controls */
+  .controls{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 26px}
+  @media(max-width:720px){.controls{grid-template-columns:1fr}}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:5px}
+  .ctl label b{color:var(--ink);font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--accent);margin:0}
+  .seg{display:flex;gap:6px;flex-wrap:wrap}
+  .seg button{flex:1;min-width:84px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;
+    padding:7px 8px;font-size:12.5px;cursor:pointer;transition:.12s}
+  .seg button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .seg.small button{padding:6px 8px;font-size:12px}
+  .row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .chk{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);cursor:pointer}
+  .chk input{accent-color:var(--accent)}
+  /* stat pills */
+  .pills{display:flex;gap:12px;flex-wrap:wrap;margin:2px 0 0}
+  .pill{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-width:150px}
+  .pill .k{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .pill .v{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:2px}
+  .pill .v small{font-size:12px;font-weight:500;color:var(--muted)}
+  /* chart */
+  svg{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12.5px}
+  .legend span{display:inline-flex;align-items:center;gap:6px;color:var(--ink)}
+  .swatch{width:14px;height:3px;border-radius:2px;display:inline-block}
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{padding:8px 9px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
+  th:first-child,td:first-child{text-align:left;white-space:normal}
+  th{font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:700;cursor:default}
+  tr.win td{background:rgba(47,125,86,.07)}
+  tr.kia td{background:rgba(92,100,112,.07);font-weight:600}
+  td .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px;vertical-align:middle}
+  .tag{display:inline-block;font-size:10.5px;padding:1px 6px;border-radius:5px;background:#efe7d6;color:var(--warn);margin-left:6px}
+  .tag.bad{background:#f5e1de;color:var(--accent)}
+  .neg{color:var(--accent)} .pos{color:var(--good)}
+  details{margin:7px 0;border-top:1px solid var(--line);padding-top:8px}
+  details summary{cursor:pointer;font-size:13.5px;font-weight:600}
+  details .body{font-size:13px;color:var(--muted);margin:8px 0 4px;line-height:1.5}
+  .care{font-size:13px;color:var(--ink)}
+  .care li{margin:5px 0}
+  .care b{color:var(--accent)}
+  footer{color:var(--muted);font-size:12px;margin-top:8px;line-height:1.5}
+  code{background:#efe9dc;padding:1px 5px;border-radius:4px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>What each world actually costs you</h1>
+  <p class="sub">Keep the 2025 Kia vs. switching — Model Y (new&nbsp;0.99% / new&nbsp;6.27% / used), Ioniq&nbsp;5 (buy&nbsp;0% / lease), or a PHEV.
+  Seattle, June 2026. <b>Net cost = every dollar out of pocket minus what the car is still worth.</b> Move the sliders — it's your numbers.</p>
+
+  <div class="verdict" id="verdict">…</div>
+
+  <div class="card">
+    <h2>Your assumptions</h2>
+    <div class="controls">
+      <div class="ctl">
+        <label>Holding period <b><span id="holdV">60</span> mo</b></label>
+        <input type="range" id="hold" min="12" max="96" step="1" value="60">
+      </div>
+      <div class="ctl">
+        <label>Gas price <b>$<span id="gasV">5.61</span>/gal</b></label>
+        <input type="range" id="gas" min="3.50" max="6.50" step="0.01" value="5.61">
+      </div>
+      <div class="ctl">
+        <label>Miles driven <b><span id="milesV">23,400</span>/yr</b></label>
+        <input type="range" id="miles" min="10000" max="30000" step="200" value="23400">
+      </div>
+      <div class="ctl">
+        <label>EV charging case <b id="evV">Cheap · $50/mo</b></label>
+        <div class="seg small" id="evCase">
+          <button data-v="50" class="on">Destination L2 · $50</button>
+          <button data-v="120">Winter/paid · $120</button>
+          <button data-v="184">Office fails · $184</button>
+        </div>
+      </div>
+      <div class="ctl" style="grid-column:1/-1">
+        <div class="row" style="justify-content:space-between">
+          <div class="seg" id="view" style="max-width:430px">
+            <button data-v="net" class="on">True cost (net of resale)</button>
+            <button data-v="cash">Cash out of pocket</button>
+          </div>
+          <label class="chk"><input type="checkbox" id="conserv"> Conservative resale (price-cut + high-mileage haircut)</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pills" id="pills"></div>
+  <div style="height:18px"></div>
+
+  <div class="card">
+    <h2>Cumulative cost over time — where the lines cross is break-even vs the Kia</h2>
+    <svg id="chart" viewBox="0 0 920 430" role="img" aria-label="cumulative cost chart"></svg>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <div class="card">
+    <h2>At your holding period (<span id="hold2">60</span> months)</h2>
+    <table id="tbl">
+      <thead><tr>
+        <th>World</th><th>Upfront</th><th>Monthly all-in</th><th id="hcol">Cost @ 60mo</th>
+        <th>vs Kia</th><th>Beats Kia</th><th>Walk-away whole</th><th>Owns?</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="body" style="font-size:12.5px;color:var(--muted);margin-top:10px">
+      <b>Beats Kia</b> = first month this world's cost dips below keeping the Kia. <b>Walk-away whole</b> = first month the car
+      is worth at least what you still owe (you could sell without writing a check). “Cost” follows the view toggle above.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>The math, per world</h2>
+    <div id="cards"></div>
+  </div>
+
+  <div class="card">
+    <h2>What flips the answer — read before deciding</h2>
+    <ul class="care">
+      <li><b>Holding period is the biggest lever.</b> Under ~36 months every <i>buy</i> is still underwater (the rolled $9k Kia
+        gap + WA tax). Over ~48 months the Ioniq&nbsp;0% wins clean. If you might sell early, the <b>Model Y @ 0.99%</b> is safest —
+        it's the first to go equity-positive (walk-away-whole ~month 33).</li>
+      <li><b>The lease is rent, not a win.</b> Its low cash-out builds <b>zero equity</b> — you own nothing and can never walk away
+        whole. And at 23,400 mi/yr the mileage overage already inflates it to ~$790–890/mo all-in. Avoid.</li>
+      <li><b>EV energy assumes your office L2 holds.</b> Cheap ($50) is your normal pattern (free weekday L2 + cheap destination L2,
+        no routine DC). If the office charger is capped/lost, switch the toggle to <code>Office fails $184</code> — the gap to the
+        Kia shrinks and the <b>PHEV/Kia</b> become the hedge (neither needs a charger).</li>
+      <li><b>The PHEV is an estimate, and assumes a reachable 120V outlet at your stall.</b> No outlet → it runs as a 38 mpg hybrid
+        and the energy line jumps. Verify the outlet before treating it as the safe option.</li>
+      <li><b>Ioniq 0% beats taking $7k cash only because the fallback rate is ~6.5%.</b> If you can get sub-5% financing (credit
+        union), take the $7k cash off a lower principal instead.</li>
+      <li><b>Resale is the soft number.</b> A Tesla price cut or the 70k-mile/3yr haircut (you drive 2× average) trims the Model Y's
+        hold-value edge — toggle <b>Conservative resale</b> to see it.</li>
+    </ul>
+  </div>
+
+  <footer>
+    Estimates, June 2026, composited from <code>analyses/ev-switch-*</code> (web-sourced + adversarially verified) and recomputed
+    live in your browser with exact loan amortization. Not financial advice; not affiliated with Tesla, Hyundai, or Kia.
+    Reconfirm VIN-specific quotes, your real APR, and an insurance quote before signing. The $9,000 negative-equity figure (trade-in
+    basis) and the resale curves are the load-bearing assumptions — small changes move the ranking.
+  </footer>
+</div>
+
+<script>
+const MONTHS=[0,12,24,36,48,60,72,96];
+// ---- verified per-world params (workflow tesla-savings-breakeven, math audited to the cent) ----
+const WORLDS=[
+  {key:'kia',  label:'Keep the Kia',           type:'gas',   color:getCSS('--kia'),
+   upfront:0, principal:30000, apr:5.1, term:35, insurance:283, maint:70,
+   resale:[24000,17000,13000,10000,8000,7000,6000,5000], owns:true,
+   note:'Baseline. Loan ($30k @ 5.1%) ends month 35 → after that you pay only insurance + gas + maint ($730/mo). Keeping it does NOT crystallize the ~$9k negative equity; you just keep paying. Cost is dominated by gas.'},
+  {key:'ioniq', label:'Ioniq 5 — buy @ 0%',    type:'ev',    color:getCSS('--ioniq'), tag:'CarPlay',
+   upfront:0, principal:53531, apr:0, term:72, insurance:200, maint:30,
+   resale:[40100,28000,23000,19000,15500,13000,10500,8000], owns:true,
+   note:'Principal = $44,531 OTD (incl. tax) + $9,000 rolled Kia gap, financed at 0%/72 = $743/mo. Cheapest payment of any buy, cheapest insurance, has Apple CarPlay. Catch: Hyundai depreciates fast, so you stay underwater until ~month 53.'},
+  {key:'my099', label:'New Model Y @ 0.99%',    type:'ev',    color:getCSS('--my099'),
+   upfront:2569, principal:64011, apr:0.99, term:72, insurance:230, maint:30,
+   resale:[57580,45000,39000,34000,30000,26000,22000,18000], owns:true,
+   note:'Principal = $57,580 OTD − $2,569 (5%) down + $9,000 rolled gap, at the 0.99% promo. Payment ≈ the Kia’s, holds value best, equity-positive by ~month 33. Needs ~$2.6k cash up front. No CarPlay. Interest-deduction negligible at 0.99%.'},
+  {key:'usedmy',label:'Used Model Y @ ~10%',    type:'ev',    color:getCSS('--usedmy'),
+   upfront:0, principal:46757, apr:10, term:72, insurance:230, maint:30,
+   resale:[34000,30000,26000,23000,20000,18000,15500,13000], owns:true,
+   note:'Principal = $37,757 OTD + $9,000 rolled gap. Lower payment than new, but 10% APR on the $9k roll keeps you deep underwater until ~month 46. No CarPlay, no used-EV credit.'},
+  {key:'phev', label:'PHEV (RAV4-class) — est.',type:'phev',  color:getCSS('--phev'), tag:'estimate',
+   upfront:0, principal:59000, apr:6, term:72, insurance:220, maint:55,
+   resale:[50000,40000,35000,31000,27000,24000,21000,17000], owns:true,
+   note:'ESTIMATE — no hard quote. ~$50k OTD + $9k gap at ~6%/72 = $978/mo. Weekday miles on a 120V outlet (~42 mi EV range), weekend highway on gas (~38 mpg). Lowest charging risk (no L2 dependency) but the priciest payment + slow depreciation make it the money laggard.'},
+  {key:'my627', label:'New Model Y @ 6.27%',    type:'ev',    color:getCSS('--my627'),
+   upfront:0, principal:66580, apr:6.27, term:72, insurance:230, maint:30,
+   resale:[57580,45000,39000,34000,30000,26000,22000,18000], owns:true,
+   note:'Same car, fallback rate, no down. $1,112/mo payment is the killer — only beats the Kia (best energy) at ~month 77, never in the winter case. A ~23% loan-interest deduction helps ONLY if you itemize/qualify (not modeled).'},
+  {key:'lease', label:'Ioniq 5 — lease',         type:'lease', color:getCSS('--lease'), tag:'CarPlay', tagBad:'rent',
+   upfront:0, principal:0, apr:0, term:36, insurance:200, maint:0,
+   resale:[0,0,0,0,0,0,0,0], owns:false,
+   note:'POOR FIT at 23,400 mi/yr. Headline ~$259–449 assumes 12k mi/yr; ~11,400 excess miles add ~$190–240/mo, so ~$790–890/mo all-in. Looks cheap on cash because it builds ZERO equity — you own nothing and re-lease forever.'},
+];
+function getCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+
+// ---- finance engine (mirrors the verified workflow basis) ----
+function pmt(P,apr,n){const i=apr/1200;return i?P*i/(1-Math.pow(1+i,-n)):P/n;}
+function balance(P,apr,n,m){if(m>=n)return 0;const i=apr/1200;const p=pmt(P,apr,n);
+  return i?P*Math.pow(1+i,m)-p*(Math.pow(1+i,m)-1)/i:Math.max(0,P-p*m);}
+function interp(anchors,m){if(m<=0)return anchors[0];if(m>=96)return anchors[7];
+  for(let k=1;k<MONTHS.length;k++){if(m<=MONTHS[k]){const t=(m-MONTHS[k-1])/(MONTHS[k]-MONTHS[k-1]);
+    return anchors[k-1]+t*(anchors[k]-anchors[k-1]);}}}
+const S={hold:60,gas:5.61,miles:23400,ev:50,view:'net',conserv:false};
+
+function resaleAnchors(w){
+  if(!S.conserv||!w.owns)return w.resale;
+  // haircut ramps in months 24-72: bigger on Tesla, smaller elsewhere
+  const cut=w.key==='my099'||w.key==='my627'?0.90:(w.key==='usedmy'?0.92:0.95);
+  return w.resale.map((v,idx)=>{const mo=MONTHS[idx];const f=mo<=12?1:(mo>=36?cut:1-(1-cut)*(mo-12)/24);return v*f;});
+}
+function gasMonthly(w){ // dynamic with gas + miles
+  if(w.type==='gas') return (S.miles/29*S.gas)/12;
+  if(w.type==='phev'){ const wknd=S.miles*0.64; return 20 + (wknd/38*S.gas)/12; } // electric weekday + gas weekend
+  return 0;
+}
+function energyMonthly(w){ return (w.type==='ev'||w.type==='lease')?S.ev:0; }
+function monthlyAllIn(w){ const p = w.type==='lease'?540:pmt(w.principal,w.apr,w.term);
+  return p + w.insurance + w.maint + gasMonthly(w) + energyMonthly(w); }
+function cashOut(w,m){
+  const op=w.insurance+w.maint+gasMonthly(w)+energyMonthly(w);
+  if(w.type==='lease') return (540+op)*m;            // perpetual rent
+  const p=pmt(w.principal,w.apr,w.term);
+  return w.upfront + p*Math.min(m,w.term) + op*m;
+}
+function equity(w,m){ if(!w.owns)return 0; return interp(resaleAnchors(w),m)-balance(w.principal,w.apr,w.term,m); }
+function value(w,m){ return S.view==='cash'?cashOut(w,m):cashOut(w,m)-equity(w,m); }
+function beatsKia(w){ if(w.key==='kia')return null; const k=WORLDS[0];
+  for(let m=1;m<=96;m++) if(value(w,m)<value(k,m)) return m; return null; }
+function walkAway(w){ if(!w.owns)return null;
+  for(let m=1;m<=96;m++) if(equity(w,m)>=0) return m; return null; }
+
+// ---- chart ----
+const PAD={l:58,r:14,t:14,b:34}, CW=920, CH=430, PW=CW-PAD.l-PAD.r, PH=CH-PAD.t-PAD.b;
+function px(m){return PAD.l + m/96*PW;}
+function py(v,max){return PAD.t + (1-v/max)*PH;}
+function drawChart(){
+  let ymax=0;
+  for(const w of WORLDS) for(let m=0;m<=96;m++) ymax=Math.max(ymax,value(w,m));
+  ymax=Math.ceil(ymax/10000)*10000;
+  let s=`<g font-size="11" fill="${getCSS('--muted')}">`;
+  // y gridlines
+  for(let v=0;v<=ymax;v+=10000){const y=py(v,ymax);
+    s+=`<line x1="${PAD.l}" y1="${y}" x2="${CW-PAD.r}" y2="${y}" stroke="${getCSS('--line')}"/>`;
+    s+=`<text x="${PAD.l-7}" y="${y+3}" text-anchor="end">$${v/1000}k</text>`;}
+  // x gridlines
+  for(const m of [0,12,24,36,48,60,72,84,96]){const x=px(m);
+    s+=`<line x1="${x}" y1="${PAD.t}" x2="${x}" y2="${PAD.t+PH}" stroke="${getCSS('--line')}" stroke-dasharray="2 3"/>`;
+    s+=`<text x="${x}" y="${PAD.t+PH+18}" text-anchor="middle">${m}</text>`;}
+  s+=`<text x="${PAD.l+PW/2}" y="${CH-2}" text-anchor="middle">months</text>`;
+  // holding marker
+  const mx=px(S.hold);
+  s+=`<line x1="${mx}" y1="${PAD.t}" x2="${mx}" y2="${PAD.t+PH}" stroke="${getCSS('--accent')}" stroke-width="1.4" opacity=".55"/>`;
+  s+=`</g>`;
+  // lines
+  for(const w of WORLDS){
+    let d='';
+    for(let m=0;m<=96;m++){ d+=(m?'L':'M')+px(m).toFixed(1)+' '+py(value(w,m),ymax).toFixed(1)+' '; }
+    const dash=(w.key==='lease'||w.key==='my627')?'stroke-dasharray="6 4"':'';
+    const wdt=w.key==='kia'?3:1.9;
+    s+=`<path d="${d}" fill="none" stroke="${w.color}" stroke-width="${wdt}" ${dash} opacity="${w.key==='lease'?.7:1}"/>`;
+    // dot at holding period
+    const vy=py(value(w,S.hold),ymax);
+    s+=`<circle cx="${mx}" cy="${vy}" r="3.4" fill="${w.color}"/>`;
+  }
+  document.getElementById('chart').innerHTML=s;
+  // legend
+  document.getElementById('legend').innerHTML=WORLDS.map(w=>
+    `<span><i class="swatch" style="background:${w.color}"></i>${w.label}</span>`).join('');
+}
+
+// ---- table + pills + verdict ----
+const fmt=v=>(v<0?'-':'')+'$'+Math.round(Math.abs(v)).toLocaleString();
+function render(){
+  drawChart();
+  const k=WORLDS[0], hold=S.hold;
+  // ranked by value at holding period (lease flagged separately)
+  const rows=WORLDS.map(w=>({w,val:value(w,hold),be:beatsKia(w),wa:walkAway(w),mo:monthlyAllIn(w)}));
+  const ranked=[...rows].sort((a,b)=>a.val-b.val);
+  const cheapestReal=ranked.filter(r=>r.w.owns&&r.w.key!=='kia')[0];
+  const kiaVal=value(k,hold);
+  // verdict
+  const save=kiaVal-cheapestReal.val;
+  document.getElementById('verdict').innerHTML=
+    `At <b>${hold} months</b>, the cheapest world you'd actually own is <b>${cheapestReal.w.label}</b> at `+
+    `<b>${fmt(cheapestReal.val)}</b> — that's <b>${save>=0?fmt(save)+' less':fmt(-save)+' more'}</b> than keeping the Kia `+
+    `(${fmt(kiaVal)}). ${save>=0?'Switching saves money':'Keeping the Kia is cheaper'} on this horizon and these charging assumptions.`;
+  // pills
+  document.getElementById('pills').innerHTML=[
+    ['Cheapest (owned)',cheapestReal.w.label.replace(/—.*/,''),fmt(cheapestReal.val)],
+    ['vs keep Kia', save>=0?'saves':'costs', (save>=0?'':'+')+fmt(Math.abs(save))],
+    ['Kia gas now', 'per month', fmt(gasMonthly(k))],
+    ['Kia, kept', 'net @'+hold+'mo', fmt(kiaVal)],
+  ].map(p=>`<div class="pill"><div class="k">${p[0]}</div><div class="v">${p[2]} <small>${p[1]}</small></div></div>`).join('');
+  // table
+  document.getElementById('hcol').textContent='Cost @ '+hold+'mo';
+  document.getElementById('hold2').textContent=hold;
+  const tb=document.querySelector('#tbl tbody'); tb.innerHTML='';
+  for(const r of ranked){
+    const w=r.w, d=r.val-kiaVal;
+    const tr=document.createElement('tr');
+    if(w.key===cheapestReal.w.key) tr.className='win'; else if(w.key==='kia') tr.className='kia';
+    const tags=(w.tag?`<span class="tag">${w.tag}</span>`:'')+(w.tagBad?`<span class="tag bad">${w.tagBad}</span>`:'');
+    tr.innerHTML=
+      `<td><span class="dot" style="background:${w.color}"></span>${w.label}${tags}</td>`+
+      `<td>${fmt(w.upfront)}</td>`+
+      `<td>${fmt(r.mo)}</td>`+
+      `<td>${fmt(r.val)}</td>`+
+      `<td class="${w.key==='kia'?'':(d<0?'pos':'neg')}">${w.key==='kia'?'—':(d<0?fmt(d):'+'+fmt(d))}</td>`+
+      `<td>${r.be?('mo '+r.be):(w.key==='kia'?'—':'—')}</td>`+
+      `<td>${w.owns?(r.wa?('mo '+r.wa):'>96'):'<span class="neg">never</span>'}</td>`+
+      `<td>${w.owns?'yes':'<span class="neg">no</span>'}</td>`;
+    tb.appendChild(tr);
+  }
+  // per-world cards
+  document.getElementById('cards').innerHTML=WORLDS.map(w=>{
+    const p=w.type==='lease'?540:pmt(w.principal,w.apr,w.term);
+    const breakdown=w.type==='lease'
+      ? `lease $540 + insurance $${w.insurance} + energy $${S.ev} = <b>${fmt(monthlyAllIn(w))}/mo</b>, $0 equity`
+      : `payment ${fmt(p)} + insurance $${w.insurance} + maint $${w.maint}`+
+        `${gasMonthly(w)>0?` + ${w.type==='phev'?'energy':'gas'} ${fmt(gasMonthly(w))}`:''}`+
+        `${energyMonthly(w)>0?` + energy $${S.ev}`:''} = <b>${fmt(monthlyAllIn(w))}/mo</b>`;
+    return `<details ${w.key==='ioniq'||w.key==='my099'?'open':''}>
+      <summary><span class="dot" style="background:${w.color}"></span>${w.label} — ${fmt(monthlyAllIn(w))}/mo all-in</summary>
+      <div class="body">${breakdown}.<br>${w.note}</div></details>`;
+  }).join('');
+}
+
+// ---- wire controls ----
+function bindRange(id,key,fmtFn){const el=document.getElementById(id);const lab=document.getElementById(id+'V');
+  el.addEventListener('input',()=>{S[key]=parseFloat(el.value);lab.textContent=fmtFn(S[key]);
+    if(id==='hold')document.getElementById('hold2').textContent=S.hold;render();});}
+bindRange('hold','hold',v=>v);
+bindRange('gas','gas',v=>v.toFixed(2));
+bindRange('miles','miles',v=>Math.round(v).toLocaleString());
+document.querySelectorAll('#evCase button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#evCase button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  S.ev=parseFloat(b.dataset.v);
+  document.getElementById('evV').textContent=(S.ev==50?'Cheap':S.ev==120?'Winter/paid':'Office fails')+' · $'+S.ev+'/mo';render();}));
+document.querySelectorAll('#view button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#view button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  S.view=b.dataset.v;render();}));
+document.getElementById('conserv').addEventListener('change',e=>{S.conserv=e.target.checked;render();});
+render();
+</script>
+</body>
+</html>

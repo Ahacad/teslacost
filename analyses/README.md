@@ -32,6 +32,7 @@ The month payoff ≤ quote, you're clear to move.
 - [`ev-switch-baseline.md`](ev-switch-baseline.md) — the personal inputs (situation, loan, driving, charging, constraints).
 - [`ev-switch-facts-2026-06.md`](ev-switch-facts-2026-06.md) — **the raw verified market facts** (prices, range, charging, taxes, credits, APRs, insurance) with sources + confidence.
 - [`ev-switch-decision-2026-06.md`](ev-switch-decision-2026-06.md) — ranking, weighted matrix, TCO, recommendation, sensitivity, action plan.
+- [`ev-switch-cost-model-2026-06.md`](ev-switch-cost-model-2026-06.md) — **the 7-world cost model** (keep Kia vs new/used Model Y, Ioniq 5 buy/lease, PHEV): net cost over time + break-even, with the corrected charging/energy assumptions. Interactive: [`tesla-cost-model.html`](tesla-cost-model.html).
 
 ## How these were produced
 
