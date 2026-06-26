@@ -8,7 +8,7 @@
   :root{
     --paper:#f3efe6; --paper2:#efe9dc; --card:#fcfaf5; --ink:#23211c; --muted:#6b6557;
     --line:#ddd6c6; --accent:#9c3b2e; --good:#2f7d56; --warn:#a9791f;
-    --kia:#5c6470; --my099:#c0392b; --my627:#e08e86; --usedmy:#2a8a8a;
+    --kia:#3f4651; --my099:#c0392b; --my627:#e08e86; --usedmy:#1f8a8a;
     --ioniq:#2f7d56; --lease:#b07d1a; --phev:#7a5aa3;
   }
   *{box-sizing:border-box}
@@ -23,7 +23,6 @@
   .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 18px;
     box-shadow:0 1px 0 rgba(0,0,0,.02)}
   .card h2{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 12px;font-weight:700}
-  /* controls */
   .controls{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 26px}
   @media(max-width:720px){.controls{grid-template-columns:1fr}}
   .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:5px}
@@ -37,24 +36,33 @@
   .row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
   .chk{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);cursor:pointer}
   .chk input{accent-color:var(--accent)}
-  /* stat pills */
   .pills{display:flex;gap:12px;flex-wrap:wrap;margin:2px 0 0}
   .pill{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;min-width:150px}
   .pill .k{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
   .pill .v{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:2px}
   .pill .v small{font-size:12px;font-weight:500;color:var(--muted)}
   /* chart */
-  svg{width:100%;height:auto;display:block}
-  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12.5px}
-  .legend span{display:inline-flex;align-items:center;gap:6px;color:var(--ink)}
+  .chartwrap{position:relative}
+  svg{width:100%;height:auto;display:block;cursor:crosshair}
+  .tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--line);border-radius:9px;
+    box-shadow:0 4px 16px rgba(0,0,0,.13);padding:9px 11px;font-size:12.5px;min-width:188px;opacity:0;transition:opacity .08s;z-index:5}
+  .tip .th{font-weight:700;margin-bottom:6px;font-size:12px;color:var(--muted)}
+  .tip .tr{display:flex;justify-content:space-between;gap:14px;line-height:1.7;font-variant-numeric:tabular-nums}
+  .tip .tr i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  .tip .tr.me{font-weight:700}
+  .legend{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px;font-size:12.5px}
+  .legend span{display:inline-flex;align-items:center;gap:6px;color:var(--ink);cursor:pointer;
+    padding:3px 8px;border:1px solid var(--line);border-radius:20px;background:#fff;user-select:none;transition:.12s}
+  .legend span.off{opacity:.4;text-decoration:line-through}
   .swatch{width:14px;height:3px;border-radius:2px;display:inline-block}
+  .hint{font-size:12px;color:var(--muted);margin-top:8px}
   /* table */
   table{width:100%;border-collapse:collapse;font-size:13.5px}
   th,td{padding:8px 9px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
   th:first-child,td:first-child{text-align:left;white-space:normal}
-  th{font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:700;cursor:default}
-  tr.win td{background:rgba(47,125,86,.07)}
-  tr.kia td{background:rgba(92,100,112,.07);font-weight:600}
+  th{font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:700}
+  tr.win td{background:rgba(47,125,86,.08)}
+  tr.kia td{background:rgba(63,70,81,.08);font-weight:600}
   td .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px;vertical-align:middle}
   .tag{display:inline-block;font-size:10.5px;padding:1px 6px;border-radius:5px;background:#efe7d6;color:var(--warn);margin-left:6px}
   .tag.bad{background:#f5e1de;color:var(--accent)}
@@ -62,11 +70,21 @@
   details{margin:7px 0;border-top:1px solid var(--line);padding-top:8px}
   details summary{cursor:pointer;font-size:13.5px;font-weight:600}
   details .body{font-size:13px;color:var(--muted);margin:8px 0 4px;line-height:1.5}
-  .care{font-size:13px;color:var(--ink)}
-  .care li{margin:5px 0}
-  .care b{color:var(--accent)}
+  .care{font-size:13px;color:var(--ink)} .care li{margin:5px 0} .care b{color:var(--accent)}
   footer{color:var(--muted);font-size:12px;margin-top:8px;line-height:1.5}
   code{background:#efe9dc;padding:1px 5px;border-radius:4px;font-size:12px}
+  /* math */
+  .math{font-size:14px;line-height:1.9}
+  .eq{background:#fbf8f1;border:1px solid var(--line);border-radius:8px;padding:11px 14px;margin:9px 0;overflow-x:auto}
+  .eq .lab{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:4px}
+  i.v{font-style:italic;color:var(--accent);font-family:ui-serif,Georgia,serif}
+  .frac{display:inline-flex;flex-direction:column;text-align:center;vertical-align:middle;margin:0 .3em}
+  .frac>span:first-child{border-bottom:1.6px solid currentColor;padding:0 .5em}
+  .frac>span:last-child{padding:1px .5em 0}
+  .worked{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;line-height:1.85;
+    background:#23211c;color:#e9e2d2;border-radius:9px;padding:13px 15px;overflow-x:auto;white-space:pre-wrap}
+  .worked b{color:#ffd479} .worked .ok{color:#7fd6a0}
+  select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -117,8 +135,12 @@
 
   <div class="card">
     <h2>Cumulative cost over time — where the lines cross is break-even vs the Kia</h2>
-    <svg id="chart" viewBox="0 0 920 430" role="img" aria-label="cumulative cost chart"></svg>
+    <div class="chartwrap" id="chartwrap">
+      <svg id="chart" viewBox="0 0 920 430" role="img" aria-label="cumulative cost chart"></svg>
+      <div class="tip" id="tip"></div>
+    </div>
     <div class="legend" id="legend"></div>
+    <div class="hint">Hover the chart to read every world at that month. Click a legend chip to hide/show a line. The red vertical line is your holding period.</div>
   </div>
 
   <div class="card">
@@ -132,8 +154,43 @@
     </table>
     <div class="body" style="font-size:12.5px;color:var(--muted);margin-top:10px">
       <b>Beats Kia</b> = first month this world's cost dips below keeping the Kia. <b>Walk-away whole</b> = first month the car
-      is worth at least what you still owe (you could sell without writing a check). “Cost” follows the view toggle above.
+      is worth at least what you still owe (sell without writing a check). "Cost" follows the view toggle above.
     </div>
+  </div>
+
+  <div class="card math">
+    <h2>The exact math — verify it yourself</h2>
+    <p style="margin:0 0 6px;color:var(--muted);font-size:13px">Every number on this page comes from these formulas. Definitions:
+      <i class="v">P</i> = amount financed (price + tax + rolled $9k Kia gap − down) · <i class="v">i</i> = APR ÷ 1200 (monthly rate) ·
+      <i class="v">n</i> = loan months · <i class="v">m</i> = the month in question.</p>
+
+    <div class="eq"><span class="lab">1 · Monthly payment (standard amortization; if APR = 0, <i class="v">pmt</i> = <i class="v">P</i>/<i class="v">n</i>)</span>
+      <i class="v">pmt</i> &nbsp;=&nbsp; <span class="frac"><span><i class="v">P</i> · <i class="v">i</i></span><span>1 − (1 + <i class="v">i</i>)<sup>−<i class="v">n</i></sup></span></span></div>
+
+    <div class="eq"><span class="lab">2 · Loan balance still owed at month <i class="v">m</i> &nbsp;(0 once <i class="v">m</i> ≥ <i class="v">n</i>)</span>
+      <i class="v">b</i>(<i class="v">m</i>) &nbsp;=&nbsp; <i class="v">P</i>(1 + <i class="v">i</i>)<sup><i class="v">m</i></sup> − <i class="v">pmt</i> · <span class="frac"><span>(1 + <i class="v">i</i>)<sup><i class="v">m</i></sup> − 1</span><span><i class="v">i</i></span></span></div>
+
+    <div class="eq"><span class="lab">3 · Monthly running cost &nbsp;(gas, EV energy, or both for the PHEV)</span>
+      <i class="v">run</i> = insurance + maintenance + energy + gas, &nbsp;&nbsp; where &nbsp;
+      gas = <span class="frac"><span>miles/yr ÷ mpg × $/gal</span><span>12</span></span> &nbsp; and EV energy = the charging-case value ($50 / $120 / $184)</div>
+
+    <div class="eq"><span class="lab">4 · Total cash out of pocket by month <i class="v">m</i> &nbsp;(lease never stops paying: <i class="v">cash</i> = (payment + insurance + energy)·<i class="v">m</i>)</span>
+      <i class="v">cash</i>(<i class="v">m</i>) &nbsp;=&nbsp; down + <i class="v">pmt</i> · min(<i class="v">m</i>, <i class="v">n</i>) + <i class="v">run</i> · <i class="v">m</i></div>
+
+    <div class="eq"><span class="lab">5 · Equity (what the car is worth to you) — resale is straight-line between anchor months 0,12,24,36,48,60,72,96</span>
+      <i class="v">equity</i>(<i class="v">m</i>) = resale(<i class="v">m</i>) − <i class="v">b</i>(<i class="v">m</i>) &nbsp;&nbsp;(= 0 for a lease — you own nothing)</div>
+
+    <div class="eq"><span class="lab">6 · True cost (the "net of resale" line) &nbsp;·&nbsp; and the two milestones</span>
+      <i class="v">net</i>(<i class="v">m</i>) = <i class="v">cash</i>(<i class="v">m</i>) − <i class="v">equity</i>(<i class="v">m</i>) &nbsp;&nbsp;|&nbsp;&nbsp;
+      <b>Beats Kia</b> = smallest <i class="v">m</i> with <i class="v">net</i><sub>world</sub> &lt; <i class="v">net</i><sub>Kia</sub> &nbsp;&nbsp;|&nbsp;&nbsp;
+      <b>Walk-away-whole</b> = smallest <i class="v">m</i> with <i class="v">equity</i> ≥ 0</div>
+
+    <div class="row" style="margin:14px 0 8px">
+      <label style="font-size:13px;color:var(--muted)">Worked example — plug in real numbers for:</label>
+      <select id="exWorld"></select>
+      <span style="font-size:13px;color:var(--muted)">at month <b id="exHold">60</b></span>
+    </div>
+    <div class="worked" id="worked"></div>
   </div>
 
   <div class="card">
@@ -171,40 +228,40 @@
 
 <script>
 const MONTHS=[0,12,24,36,48,60,72,96];
+function getCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
 // ---- verified per-world params (workflow tesla-savings-breakeven, math audited to the cent) ----
 const WORLDS=[
-  {key:'kia',  label:'Keep the Kia',           type:'gas',   color:getCSS('--kia'),
+  {key:'kia',  label:'Keep the Kia', short:'Kia', type:'gas', color:getCSS('--kia'),
    upfront:0, principal:30000, apr:5.1, term:35, insurance:283, maint:70,
    resale:[24000,17000,13000,10000,8000,7000,6000,5000], owns:true,
    note:'Baseline. Loan ($30k @ 5.1%) ends month 35 → after that you pay only insurance + gas + maint ($730/mo). Keeping it does NOT crystallize the ~$9k negative equity; you just keep paying. Cost is dominated by gas.'},
-  {key:'ioniq', label:'Ioniq 5 — buy @ 0%',    type:'ev',    color:getCSS('--ioniq'), tag:'CarPlay',
+  {key:'ioniq', label:'Ioniq 5 — buy @ 0%', short:'Ioniq 0%', type:'ev', color:getCSS('--ioniq'), tag:'CarPlay',
    upfront:0, principal:53531, apr:0, term:72, insurance:200, maint:30,
    resale:[40100,28000,23000,19000,15500,13000,10500,8000], owns:true,
    note:'Principal = $44,531 OTD (incl. tax) + $9,000 rolled Kia gap, financed at 0%/72 = $743/mo. Cheapest payment of any buy, cheapest insurance, has Apple CarPlay. Catch: Hyundai depreciates fast, so you stay underwater until ~month 53.'},
-  {key:'my099', label:'New Model Y @ 0.99%',    type:'ev',    color:getCSS('--my099'),
+  {key:'my099', label:'New Model Y @ 0.99%', short:'MY 0.99%', type:'ev', color:getCSS('--my099'),
    upfront:2569, principal:64011, apr:0.99, term:72, insurance:230, maint:30,
    resale:[57580,45000,39000,34000,30000,26000,22000,18000], owns:true,
    note:'Principal = $57,580 OTD − $2,569 (5%) down + $9,000 rolled gap, at the 0.99% promo. Payment ≈ the Kia’s, holds value best, equity-positive by ~month 33. Needs ~$2.6k cash up front. No CarPlay. Interest-deduction negligible at 0.99%.'},
-  {key:'usedmy',label:'Used Model Y @ ~10%',    type:'ev',    color:getCSS('--usedmy'),
+  {key:'usedmy',label:'Used Model Y @ ~10%', short:'Used MY', type:'ev', color:getCSS('--usedmy'),
    upfront:0, principal:46757, apr:10, term:72, insurance:230, maint:30,
    resale:[34000,30000,26000,23000,20000,18000,15500,13000], owns:true,
    note:'Principal = $37,757 OTD + $9,000 rolled gap. Lower payment than new, but 10% APR on the $9k roll keeps you deep underwater until ~month 46. No CarPlay, no used-EV credit.'},
-  {key:'phev', label:'PHEV (RAV4-class) — est.',type:'phev',  color:getCSS('--phev'), tag:'estimate',
+  {key:'phev', label:'PHEV (RAV4-class) — est.', short:'PHEV', type:'phev', color:getCSS('--phev'), tag:'estimate',
    upfront:0, principal:59000, apr:6, term:72, insurance:220, maint:55,
    resale:[50000,40000,35000,31000,27000,24000,21000,17000], owns:true,
    note:'ESTIMATE — no hard quote. ~$50k OTD + $9k gap at ~6%/72 = $978/mo. Weekday miles on a 120V outlet (~42 mi EV range), weekend highway on gas (~38 mpg). Lowest charging risk (no L2 dependency) but the priciest payment + slow depreciation make it the money laggard.'},
-  {key:'my627', label:'New Model Y @ 6.27%',    type:'ev',    color:getCSS('--my627'),
+  {key:'my627', label:'New Model Y @ 6.27%', short:'MY 6.27%', type:'ev', color:getCSS('--my627'),
    upfront:0, principal:66580, apr:6.27, term:72, insurance:230, maint:30,
    resale:[57580,45000,39000,34000,30000,26000,22000,18000], owns:true,
    note:'Same car, fallback rate, no down. $1,112/mo payment is the killer — only beats the Kia (best energy) at ~month 77, never in the winter case. A ~23% loan-interest deduction helps ONLY if you itemize/qualify (not modeled).'},
-  {key:'lease', label:'Ioniq 5 — lease',         type:'lease', color:getCSS('--lease'), tag:'CarPlay', tagBad:'rent',
+  {key:'lease', label:'Ioniq 5 — lease', short:'Lease', type:'lease', color:getCSS('--lease'), tag:'CarPlay', tagBad:'rent',
    upfront:0, principal:0, apr:0, term:36, insurance:200, maint:0,
    resale:[0,0,0,0,0,0,0,0], owns:false,
    note:'POOR FIT at 23,400 mi/yr. Headline ~$259–449 assumes 12k mi/yr; ~11,400 excess miles add ~$190–240/mo, so ~$790–890/mo all-in. Looks cheap on cash because it builds ZERO equity — you own nothing and re-lease forever.'},
 ];
-function getCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
 
-// ---- finance engine (mirrors the verified workflow basis) ----
+// ---- finance engine (mirrors the verified workflow basis exactly) ----
 function pmt(P,apr,n){const i=apr/1200;return i?P*i/(1-Math.pow(1+i,-n)):P/n;}
 function balance(P,apr,n,m){if(m>=n)return 0;const i=apr/1200;const p=pmt(P,apr,n);
   return i?P*Math.pow(1+i,m)-p*(Math.pow(1+i,m)-1)/i:Math.max(0,P-p*m);}
@@ -212,26 +269,26 @@ function interp(anchors,m){if(m<=0)return anchors[0];if(m>=96)return anchors[7];
   for(let k=1;k<MONTHS.length;k++){if(m<=MONTHS[k]){const t=(m-MONTHS[k-1])/(MONTHS[k]-MONTHS[k-1]);
     return anchors[k-1]+t*(anchors[k]-anchors[k-1]);}}}
 const S={hold:60,gas:5.61,miles:23400,ev:50,view:'net',conserv:false};
+const hidden=new Set(); let hi=null, exSel='my099', CHARTMAX=0, VIS=[];
 
 function resaleAnchors(w){
   if(!S.conserv||!w.owns)return w.resale;
-  // haircut ramps in months 24-72: bigger on Tesla, smaller elsewhere
   const cut=w.key==='my099'||w.key==='my627'?0.90:(w.key==='usedmy'?0.92:0.95);
   return w.resale.map((v,idx)=>{const mo=MONTHS[idx];const f=mo<=12?1:(mo>=36?cut:1-(1-cut)*(mo-12)/24);return v*f;});
 }
-function gasMonthly(w){ // dynamic with gas + miles
+function gasMonthly(w){
   if(w.type==='gas') return (S.miles/29*S.gas)/12;
-  if(w.type==='phev'){ const wknd=S.miles*0.64; return 20 + (wknd/38*S.gas)/12; } // electric weekday + gas weekend
+  if(w.type==='phev'){ const wknd=S.miles*0.64; return 20 + (wknd/38*S.gas)/12; }
   return 0;
 }
 function energyMonthly(w){ return (w.type==='ev'||w.type==='lease')?S.ev:0; }
-function monthlyAllIn(w){ const p = w.type==='lease'?540:pmt(w.principal,w.apr,w.term);
-  return p + w.insurance + w.maint + gasMonthly(w) + energyMonthly(w); }
+function monthlyAllIn(w){ const p=w.type==='lease'?540:pmt(w.principal,w.apr,w.term);
+  return p+w.insurance+w.maint+gasMonthly(w)+energyMonthly(w); }
 function cashOut(w,m){
   const op=w.insurance+w.maint+gasMonthly(w)+energyMonthly(w);
-  if(w.type==='lease') return (540+op)*m;            // perpetual rent
+  if(w.type==='lease') return (540+op)*m;
   const p=pmt(w.principal,w.apr,w.term);
-  return w.upfront + p*Math.min(m,w.term) + op*m;
+  return w.upfront+p*Math.min(m,w.term)+op*m;
 }
 function equity(w,m){ if(!w.owns)return 0; return interp(resaleAnchors(w),m)-balance(w.principal,w.apr,w.term,m); }
 function value(w,m){ return S.view==='cash'?cashOut(w,m):cashOut(w,m)-equity(w,m); }
@@ -241,88 +298,114 @@ function walkAway(w){ if(!w.owns)return null;
   for(let m=1;m<=96;m++) if(equity(w,m)>=0) return m; return null; }
 
 // ---- chart ----
-const PAD={l:58,r:14,t:14,b:34}, CW=920, CH=430, PW=CW-PAD.l-PAD.r, PH=CH-PAD.t-PAD.b;
-function px(m){return PAD.l + m/96*PW;}
-function py(v,max){return PAD.t + (1-v/max)*PH;}
+const PAD={l:58,r:96,t:14,b:34}, CW=920, CH=430, PW=CW-PAD.l-PAD.r, PH=CH-PAD.t-PAD.b;
+function px(m){return PAD.l+m/96*PW;}
+function py(v,max){return PAD.t+(1-v/max)*PH;}
 function drawChart(){
+  VIS=WORLDS.filter(w=>!hidden.has(w.key));
   let ymax=0;
-  for(const w of WORLDS) for(let m=0;m<=96;m++) ymax=Math.max(ymax,value(w,m));
-  ymax=Math.ceil(ymax/10000)*10000;
+  for(const w of VIS) for(let m=0;m<=96;m++) ymax=Math.max(ymax,value(w,m));
+  ymax=Math.max(10000,Math.ceil(ymax/10000)*10000); CHARTMAX=ymax;
   let s=`<g font-size="11" fill="${getCSS('--muted')}">`;
-  // y gridlines
   for(let v=0;v<=ymax;v+=10000){const y=py(v,ymax);
     s+=`<line x1="${PAD.l}" y1="${y}" x2="${CW-PAD.r}" y2="${y}" stroke="${getCSS('--line')}"/>`;
     s+=`<text x="${PAD.l-7}" y="${y+3}" text-anchor="end">$${v/1000}k</text>`;}
-  // x gridlines
   for(const m of [0,12,24,36,48,60,72,84,96]){const x=px(m);
     s+=`<line x1="${x}" y1="${PAD.t}" x2="${x}" y2="${PAD.t+PH}" stroke="${getCSS('--line')}" stroke-dasharray="2 3"/>`;
     s+=`<text x="${x}" y="${PAD.t+PH+18}" text-anchor="middle">${m}</text>`;}
   s+=`<text x="${PAD.l+PW/2}" y="${CH-2}" text-anchor="middle">months</text>`;
-  // holding marker
   const mx=px(S.hold);
-  s+=`<line x1="${mx}" y1="${PAD.t}" x2="${mx}" y2="${PAD.t+PH}" stroke="${getCSS('--accent')}" stroke-width="1.4" opacity=".55"/>`;
+  s+=`<line x1="${mx}" y1="${PAD.t}" x2="${mx}" y2="${PAD.t+PH}" stroke="${getCSS('--accent')}" stroke-width="1.4" opacity=".5"/>`;
+  s+=`<text x="${mx}" y="${PAD.t-3}" text-anchor="middle" fill="${getCSS('--accent')}" font-size="10.5">hold ${S.hold}mo</text>`;
   s+=`</g>`;
   // lines
-  for(const w of WORLDS){
+  for(const w of VIS){
     let d='';
     for(let m=0;m<=96;m++){ d+=(m?'L':'M')+px(m).toFixed(1)+' '+py(value(w,m),ymax).toFixed(1)+' '; }
     const dash=(w.key==='lease'||w.key==='my627')?'stroke-dasharray="6 4"':'';
-    const wdt=w.key==='kia'?3:1.9;
-    s+=`<path d="${d}" fill="none" stroke="${w.color}" stroke-width="${wdt}" ${dash} opacity="${w.key==='lease'?.7:1}"/>`;
-    // dot at holding period
-    const vy=py(value(w,S.hold),ymax);
-    s+=`<circle cx="${mx}" cy="${vy}" r="3.4" fill="${w.color}"/>`;
+    const dim=hi&&hi!==w.key;
+    const wdt=w.key==='kia'?3.2:(hi===w.key?3:1.9);
+    s+=`<path d="${d}" fill="none" stroke="${w.color}" stroke-width="${wdt}" ${dash} opacity="${dim?.18:(w.key==='lease'?.75:1)}"/>`;
   }
+  // end-of-line labels (de-overlapped)
+  const labs=VIS.map(w=>({w,y:py(value(w,96),ymax)})).sort((a,b)=>a.y-b.y);
+  let prev=-99;
+  for(const L of labs){ if(L.y<prev+12) L.y=prev+12; prev=L.y;
+    const dim=hi&&hi!==L.w.key;
+    s+=`<text x="${px(96)+6}" y="${L.y+3.5}" font-size="10.5" font-weight="600" fill="${L.w.color}" opacity="${dim?.3:1}">${L.w.short} ${fmtk(value(L.w,96))}</text>`;
+  }
+  s+=`<g id="hoverlayer"></g>`;
   document.getElementById('chart').innerHTML=s;
-  // legend
+  // legend (clickable)
   document.getElementById('legend').innerHTML=WORLDS.map(w=>
-    `<span><i class="swatch" style="background:${w.color}"></i>${w.label}</span>`).join('');
+    `<span data-k="${w.key}" class="${hidden.has(w.key)?'off':''}"><i class="swatch" style="background:${w.color}"></i>${w.label}</span>`).join('');
+  document.querySelectorAll('#legend span').forEach(el=>{
+    el.onclick=()=>{const k=el.dataset.k; hidden.has(k)?hidden.delete(k):hidden.add(k); if(hidden.size>=WORLDS.length)hidden.delete(k); render();};
+    el.onmouseenter=()=>{hi=el.dataset.k; drawChart();};
+    el.onmouseleave=()=>{hi=null; drawChart();};
+  });
+}
+function fmtk(v){return '$'+Math.round(v/1000)+'k';}
+const fmt=v=>(v<0?'-':'')+'$'+Math.round(Math.abs(v)).toLocaleString();
+
+// ---- hover tooltip ----
+function onMove(ev){
+  const svg=document.getElementById('chart'), rect=svg.getBoundingClientRect();
+  const scale=CW/rect.width, vbx=(ev.clientX-rect.left)*scale;
+  let m=Math.round((vbx-PAD.l)/PW*96);
+  const tip=document.getElementById('tip');
+  if(m<0||m>96){tip.style.opacity=0;document.getElementById('hoverlayer').innerHTML='';return;}
+  const mx=px(m);
+  // hover guideline + dots
+  let g=`<line x1="${mx}" y1="${PAD.t}" x2="${mx}" y2="${PAD.t+PH}" stroke="${getCSS('--ink')}" stroke-width="1" opacity=".35"/>`;
+  const rows=VIS.map(w=>({w,v:value(w,m)})).sort((a,b)=>a.v-b.v);
+  for(const r of rows) g+=`<circle cx="${mx}" cy="${py(r.v,CHARTMAX)}" r="3.3" fill="${r.w.color}" stroke="#fff" stroke-width="1"/>`;
+  document.getElementById('hoverlayer').innerHTML=g;
+  // tooltip html (highest cost first = top line first)
+  const desc=[...rows].reverse();
+  let h=`<div class="th">Month ${m} · ${S.view==='cash'?'cash out':'true cost'}</div>`;
+  for(const r of desc) h+=`<div class="tr"><span><i style="background:${r.w.color}"></i>${r.w.short}</span><span>${fmt(r.v)}</span></div>`;
+  tip.innerHTML=h;
+  const wrap=document.getElementById('chartwrap').getBoundingClientRect();
+  let lx=ev.clientX-wrap.left+14, ty=ev.clientY-wrap.top+10;
+  if(lx>wrap.width-205) lx=ev.clientX-wrap.left-205;
+  tip.style.left=lx+'px'; tip.style.top=Math.max(4,ty)+'px'; tip.style.opacity=1;
 }
 
 // ---- table + pills + verdict ----
-const fmt=v=>(v<0?'-':'')+'$'+Math.round(Math.abs(v)).toLocaleString();
 function render(){
   drawChart();
   const k=WORLDS[0], hold=S.hold;
-  // ranked by value at holding period (lease flagged separately)
   const rows=WORLDS.map(w=>({w,val:value(w,hold),be:beatsKia(w),wa:walkAway(w),mo:monthlyAllIn(w)}));
   const ranked=[...rows].sort((a,b)=>a.val-b.val);
   const cheapestReal=ranked.filter(r=>r.w.owns&&r.w.key!=='kia')[0];
-  const kiaVal=value(k,hold);
-  // verdict
-  const save=kiaVal-cheapestReal.val;
+  const kiaVal=value(k,hold), save=kiaVal-cheapestReal.val;
   document.getElementById('verdict').innerHTML=
     `At <b>${hold} months</b>, the cheapest world you'd actually own is <b>${cheapestReal.w.label}</b> at `+
     `<b>${fmt(cheapestReal.val)}</b> — that's <b>${save>=0?fmt(save)+' less':fmt(-save)+' more'}</b> than keeping the Kia `+
     `(${fmt(kiaVal)}). ${save>=0?'Switching saves money':'Keeping the Kia is cheaper'} on this horizon and these charging assumptions.`;
-  // pills
   document.getElementById('pills').innerHTML=[
-    ['Cheapest (owned)',cheapestReal.w.label.replace(/—.*/,''),fmt(cheapestReal.val)],
+    ['Cheapest (owned)',cheapestReal.w.short,fmt(cheapestReal.val)],
     ['vs keep Kia', save>=0?'saves':'costs', (save>=0?'':'+')+fmt(Math.abs(save))],
     ['Kia gas now', 'per month', fmt(gasMonthly(k))],
     ['Kia, kept', 'net @'+hold+'mo', fmt(kiaVal)],
   ].map(p=>`<div class="pill"><div class="k">${p[0]}</div><div class="v">${p[2]} <small>${p[1]}</small></div></div>`).join('');
-  // table
   document.getElementById('hcol').textContent='Cost @ '+hold+'mo';
   document.getElementById('hold2').textContent=hold;
   const tb=document.querySelector('#tbl tbody'); tb.innerHTML='';
   for(const r of ranked){
-    const w=r.w, d=r.val-kiaVal;
-    const tr=document.createElement('tr');
+    const w=r.w, d=r.val-kiaVal, tr=document.createElement('tr');
     if(w.key===cheapestReal.w.key) tr.className='win'; else if(w.key==='kia') tr.className='kia';
     const tags=(w.tag?`<span class="tag">${w.tag}</span>`:'')+(w.tagBad?`<span class="tag bad">${w.tagBad}</span>`:'');
     tr.innerHTML=
       `<td><span class="dot" style="background:${w.color}"></span>${w.label}${tags}</td>`+
-      `<td>${fmt(w.upfront)}</td>`+
-      `<td>${fmt(r.mo)}</td>`+
-      `<td>${fmt(r.val)}</td>`+
+      `<td>${fmt(w.upfront)}</td><td>${fmt(r.mo)}</td><td>${fmt(r.val)}</td>`+
       `<td class="${w.key==='kia'?'':(d<0?'pos':'neg')}">${w.key==='kia'?'—':(d<0?fmt(d):'+'+fmt(d))}</td>`+
-      `<td>${r.be?('mo '+r.be):(w.key==='kia'?'—':'—')}</td>`+
+      `<td>${r.be?('mo '+r.be):'—'}</td>`+
       `<td>${w.owns?(r.wa?('mo '+r.wa):'>96'):'<span class="neg">never</span>'}</td>`+
       `<td>${w.owns?'yes':'<span class="neg">no</span>'}</td>`;
     tb.appendChild(tr);
   }
-  // per-world cards
   document.getElementById('cards').innerHTML=WORLDS.map(w=>{
     const p=w.type==='lease'?540:pmt(w.principal,w.apr,w.term);
     const breakdown=w.type==='lease'
@@ -334,12 +417,55 @@ function render(){
       <summary><span class="dot" style="background:${w.color}"></span>${w.label} — ${fmt(monthlyAllIn(w))}/mo all-in</summary>
       <div class="body">${breakdown}.<br>${w.note}</div></details>`;
   }).join('');
+  updateWorked();
 }
 
-// ---- wire controls ----
-function bindRange(id,key,fmtFn){const el=document.getElementById(id);const lab=document.getElementById(id+'V');
-  el.addEventListener('input',()=>{S[key]=parseFloat(el.value);lab.textContent=fmtFn(S[key]);
-    if(id==='hold')document.getElementById('hold2').textContent=S.hold;render();});}
+// ---- worked example (ties every equation to the table numbers) ----
+function num(v,d){return (Math.round(v*(d?10**d:1))/(d?10**d:1)).toLocaleString(undefined,{minimumFractionDigits:d||0,maximumFractionDigits:d||0});}
+function updateWorked(){
+  document.getElementById('exHold').textContent=S.hold;
+  const w=WORLDS.find(x=>x.key===exSel)||WORLDS[2], m=S.hold, box=document.getElementById('worked');
+  if(w.type==='lease'){
+    const op=w.insurance+S.ev, cash=(540+op)*m;
+    box.innerHTML=`<b>${w.label}</b> — a lease: no loan, no equity.\n`+
+      `run   = insurance ${w.insurance} + energy ${S.ev} = ${op}/mo\n`+
+      `cash(${m}) = (payment 540 + ${op}) × ${m} = <b>$${num(cash)}</b>\n`+
+      `equity = $0  (you own nothing)\n`+
+      `net    = cash − equity = <span class="ok">$${num(cash)}</span>   ← matches the table`;
+    return;
+  }
+  const i=w.apr/1200, n=w.term, P=w.principal, p=pmt(P,w.apr,n);
+  const pw=Math.pow(1+i,m), denom=1-Math.pow(1+i,-n);
+  const b=balance(P,w.apr,n,m), anch=resaleAnchors(w), r=interp(anch,m);
+  const gas=gasMonthly(w), en=energyMonthly(w), run=w.insurance+w.maint+gas+en;
+  const paidM=Math.min(m,n), cash=cashOut(w,m), eq=r-b, net=cash-eq;
+  // which two anchors bracket m, for resale interpolation
+  let ai=1; while(ai<MONTHS.length-1 && m>MONTHS[ai]) ai++;
+  const lo=MONTHS[ai-1], hiM=MONTHS[ai], t=(m-lo)/(hiM-lo);
+  const payLine = w.apr===0
+    ? `pmt   = P / n = ${num(P)} / ${n} = <b>$${num(p,2)}</b>   (0% APR)`
+    : `i     = APR/1200 = ${w.apr}/1200 = ${num(i,6)}\n`+
+      `pmt   = P·i / (1 − (1+i)^−n)\n`+
+      `      = ${num(P)} × ${num(i,6)} / (1 − ${num(Math.pow(1+i,-n),5)})\n`+
+      `      = ${num(P*i,2)} / ${num(denom,5)} = <b>$${num(p,2)}</b>`;
+  const balLine = m>=n
+    ? `b(${m}) = 0   (loan already paid off at month ${n})`
+    : `b(${m}) = P(1+i)^m − pmt·((1+i)^m −1)/i\n`+
+      `      = ${num(P)}×${num(pw,5)} − ${num(p,2)}×(${num(pw,5)}−1)/${num(i,6)} = <b>$${num(b)}</b>`;
+  box.innerHTML=
+    `<b>${w.label}</b>   P = $${num(P)}   n = ${n} mo   APR = ${w.apr}%\n`+
+    `${payLine}\n`+
+    `${balLine}\n`+
+    `resale(${m}) = straight line ${lo}→${hiM}mo : ${num(anch[ai-1])} + ${num(t,2)}×(${num(anch[ai])}−${num(anch[ai-1])}) = <b>$${num(r)}</b>\n`+
+    `run   = ins ${w.insurance} + maint ${w.maint}${gas>0?` + ${w.type==='phev'?'energy':'gas'} ${num(gas)}`:''}${en>0?` + energy ${en}`:''} = ${num(run)}/mo\n`+
+    `cash(${m}) = down ${num(w.upfront)} + pmt×min(${m},${n})=${num(p*paidM)} + run×${m}=${num(run*m)} = <b>$${num(cash)}</b>\n`+
+    `equity = resale − b = ${num(r)} − ${num(b)} = $${num(eq)}\n`+
+    `net    = cash − equity = ${num(cash)} − ${num(eq)} = <span class="ok">$${num(net)}</span>   ← matches the “Cost @ ${m}mo” cell`;
+}
+
+// ---- controls ----
+function bindRange(id,key,fmtFn){const el=document.getElementById(id),lab=document.getElementById(id+'V');
+  el.addEventListener('input',()=>{S[key]=parseFloat(el.value);lab.textContent=fmtFn(S[key]);render();});}
 bindRange('hold','hold',v=>v);
 bindRange('gas','gas',v=>v.toFixed(2));
 bindRange('miles','miles',v=>Math.round(v).toLocaleString());
@@ -348,9 +474,16 @@ document.querySelectorAll('#evCase button').forEach(b=>b.addEventListener('click
   S.ev=parseFloat(b.dataset.v);
   document.getElementById('evV').textContent=(S.ev==50?'Cheap':S.ev==120?'Winter/paid':'Office fails')+' · $'+S.ev+'/mo';render();}));
 document.querySelectorAll('#view button').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('#view button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-  S.view=b.dataset.v;render();}));
+  document.querySelectorAll('#view button').forEach(x=>x.classList.remove('on'));b.classList.add('on');S.view=b.dataset.v;render();}));
 document.getElementById('conserv').addEventListener('change',e=>{S.conserv=e.target.checked;render();});
+// worked-example world picker
+const sel=document.getElementById('exWorld');
+sel.innerHTML=WORLDS.map(w=>`<option value="${w.key}" ${w.key===exSel?'selected':''}>${w.label}</option>`).join('');
+sel.addEventListener('change',()=>{exSel=sel.value;updateWorked();});
+// chart hover
+const svg=document.getElementById('chart');
+svg.addEventListener('mousemove',onMove);
+svg.addEventListener('mouseleave',()=>{document.getElementById('tip').style.opacity=0;const h=document.getElementById('hoverlayer');if(h)h.innerHTML='';});
 render();
 </script>
 </body>
