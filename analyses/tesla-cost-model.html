@@ -134,6 +134,15 @@
         </div>
       </div>
       <div class="ctl">
+        <label>New-car loan term <b id="loanTermV">72 mo</b></label>
+        <div class="seg small" id="loanTerm">
+          <button data-v="48">48 mo</button>
+          <button data-v="60">60 mo</button>
+          <button data-v="72" class="on">72 mo</button>
+        </div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Applies to every financed switch (the Kia keeps its 35 months left; the lease its 36). Shorter term → higher payment, less total interest, equity sooner. APR is held fixed across terms (real quotes often shave the rate a little on shorter loans); the per-world notes quote the 72-mo base.</div>
+      </div>
+      <div class="ctl">
         <label>Inflation / discount rate <b><span id="inflV">0.0</span>%/yr</b></label>
         <input type="range" id="infl" min="0" max="8" step="0.1" value="0">
         <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Re-prices every future dollar into <i>today's</i> money (present value). <b>0% = raw nominal dollars</b> (as validated). Higher rate shrinks far-off costs <i>and</i> resale — it modestly favors keeping the Kia, whose cost is spread out vs the EV's front-loaded price.</div>
@@ -305,7 +314,7 @@ function balance(P,apr,n,m){if(m>=n)return 0;const i=apr/1200;const p=pmt(P,apr,
 function interp(anchors,m){if(m<=0)return anchors[0];if(m>=96)return anchors[7];
   for(let k=1;k<MONTHS.length;k++){if(m<=MONTHS[k]){const t=(m-MONTHS[k-1])/(MONTHS[k]-MONTHS[k-1]);
     return anchors[k-1]+t*(anchors[k]-anchors[k-1]);}}}
-const S={hold:60,gas:4.60,miles:23400,ev:50,view:'net',conserv:false,tradeCredit:true,infl:0,insMult:1};
+const S={hold:60,gas:4.60,miles:23400,ev:50,view:'net',conserv:false,tradeCredit:true,infl:0,insMult:1,loanTerm:72};
 const hidden=new Set(); let hi=null, exSel='my099', CHARTMAX=0, VIS=[];
 const FEAT=new Set(['kia','my099']); // the two lines spotlighted on the chart by default (keep-the-Kia vs the recommended new buy)
 // WA reduces the taxable price by the trade-in allowance (~$21k Kia) → ~$2,320 less tax on every dealer-trade switch.
@@ -313,6 +322,7 @@ WORLDS.forEach(w=>{ if(w.key!=='kia'&&w.key!=='lease') w.tradeIn=true; });
 function prin(w){ return Math.max(0, w.principal - (w.tradeIn&&S.tradeCredit?2320:0)); }
 function df(t){ const r=S.infl/100; return r?1/Math.pow(1+r,t/12):1; } // present-value factor for a dollar spent at month t
 function insRaw(w){ return w.insurance*S.insMult; }                    // per-car insurance, scaled to your own quote level
+function termOf(w){ return (w.key==='kia'||w.type==='lease')?w.term:S.loanTerm; } // new-car loan length you can flex; Kia keeps its 35 left, lease its 36
 
 function resaleAnchors(w){
   if(!S.conserv||!w.owns)return w.resale;
@@ -325,18 +335,18 @@ function gasMonthly(w){
   return 0;
 }
 function energyMonthly(w){ return (w.type==='ev'||w.type==='lease')?S.ev:0; }
-function monthlyAllIn(w){ const p=w.type==='lease'?540:pmt(prin(w),w.apr,w.term);
+function monthlyAllIn(w){ const p=w.type==='lease'?540:pmt(prin(w),w.apr,termOf(w));
   return p+insRaw(w)+w.maint+gasMonthly(w)+energyMonthly(w); }
 // total cash out by month m, each month discounted to today's dollars when an inflation rate is set (df=1 at 0%)
 function cashOut(w,m){
   const op=insRaw(w)+w.maint+gasMonthly(w)+energyMonthly(w);
-  const p=w.type==='lease'?540:pmt(prin(w),w.apr,w.term);
-  const term=w.type==='lease'?m:w.term;             // a lease keeps paying for every month you hold it
+  const p=w.type==='lease'?540:pmt(prin(w),w.apr,termOf(w));
+  const term=w.type==='lease'?m:termOf(w);          // a lease keeps paying for every month you hold it
   let pv=w.type==='lease'?0:w.upfront;               // the down payment is spent today (t=0) → never discounted
   for(let t=1;t<=m;t++) pv+=((t<=term?p:0)+op)*df(t);
   return pv;
 }
-function equity(w,m){ if(!w.owns)return 0; return interp(resaleAnchors(w),m)-balance(prin(w),w.apr,w.term,m); }
+function equity(w,m){ if(!w.owns)return 0; return interp(resaleAnchors(w),m)-balance(prin(w),w.apr,termOf(w),m); }
 // net = cash out − resale equity; equity is a future receipt, so discount it to today's dollars too
 function value(w,m){ return S.view==='cash'?cashOut(w,m):cashOut(w,m)-equity(w,m)*df(m); }
 function beatsKia(w){ if(w.key==='kia')return null; const k=WORLDS[0];
@@ -469,7 +479,7 @@ function render(){
     tb.appendChild(tr);
   }
   document.getElementById('cards').innerHTML=WORLDS.map(w=>{
-    const p=w.type==='lease'?540:pmt(prin(w),w.apr,w.term);
+    const p=w.type==='lease'?540:pmt(prin(w),w.apr,termOf(w));
     const breakdown=w.type==='lease'
       ? `lease $540 + insurance $${Math.round(insRaw(w))} + energy $${S.ev} = <b>${fmt(monthlyAllIn(w))}/mo</b>, $0 equity`
       : `payment ${fmt(p)} + insurance $${Math.round(insRaw(w))} + maint $${w.maint}`+
@@ -498,7 +508,7 @@ function updateWorked(){
       `net    = cash − equity = <span class="ok">$${num(cash)}</span>   ← matches the table`;
     return;
   }
-  const i=w.apr/1200, n=w.term, P=prin(w), p=pmt(P,w.apr,n);
+  const i=w.apr/1200, n=termOf(w), P=prin(w), p=pmt(P,w.apr,n);
   const pw=Math.pow(1+i,m), denom=1-Math.pow(1+i,-n);
   const b=balance(P,w.apr,n,m), anch=resaleAnchors(w), r=interp(anch,m);
   const gas=gasMonthly(w), en=energyMonthly(w), ins=insRaw(w), run=ins+w.maint+gas+en;
@@ -542,6 +552,9 @@ document.querySelectorAll('#evCase button').forEach(b=>b.addEventListener('click
   document.querySelectorAll('#evCase button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
   S.ev=parseFloat(b.dataset.v);
   document.getElementById('evV').textContent=(S.ev==50?'Cheap':S.ev==120?'Winter/paid':'Office fails')+' · $'+S.ev+'/mo';render();}));
+document.querySelectorAll('#loanTerm button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#loanTerm button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  S.loanTerm=parseInt(b.dataset.v);document.getElementById('loanTermV').textContent=S.loanTerm+' mo';render();}));
 document.querySelectorAll('#view button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('#view button').forEach(x=>x.classList.remove('on'));b.classList.add('on');S.view=b.dataset.v;render();}));
 document.getElementById('conserv').addEventListener('change',e=>{S.conserv=e.target.checked;render();});
