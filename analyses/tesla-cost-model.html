@@ -54,6 +54,7 @@
   .legend span{display:inline-flex;align-items:center;gap:6px;color:var(--ink);cursor:pointer;
     padding:3px 8px;border:1px solid var(--line);border-radius:20px;background:#fff;user-select:none;transition:.12s}
   .legend span.off{opacity:.4;text-decoration:line-through}
+  .legend span.feat{border-color:var(--ink);font-weight:700}
   .swatch{width:14px;height:3px;border-radius:2px;display:inline-block}
   .hint{font-size:12px;color:var(--muted);margin-top:8px}
   /* table */
@@ -95,8 +96,21 @@
 
   <div class="verdict" id="verdict">…</div>
 
+  <div class="pills" id="pills"></div>
+  <div style="height:18px"></div>
+
   <div class="card">
-    <h2>Your assumptions</h2>
+    <h2>Cumulative cost over time — where the lines cross is break-even vs the Kia</h2>
+    <div class="chartwrap" id="chartwrap">
+      <svg id="chart" viewBox="0 0 920 430" role="img" aria-label="cumulative cost chart"></svg>
+      <div class="tip" id="tip"></div>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="hint"><b>Keep&nbsp;the&nbsp;Kia</b> and <b>Model&nbsp;Y&nbsp;@&nbsp;0.99%</b> are highlighted; the other worlds are faded. Hover the chart to read every world at that month; hover a legend chip to spotlight that line, or click it to hide/show. The red vertical line is your holding period.</div>
+  </div>
+
+  <div class="card">
+    <h2>Your assumptions <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">— slide and the table below (and chart above) update live</span></h2>
     <div class="controls">
       <div class="ctl">
         <label>Holding period <b><span id="holdV">60</span> mo</b></label>
@@ -130,19 +144,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="pills" id="pills"></div>
-  <div style="height:18px"></div>
-
-  <div class="card">
-    <h2>Cumulative cost over time — where the lines cross is break-even vs the Kia</h2>
-    <div class="chartwrap" id="chartwrap">
-      <svg id="chart" viewBox="0 0 920 430" role="img" aria-label="cumulative cost chart"></svg>
-      <div class="tip" id="tip"></div>
-    </div>
-    <div class="legend" id="legend"></div>
-    <div class="hint">Hover the chart to read every world at that month. Click a legend chip to hide/show a line. The red vertical line is your holding period.</div>
   </div>
 
   <div class="card">
@@ -295,6 +296,7 @@ function interp(anchors,m){if(m<=0)return anchors[0];if(m>=96)return anchors[7];
     return anchors[k-1]+t*(anchors[k]-anchors[k-1]);}}}
 const S={hold:60,gas:4.60,miles:23400,ev:50,view:'net',conserv:false,tradeCredit:true};
 const hidden=new Set(); let hi=null, exSel='my099', CHARTMAX=0, VIS=[];
+const FEAT=new Set(['kia','my099']); // the two lines spotlighted on the chart by default (keep-the-Kia vs the recommended new buy)
 // WA reduces the taxable price by the trade-in allowance (~$21k Kia) → ~$2,320 less tax on every dealer-trade switch.
 WORLDS.forEach(w=>{ if(w.key!=='kia'&&w.key!=='lease') w.tradeIn=true; });
 function prin(w){ return Math.max(0, w.principal - (w.tradeIn&&S.tradeCredit?2320:0)); }
@@ -352,9 +354,12 @@ function drawChart(){
     let d='';
     for(let m=0;m<=96;m++){ d+=(m?'L':'M')+px(m).toFixed(1)+' '+py(value(w,m),ymax).toFixed(1)+' '; }
     const dash=(w.key==='lease'||w.key==='my627')?'stroke-dasharray="6 4"':'';
-    const dim=hi&&hi!==w.key;
-    const wdt=w.key==='kia'?3.2:(hi===w.key?3:1.9);
-    s+=`<path d="${d}" fill="none" stroke="${w.color}" stroke-width="${wdt}" ${dash} opacity="${dim?.18:(w.key==='lease'?.75:1)}"/>`;
+    const feat=FEAT.has(w.key);
+    // at rest the two focus lines (Kia + MY 0.99%) stay bold and the rest fade; hovering a legend chip overrides.
+    const dim=hi?(hi!==w.key):!feat;
+    const wdt=(hi===w.key)?3.4:(feat?3.3:1.7);
+    const op=dim?(hi?.16:.4):(w.key==='lease'?.85:1);
+    s+=`<path d="${d}" fill="none" stroke="${w.color}" stroke-width="${wdt}" ${dash} opacity="${op}"/>`;
   }
   // end-of-line labels (de-overlapped)
   const labs=VIS.map(w=>({w,y:py(value(w,96),ymax),ey:py(value(w,96),ymax)})).sort((a,b)=>a.y-b.y);
@@ -362,7 +367,7 @@ function drawChart(){
   for(const L of labs){ if(L.y<prev+12) L.y=prev+12; prev=L.y; }          // pass 1: push down
   const over=(labs.length?labs[labs.length-1].y:0)-(PAD.t+PH);
   if(over>0) for(const L of labs) L.y-=over;                               // pass 2: lift stack back into the plot
-  for(const L of labs){ const dim=hi&&hi!==L.w.key;
+  for(const L of labs){ const dim=hi?(hi!==L.w.key):!FEAT.has(L.w.key);
     if(Math.abs(L.y-L.ey)>5) s+=`<line x1="${px(96)+1}" y1="${L.ey}" x2="${px(96)+5}" y2="${L.y+0.5}" stroke="${L.w.color}" stroke-width="0.8" opacity="${dim?.3:.6}"/>`;
     s+=`<text x="${px(96)+6}" y="${L.y+3.5}" font-size="10.5" font-weight="600" fill="${L.w.color}" opacity="${dim?.3:1}">${L.w.short} ${fmtk(value(L.w,96))}</text>`;
   }
@@ -370,7 +375,7 @@ function drawChart(){
   document.getElementById('chart').innerHTML=s;
   // legend (clickable)
   document.getElementById('legend').innerHTML=WORLDS.map(w=>
-    `<span data-k="${w.key}" class="${hidden.has(w.key)?'off':''}"><i class="swatch" style="background:${w.color}"></i>${w.label}</span>`).join('');
+    `<span data-k="${w.key}" class="${hidden.has(w.key)?'off':''} ${FEAT.has(w.key)?'feat':''}"><i class="swatch" style="background:${w.color}"></i>${w.label}</span>`).join('');
   document.querySelectorAll('#legend span').forEach(el=>{
     el.onclick=()=>{const k=el.dataset.k; hidden.has(k)?hidden.delete(k):hidden.add(k); if(hidden.size>=WORLDS.length)hidden.delete(k); render();};
     el.onmouseenter=()=>{hi=el.dataset.k; drawChart();};
