@@ -103,8 +103,9 @@
         <input type="range" id="hold" min="12" max="96" step="1" value="60">
       </div>
       <div class="ctl">
-        <label>Gas price <b>$<span id="gasV">5.61</span>/gal</b></label>
-        <input type="range" id="gas" min="3.50" max="6.50" step="0.01" value="5.61">
+        <label>Gas price <b>$<span id="gasV">4.60</span>/gal</b></label>
+        <input type="range" id="gas" min="3.50" max="6.50" step="0.01" value="4.60">
+        <div style="font-size:11.5px;color:var(--muted);margin-top:3px">WA multi-year baseline ~$4.30–4.90 · mid-2026 spiked to ~$5.61 (Hormuz). Set what you expect to <i>average</i> over your hold — the Kia's lead is the most gas-sensitive number here.</div>
       </div>
       <div class="ctl">
         <label>Miles driven <b><span id="milesV">23,400</span>/yr</b></label>
@@ -124,6 +125,7 @@
             <button data-v="net" class="on">True cost (net of resale)</button>
             <button data-v="cash">Cash out of pocket</button>
           </div>
+          <label class="chk"><input type="checkbox" id="tradeCredit" checked> WA trade-in tax credit (−$2,320/switch)</label>
           <label class="chk"><input type="checkbox" id="conserv"> Conservative resale (price-cut + high-mileage haircut)</label>
         </div>
       </div>
@@ -199,6 +201,25 @@
   </div>
 
   <div class="card">
+    <h2>Validated — what to trust, and the known limits</h2>
+    <p style="margin:0 0 10px;font-size:13.5px">Independently checked by a multi-agent adversarial pass (recompute · plot-logic · finance methodology · market data).
+      <b>Verdict: the math is correct</b> (every figure reproduces to the cent, including the new 6% row) and <b>the ranking is robust</b> —
+      but the headline <i>dollar gap</i> is gas-sensitive, so don't anchor on it. Corrections already applied + the limits to keep in mind:</p>
+    <ul class="care" style="font-size:12.8px">
+      <li><b style="color:var(--good)">Fixed · gas default.</b> Was $5.61 (a mid-2026 Hormuz spike); now $4.60 (WA multi-year baseline). The Kia is the most gas-sensitive world, so this is the single biggest lever — slider it to the price you expect to <i>average</i>.</li>
+      <li><b style="color:var(--good)">Fixed · WA trade-in tax credit</b> (toggle, on). WA taxes (price − trade-in allowance), so trading the ~$21k Kia saves ~$2,320 tax on every switch. Applied uniformly; favors switching, partly offsetting the gas fix.</li>
+      <li><b style="color:var(--good)">Fixed · chart.</b> Y-axis is locked to all worlds (hiding a line no longer re-slopes the rest); the right-edge hover dead-zone and end-label overlap are gone.</li>
+      <li><b style="color:var(--warn)">Rejected (false alarm).</b> A validator claimed 4 EV rows carry no sales tax — they do: WA tax is baked into every switch's OTD price (e.g. MY 0.99% $64,011 = $51,880×1.1105 − $2,569 + $9,000). Not double-counted.</li>
+      <li><b>6% used-MY APR is a best case</b> (credit-union / promo). A conventional 720 buyer often sees ~9–10% — that's the other row. Plan for the 6–10% band.</li>
+      <li><b>No time-value-of-money.</b> Nominal dollars; discounting at ~6% moves the 60-month gap only ~$300–700 — ≈neutral at your horizon.</li>
+      <li><b>Resale & energy are the soft inputs.</b> Curves don't auto-haircut for your ~2× mileage (toggle <i>Conservative resale</i> — it's ~symmetric, doesn't change the winner); EV energy is a flat preset (free office charging), so the miles slider scales gas but not EV charging.</li>
+      <li><b>“Net cost” counts resale equity you can't spend</b> with one car + ~$0 cash. Cross-check the <i>monthly all-in</i> and <i>walk-away-whole</i> columns before deciding.</li>
+    </ul>
+    <p style="margin:10px 0 0;font-size:13px"><b>Bottom line:</b> reliable for the <b>pick</b> — used MY @ 6% cheapest to own, then Ioniq 5 @ 0% / MY @ 0.99%; the lease is pure rent. The <i>size</i> of the edge (used MY @ 6% vs keeping the Kia, 5-yr net) swings with assumptions:
+      <b>~$11.7k</b> at these defaults · <b>~$10.5k</b> at gas $4.30 · <b>~$5.5k</b> under a conservative stack (low gas + winter $120 charging + conservative resale) · and roughly <b>break-even</b> in the worst realistic case (a conventional ~10% used rate <i>plus</i> all of the above) or <b>~$3.7k</b> if the office charger fails. Translation: the switch wins comfortably <i>if</i> you land a low rate and keep cheap charging; it's a coin flip if you finance at 10% into a pessimistic world. The 6% rate and the charging are the whole bet.</p>
+  </div>
+
+  <div class="card">
     <h2>What flips the answer — read before deciding</h2>
     <ul class="care">
       <li><b>Holding period is the biggest lever.</b> Under ~36 months every <i>buy</i> is still underwater (the rolled $9k Kia
@@ -238,7 +259,7 @@ const WORLDS=[
   {key:'ioniq', label:'Ioniq 5 — buy @ 0%', short:'Ioniq 0%', type:'ev', color:getCSS('--ioniq'), tag:'CarPlay',
    upfront:0, principal:53531, apr:0, term:72, insurance:200, maint:30,
    resale:[40100,28000,23000,19000,15500,13000,10500,8000], owns:true,
-   note:'Principal = $44,531 OTD (incl. tax) + $9,000 rolled Kia gap, financed at 0%/72 = $743/mo. Cheapest payment of any buy, cheapest insurance, has Apple CarPlay. Catch: Hyundai depreciates fast, so you stay underwater until ~month 53.'},
+   note:'Principal = $44,531 OTD (incl. WA tax) − ~$2,320 trade-in tax credit + $9,000 rolled Kia gap, financed at 0%/72. Cheapest payment of any buy, cheapest insurance, has Apple CarPlay. Catch: Hyundai depreciates fast, so you stay underwater until ~month 53.'},
   {key:'my099', label:'New Model Y @ 0.99%', short:'MY 0.99%', type:'ev', color:getCSS('--my099'),
    upfront:2569, principal:64011, apr:0.99, term:72, insurance:230, maint:30,
    resale:[57580,45000,39000,34000,30000,26000,22000,18000], owns:true,
@@ -246,7 +267,7 @@ const WORLDS=[
   {key:'usedmy6',label:'Used Model Y @ 6%', short:'Used MY 6%', type:'ev', color:getCSS('--usedmy6'),
    upfront:0, principal:46757, apr:6, term:72, insurance:230, maint:30,
    resale:[34000,30000,26000,23000,20000,18000,15500,13000], owns:true,
-   note:'Same car as the 10% row but at a 6% APR (more realistic for a strong-credit buyer who shops a credit union / captive promo). Principal = $37,757 OTD + $9,000 rolled gap → ~$775/mo. The lower rate makes it the cheapest payment of any Model Y and pays down the $9k faster — walk-away-whole arrives sooner than the 10% case. No CarPlay, no used-EV credit.'},
+   note:'Same car as the 10% row but at a 6% APR — a BEST-CASE rate (credit-union / green-EV / captive promo). A conventional 720 buyer on a used EV more often sees ~9–10% (the other row) — treat 6% as the shop-around reward, and plan for the 6–10% band. Principal = $37,757 OTD (incl. tax) − ~$2,320 trade-in credit + $9,000 gap. The low rate makes it the cheapest payment of any Model Y and pays the $9k down faster, so walk-away-whole comes sooner than the 10% case. No CarPlay, no used-EV credit.'},
   {key:'usedmy',label:'Used Model Y @ ~10%', short:'Used MY 10%', type:'ev', color:getCSS('--usedmy'),
    upfront:0, principal:46757, apr:10, term:72, insurance:230, maint:30,
    resale:[34000,30000,26000,23000,20000,18000,15500,13000], owns:true,
@@ -254,11 +275,11 @@ const WORLDS=[
   {key:'phev', label:'PHEV (RAV4-class) — est.', short:'PHEV', type:'phev', color:getCSS('--phev'), tag:'estimate',
    upfront:0, principal:59000, apr:6, term:72, insurance:220, maint:55,
    resale:[50000,40000,35000,31000,27000,24000,21000,17000], owns:true,
-   note:'ESTIMATE — no hard quote. ~$50k OTD + $9k gap at ~6%/72 = $978/mo. Weekday miles on a 120V outlet (~42 mi EV range), weekend highway on gas (~38 mpg). Lowest charging risk (no L2 dependency) but the priciest payment + slow depreciation make it the money laggard.'},
+   note:'ESTIMATE — no hard quote. ~$50k OTD + $9k gap at ~6%/72. Weekday miles on a 120V outlet (~42 mi EV range), weekend highway on gas (~38 mpg). Lowest charging risk (no L2 dependency) but the priciest payment + slow depreciation make it the money laggard.'},
   {key:'my627', label:'New Model Y @ 6.27%', short:'MY 6.27%', type:'ev', color:getCSS('--my627'),
    upfront:0, principal:66580, apr:6.27, term:72, insurance:230, maint:30,
    resale:[57580,45000,39000,34000,30000,26000,22000,18000], owns:true,
-   note:'Same car, fallback rate, no down. $1,112/mo payment is the killer — only beats the Kia (best energy) at ~month 77, never in the winter case. A ~23% loan-interest deduction helps ONLY if you itemize/qualify (not modeled).'},
+   note:'Same car, fallback rate, no down. The ~$1,070/mo payment is the killer — only beats the Kia (best energy) at ~month 77, never in the winter case. A ~23% loan-interest deduction helps ONLY if you itemize/qualify (not modeled).'},
   {key:'lease', label:'Ioniq 5 — lease', short:'Lease', type:'lease', color:getCSS('--lease'), tag:'CarPlay', tagBad:'rent',
    upfront:0, principal:0, apr:0, term:36, insurance:200, maint:0,
    resale:[0,0,0,0,0,0,0,0], owns:false,
@@ -272,8 +293,11 @@ function balance(P,apr,n,m){if(m>=n)return 0;const i=apr/1200;const p=pmt(P,apr,
 function interp(anchors,m){if(m<=0)return anchors[0];if(m>=96)return anchors[7];
   for(let k=1;k<MONTHS.length;k++){if(m<=MONTHS[k]){const t=(m-MONTHS[k-1])/(MONTHS[k]-MONTHS[k-1]);
     return anchors[k-1]+t*(anchors[k]-anchors[k-1]);}}}
-const S={hold:60,gas:5.61,miles:23400,ev:50,view:'net',conserv:false};
+const S={hold:60,gas:4.60,miles:23400,ev:50,view:'net',conserv:false,tradeCredit:true};
 const hidden=new Set(); let hi=null, exSel='my099', CHARTMAX=0, VIS=[];
+// WA reduces the taxable price by the trade-in allowance (~$21k Kia) → ~$2,320 less tax on every dealer-trade switch.
+WORLDS.forEach(w=>{ if(w.key!=='kia'&&w.key!=='lease') w.tradeIn=true; });
+function prin(w){ return Math.max(0, w.principal - (w.tradeIn&&S.tradeCredit?2320:0)); }
 
 function resaleAnchors(w){
   if(!S.conserv||!w.owns)return w.resale;
@@ -286,15 +310,15 @@ function gasMonthly(w){
   return 0;
 }
 function energyMonthly(w){ return (w.type==='ev'||w.type==='lease')?S.ev:0; }
-function monthlyAllIn(w){ const p=w.type==='lease'?540:pmt(w.principal,w.apr,w.term);
+function monthlyAllIn(w){ const p=w.type==='lease'?540:pmt(prin(w),w.apr,w.term);
   return p+w.insurance+w.maint+gasMonthly(w)+energyMonthly(w); }
 function cashOut(w,m){
   const op=w.insurance+w.maint+gasMonthly(w)+energyMonthly(w);
   if(w.type==='lease') return (540+op)*m;
-  const p=pmt(w.principal,w.apr,w.term);
+  const p=pmt(prin(w),w.apr,w.term);
   return w.upfront+p*Math.min(m,w.term)+op*m;
 }
-function equity(w,m){ if(!w.owns)return 0; return interp(resaleAnchors(w),m)-balance(w.principal,w.apr,w.term,m); }
+function equity(w,m){ if(!w.owns)return 0; return interp(resaleAnchors(w),m)-balance(prin(w),w.apr,w.term,m); }
 function value(w,m){ return S.view==='cash'?cashOut(w,m):cashOut(w,m)-equity(w,m); }
 function beatsKia(w){ if(w.key==='kia')return null; const k=WORLDS[0];
   for(let m=1;m<=96;m++) if(value(w,m)<value(k,m)) return m; return null; }
@@ -307,8 +331,9 @@ function px(m){return PAD.l+m/96*PW;}
 function py(v,max){return PAD.t+(1-v/max)*PH;}
 function drawChart(){
   VIS=WORLDS.filter(w=>!hidden.has(w.key));
+  // y-axis is locked to ALL worlds (not just visible) so hiding lines never re-slopes the survivors.
   let ymax=0;
-  for(const w of VIS) for(let m=0;m<=96;m++) ymax=Math.max(ymax,value(w,m));
+  for(const w of WORLDS) for(let m=0;m<=96;m++) ymax=Math.max(ymax,value(w,m));
   ymax=Math.max(10000,Math.ceil(ymax/10000)*10000); CHARTMAX=ymax;
   let s=`<g font-size="11" fill="${getCSS('--muted')}">`;
   for(let v=0;v<=ymax;v+=10000){const y=py(v,ymax);
@@ -332,10 +357,13 @@ function drawChart(){
     s+=`<path d="${d}" fill="none" stroke="${w.color}" stroke-width="${wdt}" ${dash} opacity="${dim?.18:(w.key==='lease'?.75:1)}"/>`;
   }
   // end-of-line labels (de-overlapped)
-  const labs=VIS.map(w=>({w,y:py(value(w,96),ymax)})).sort((a,b)=>a.y-b.y);
+  const labs=VIS.map(w=>({w,y:py(value(w,96),ymax),ey:py(value(w,96),ymax)})).sort((a,b)=>a.y-b.y);
   let prev=-99;
-  for(const L of labs){ if(L.y<prev+12) L.y=prev+12; prev=L.y;
-    const dim=hi&&hi!==L.w.key;
+  for(const L of labs){ if(L.y<prev+12) L.y=prev+12; prev=L.y; }          // pass 1: push down
+  const over=(labs.length?labs[labs.length-1].y:0)-(PAD.t+PH);
+  if(over>0) for(const L of labs) L.y-=over;                               // pass 2: lift stack back into the plot
+  for(const L of labs){ const dim=hi&&hi!==L.w.key;
+    if(Math.abs(L.y-L.ey)>5) s+=`<line x1="${px(96)+1}" y1="${L.ey}" x2="${px(96)+5}" y2="${L.y+0.5}" stroke="${L.w.color}" stroke-width="0.8" opacity="${dim?.3:.6}"/>`;
     s+=`<text x="${px(96)+6}" y="${L.y+3.5}" font-size="10.5" font-weight="600" fill="${L.w.color}" opacity="${dim?.3:1}">${L.w.short} ${fmtk(value(L.w,96))}</text>`;
   }
   s+=`<g id="hoverlayer"></g>`;
@@ -356,9 +384,10 @@ const fmt=v=>(v<0?'-':'')+'$'+Math.round(Math.abs(v)).toLocaleString();
 function onMove(ev){
   const svg=document.getElementById('chart'), rect=svg.getBoundingClientRect();
   const scale=CW/rect.width, vbx=(ev.clientX-rect.left)*scale;
-  let m=Math.round((vbx-PAD.l)/PW*96);
+  let m=Math.max(0,Math.min(96,Math.round((vbx-PAD.l)/PW*96)));
   const tip=document.getElementById('tip');
-  if(m<0||m>96){tip.style.opacity=0;document.getElementById('hoverlayer').innerHTML='';return;}
+  // only hide when truly left of the y-axis; the right label gutter still reads as month 96.
+  if(vbx<PAD.l-14){tip.style.opacity=0;document.getElementById('hoverlayer').innerHTML='';return;}
   const mx=px(m);
   // hover guideline + dots
   let g=`<line x1="${mx}" y1="${PAD.t}" x2="${mx}" y2="${PAD.t+PH}" stroke="${getCSS('--ink')}" stroke-width="1" opacity=".35"/>`;
@@ -411,7 +440,7 @@ function render(){
     tb.appendChild(tr);
   }
   document.getElementById('cards').innerHTML=WORLDS.map(w=>{
-    const p=w.type==='lease'?540:pmt(w.principal,w.apr,w.term);
+    const p=w.type==='lease'?540:pmt(prin(w),w.apr,w.term);
     const breakdown=w.type==='lease'
       ? `lease $540 + insurance $${w.insurance} + energy $${S.ev} = <b>${fmt(monthlyAllIn(w))}/mo</b>, $0 equity`
       : `payment ${fmt(p)} + insurance $${w.insurance} + maint $${w.maint}`+
@@ -438,7 +467,7 @@ function updateWorked(){
       `net    = cash − equity = <span class="ok">$${num(cash)}</span>   ← matches the table`;
     return;
   }
-  const i=w.apr/1200, n=w.term, P=w.principal, p=pmt(P,w.apr,n);
+  const i=w.apr/1200, n=w.term, P=prin(w), p=pmt(P,w.apr,n);
   const pw=Math.pow(1+i,m), denom=1-Math.pow(1+i,-n);
   const b=balance(P,w.apr,n,m), anch=resaleAnchors(w), r=interp(anch,m);
   const gas=gasMonthly(w), en=energyMonthly(w), run=w.insurance+w.maint+gas+en;
@@ -480,6 +509,7 @@ document.querySelectorAll('#evCase button').forEach(b=>b.addEventListener('click
 document.querySelectorAll('#view button').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('#view button').forEach(x=>x.classList.remove('on'));b.classList.add('on');S.view=b.dataset.v;render();}));
 document.getElementById('conserv').addEventListener('change',e=>{S.conserv=e.target.checked;render();});
+document.getElementById('tradeCredit').addEventListener('change',e=>{S.tradeCredit=e.target.checked;render();});
 // worked-example world picker
 const sel=document.getElementById('exWorld');
 sel.innerHTML=WORLDS.map(w=>`<option value="${w.key}" ${w.key===exSel?'selected':''}>${w.label}</option>`).join('');
