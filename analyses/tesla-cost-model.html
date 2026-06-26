@@ -9,7 +9,7 @@
     --paper:#f3efe6; --paper2:#efe9dc; --card:#fcfaf5; --ink:#23211c; --muted:#6b6557;
     --line:#ddd6c6; --accent:#9c3b2e; --good:#2f7d56; --warn:#a9791f;
     --kia:#3f4651; --my099:#c0392b; --my627:#e08e86; --usedmy:#1f8a8a;
-    --ioniq:#2f7d56; --lease:#b07d1a; --phev:#7a5aa3;
+    --usedmy6:#2c6fb0; --ioniq:#2f7d56; --lease:#b07d1a; --phev:#7a5aa3;
   }
   *{box-sizing:border-box}
   html,body{margin:0;background:radial-gradient(120% 120% at 50% 0%,var(--paper2),var(--paper));color:var(--ink);
@@ -243,10 +243,14 @@ const WORLDS=[
    upfront:2569, principal:64011, apr:0.99, term:72, insurance:230, maint:30,
    resale:[57580,45000,39000,34000,30000,26000,22000,18000], owns:true,
    note:'Principal = $57,580 OTD − $2,569 (5%) down + $9,000 rolled gap, at the 0.99% promo. Payment ≈ the Kia’s, holds value best, equity-positive by ~month 33. Needs ~$2.6k cash up front. No CarPlay. Interest-deduction negligible at 0.99%.'},
-  {key:'usedmy',label:'Used Model Y @ ~10%', short:'Used MY', type:'ev', color:getCSS('--usedmy'),
+  {key:'usedmy6',label:'Used Model Y @ 6%', short:'Used MY 6%', type:'ev', color:getCSS('--usedmy6'),
+   upfront:0, principal:46757, apr:6, term:72, insurance:230, maint:30,
+   resale:[34000,30000,26000,23000,20000,18000,15500,13000], owns:true,
+   note:'Same car as the 10% row but at a 6% APR (more realistic for a strong-credit buyer who shops a credit union / captive promo). Principal = $37,757 OTD + $9,000 rolled gap → ~$775/mo. The lower rate makes it the cheapest payment of any Model Y and pays down the $9k faster — walk-away-whole arrives sooner than the 10% case. No CarPlay, no used-EV credit.'},
+  {key:'usedmy',label:'Used Model Y @ ~10%', short:'Used MY 10%', type:'ev', color:getCSS('--usedmy'),
    upfront:0, principal:46757, apr:10, term:72, insurance:230, maint:30,
    resale:[34000,30000,26000,23000,20000,18000,15500,13000], owns:true,
-   note:'Principal = $37,757 OTD + $9,000 rolled gap. Lower payment than new, but 10% APR on the $9k roll keeps you deep underwater until ~month 46. No CarPlay, no used-EV credit.'},
+   note:'Principal = $37,757 OTD + $9,000 rolled gap. The pessimistic-rate row (used-EV APRs ran ~10% for a 720 buyer through 2025). 10% APR on the $9k roll keeps you deep underwater until ~month 46. Compare to the 6% row to see the rate sensitivity. No CarPlay, no used-EV credit.'},
   {key:'phev', label:'PHEV (RAV4-class) — est.', short:'PHEV', type:'phev', color:getCSS('--phev'), tag:'estimate',
    upfront:0, principal:59000, apr:6, term:72, insurance:220, maint:55,
    resale:[50000,40000,35000,31000,27000,24000,21000,17000], owns:true,
@@ -273,7 +277,7 @@ const hidden=new Set(); let hi=null, exSel='my099', CHARTMAX=0, VIS=[];
 
 function resaleAnchors(w){
   if(!S.conserv||!w.owns)return w.resale;
-  const cut=w.key==='my099'||w.key==='my627'?0.90:(w.key==='usedmy'?0.92:0.95);
+  const cut=(w.key==='my099'||w.key==='my627')?0.90:((w.key==='usedmy'||w.key==='usedmy6')?0.92:0.95);
   return w.resale.map((v,idx)=>{const mo=MONTHS[idx];const f=mo<=12?1:(mo>=36?cut:1-(1-cut)*(mo-12)/24);return v*f;});
 }
 function gasMonthly(w){
