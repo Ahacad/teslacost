@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kia vs the alternatives — what each world actually costs you</title>
+<meta name="description" content="Keep the 2025 Kia vs switching to a Model Y / Ioniq 5 / PHEV — net cost over time, break-even, and the exact math. Seattle, June 2026." />
+</head>
+<body>
+<div class="wrap">
+  <h1>What each world actually costs you</h1>
+  <p class="sub">Keep the 2025 Kia vs. switching — Model Y (new&nbsp;0.99% / new&nbsp;6.27% / used), Ioniq&nbsp;5 (buy&nbsp;0% / lease), or a PHEV.
+  Seattle, June 2026. <b>Net cost = every dollar out of pocket minus what the car is still worth.</b> Move the sliders — it's your numbers.</p>
+
+  <div class="verdict" id="verdict">…</div>
+
+  <div class="pills" id="pills"></div>
+  <div style="height:18px"></div>
+
+  <div class="card">
+    <h2>Cumulative cost over time — where the lines cross is break-even vs the Kia</h2>
+    <div class="chartwrap" id="chartwrap">
+      <svg id="chart" viewBox="0 0 920 430" role="img" aria-label="cumulative cost chart"></svg>
+      <div class="tip" id="tip"></div>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="hint"><b>Keep&nbsp;the&nbsp;Kia</b> and <b>Model&nbsp;Y&nbsp;@&nbsp;0.99%</b> are highlighted; the other worlds are faded. Hover the chart to read every world at that month; hover a legend chip to spotlight that line, or click it to hide/show. The red vertical line is your holding period.</div>
+  </div>
+
+  <div class="card">
+    <h2>Your assumptions <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">— slide and the table below (and chart above) update live</span></h2>
+    <div class="controls">
+      <div class="ctl">
+        <label>Holding period <b><span id="holdV">60</span> mo</b></label>
+        <input type="range" id="hold" min="12" max="96" step="1" value="60">
+      </div>
+      <div class="ctl">
+        <label>Gas price <b>$<span id="gasV">4.60</span>/gal</b></label>
+        <input type="range" id="gas" min="3.50" max="6.50" step="0.01" value="4.60">
+        <div style="font-size:11.5px;color:var(--muted);margin-top:3px">WA multi-year baseline ~$4.30–4.90 · mid-2026 spiked to ~$5.61 (Hormuz). Set what you expect to <i>average</i> over your hold — the Kia's lead is the most gas-sensitive number here.</div>
+      </div>
+      <div class="ctl">
+        <label>Miles driven <b><span id="milesV">23,400</span>/yr</b></label>
+        <input type="range" id="miles" min="10000" max="30000" step="200" value="23400">
+      </div>
+      <div class="ctl">
+        <label>EV charging case <b id="evV">Cheap · $50/mo</b></label>
+        <div class="seg small" id="evCase">
+          <button data-v="50" class="on">Destination L2 · $50</button>
+          <button data-v="120">Winter/paid · $120</button>
+          <button data-v="184">Office fails · $184</button>
+        </div>
+      </div>
+      <div class="ctl">
+        <label>New-car loan term <b id="loanTermV">72 mo</b></label>
+        <div class="seg small" id="loanTerm">
+          <button data-v="48">48 mo</button>
+          <button data-v="60">60 mo</button>
+          <button data-v="72" class="on">72 mo</button>
+        </div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Applies to every financed switch (the Kia keeps its 35 months left; the lease its 36). Shorter term → higher payment, less total interest, equity sooner. APR is held fixed across terms (real quotes often shave the rate a little on shorter loans); the per-world notes quote the 72-mo base.</div>
+      </div>
+      <div class="ctl">
+        <label>Inflation / discount rate <b><span id="inflV">0.0</span>%/yr</b></label>
+        <input type="range" id="infl" min="0" max="8" step="0.1" value="0">
+        <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Re-prices every future dollar into <i>today's</i> money (present value). <b>0% = raw nominal dollars</b> (as validated). Higher rate shrinks far-off costs <i>and</i> resale — it modestly favors keeping the Kia, whose cost is spread out vs the EV's front-loaded price.</div>
+      </div>
+      <div class="ctl">
+        <label>Insurance level <b>×<span id="insMultV">1.00</span></b></label>
+        <input type="range" id="insMult" min="0.5" max="2" step="0.05" value="1">
+        <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Scales every car's premium to your own quote (the per-car spread is kept): <span id="insSpread"></span>. Insurance is a soft, personal number — set it to real quotes; the gap <i>between</i> cars matters more than the level.</div>
+      </div>
+      <div class="ctl" style="grid-column:1/-1">
+        <div class="row" style="justify-content:space-between">
+          <div class="seg" id="view" style="max-width:430px">
+            <button data-v="net" class="on">True cost (net of resale)</button>
+            <button data-v="cash">Cash out of pocket</button>
+          </div>
+          <label class="chk"><input type="checkbox" id="tradeCredit" checked> WA trade-in tax credit (−$2,320/switch)</label>
+          <label class="chk"><input type="checkbox" id="conserv"> Conservative resale (price-cut + high-mileage haircut)</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>At your holding period (<span id="hold2">60</span> months)</h2>
+    <table id="tbl">
+      <thead><tr>
+        <th>World</th><th>Upfront</th><th>Monthly all-in</th><th id="hcol">Cost @ 60mo</th>
+        <th>vs Kia</th><th>Beats Kia</th><th>Walk-away whole</th><th>Owns?</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="body" style="font-size:12.5px;color:var(--muted);margin-top:10px">
+      <b>Beats Kia</b> = first month this world's cost dips below keeping the Kia. <b>Walk-away whole</b> = first month the car
+      is worth at least what you still owe (sell without writing a check). "Cost" follows the view toggle above.
+    </div>
+  </div>
+
+  <div class="card math">
+    <h2>The exact math — verify it yourself</h2>
+    <p style="margin:0 0 6px;color:var(--muted);font-size:13px">Every number on this page comes from these formulas. Definitions:
+      <i class="v">P</i> = amount financed (price + tax + rolled $9k Kia gap − down) · <i class="v">i</i> = APR ÷ 1200 (monthly rate) ·
+      <i class="v">n</i> = loan months · <i class="v">m</i> = the month in question ·
+      <i class="v">r</i> = inflation / discount rate (annual) · <i class="v">df</i>(<i class="v">t</i>) = 1 ÷ (1 + <i class="v">r</i>)<sup><i class="v">t</i>/12</sup> = the present-value factor for a dollar spent at month <i class="v">t</i> (<i class="v">df</i> = 1 when <i class="v">r</i> = 0).</p>
+
+    <div class="eq"><span class="lab">1 · Monthly payment (standard amortization; if APR = 0, <i class="v">pmt</i> = <i class="v">P</i>/<i class="v">n</i>)</span>
+      <i class="v">pmt</i> &nbsp;=&nbsp; <span class="frac"><span><i class="v">P</i> · <i class="v">i</i></span><span>1 − (1 + <i class="v">i</i>)<sup>−<i class="v">n</i></sup></span></span></div>
+
+    <div class="eq"><span class="lab">2 · Loan balance still owed at month <i class="v">m</i> &nbsp;(0 once <i class="v">m</i> ≥ <i class="v">n</i>)</span>
+      <i class="v">b</i>(<i class="v">m</i>) &nbsp;=&nbsp; <i class="v">P</i>(1 + <i class="v">i</i>)<sup><i class="v">m</i></sup> − <i class="v">pmt</i> · <span class="frac"><span>(1 + <i class="v">i</i>)<sup><i class="v">m</i></sup> − 1</span><span><i class="v">i</i></span></span></div>
+
+    <div class="eq"><span class="lab">3 · Monthly running cost &nbsp;(gas, EV energy, or both for the PHEV)</span>
+      <i class="v">run</i> = insurance + maintenance + energy + gas, &nbsp;&nbsp; where &nbsp;
+      gas = <span class="frac"><span>miles/yr ÷ mpg × $/gal</span><span>12</span></span> &nbsp; and EV energy = the charging-case value ($50 / $120 / $184)</div>
+
+    <div class="eq"><span class="lab">4 · Total cash out by month <i class="v">m</i> — each future month re-priced to today's dollars at rate <i class="v">r</i> &nbsp;(lease pays every month held)</span>
+      <i class="v">cash</i>(<i class="v">m</i>) &nbsp;=&nbsp; down + <span style="font-size:1.15em">Σ</span><sub><i class="v">t</i>=1..<i class="v">m</i></sub> ( <i class="v">pmt</i>·[<i class="v">t</i> ≤ <i class="v">n</i>] + <i class="v">run</i> ) · <i class="v">df</i>(<i class="v">t</i>) &nbsp;&nbsp;<span style="color:var(--muted)">(at <i class="v">r</i> = 0 this collapses to down + <i class="v">pmt</i>·min(<i class="v">m</i>,<i class="v">n</i>) + <i class="v">run</i>·<i class="v">m</i>)</span></div>
+
+    <div class="eq"><span class="lab">5 · Equity (what the car is worth to you) — resale is straight-line between anchor months 0,12,24,36,48,60,72,96</span>
+      <i class="v">equity</i>(<i class="v">m</i>) = resale(<i class="v">m</i>) − <i class="v">b</i>(<i class="v">m</i>) &nbsp;&nbsp;(= 0 for a lease — you own nothing)</div>
+
+    <div class="eq"><span class="lab">6 · True cost in today's dollars (the "net of resale" line) &nbsp;·&nbsp; and the two milestones</span>
+      <i class="v">net</i>(<i class="v">m</i>) = <i class="v">cash</i>(<i class="v">m</i>) − <i class="v">equity</i>(<i class="v">m</i>) · <i class="v">df</i>(<i class="v">m</i>) &nbsp;&nbsp;|&nbsp;&nbsp;
+      <b>Beats Kia</b> = smallest <i class="v">m</i> with <i class="v">net</i><sub>world</sub> &lt; <i class="v">net</i><sub>Kia</sub> &nbsp;&nbsp;|&nbsp;&nbsp;
+      <b>Walk-away-whole</b> = smallest <i class="v">m</i> with <i class="v">equity</i> ≥ 0</div>
+
+    <div class="row" style="margin:14px 0 8px">
+      <label style="font-size:13px;color:var(--muted)">Worked example — plug in real numbers for:</label>
+      <select id="exWorld"></select>
+      <span style="font-size:13px;color:var(--muted)">at month <b id="exHold">60</b></span>
+    </div>
+    <div class="worked" id="worked"></div>
+  </div>
+
+  <div class="card">
+    <h2>The math, per world</h2>
+    <div id="cards"></div>
+  </div>
+
+  <div class="card">
+    <h2>Validated — what to trust, and the known limits</h2>
+    <p style="margin:0 0 10px;font-size:13.5px">Independently checked by a multi-agent adversarial pass (recompute · plot-logic · finance methodology · market data).
+      <b>Verdict: the math is correct</b> (every figure reproduces to the cent, including the new 6% row) and <b>the ranking is robust</b> —
+      but the headline <i>dollar gap</i> is gas-sensitive, so don't anchor on it. Corrections already applied + the limits to keep in mind:</p>
+    <ul class="care" style="font-size:12.8px">
+      <li><b style="color:var(--good)">Fixed · gas default.</b> Was $5.61 (a mid-2026 Hormuz spike); now $4.60 (WA multi-year baseline). The Kia is the most gas-sensitive world, so this is the single biggest lever — slider it to the price you expect to <i>average</i>.</li>
+      <li><b style="color:var(--good)">Fixed · WA trade-in tax credit</b> (toggle, on). WA taxes (price − trade-in allowance), so trading the ~$21k Kia saves ~$2,320 tax on every switch. Applied uniformly; favors switching, partly offsetting the gas fix.</li>
+      <li><b style="color:var(--good)">Fixed · chart.</b> Y-axis is locked to all worlds (hiding a line no longer re-slopes the rest); the right-edge hover dead-zone and end-label overlap are gone.</li>
+      <li><b style="color:var(--warn)">Rejected (false alarm).</b> A validator claimed 4 EV rows carry no sales tax — they do: WA tax is baked into every switch's OTD price (e.g. MY 0.99% $64,011 = $51,880×1.1105 − $2,569 + $9,000). Not double-counted.</li>
+      <li><b>6% used-MY APR is a best case</b> (credit-union / promo). A conventional 720 buyer often sees ~9–10% — that's the other row. Plan for the 6–10% band.</li>
+      <li><b>Time-value-of-money is now a slider.</b> Default 0% = nominal (as validated). Discounting to today's dollars shrinks far-off costs and resale alike; at ~3–6% it moves the 60-month gap only a few hundred dollars and slightly favors keeping the Kia. Monthly costs are held flat in nominal terms before discounting (gas is your hold-<i>average</i>), so this is an opportunity-cost lens, not a gas-inflation forecast.</li>
+      <li><b>Resale & energy are the soft inputs.</b> Curves don't auto-haircut for your ~2× mileage (toggle <i>Conservative resale</i> — it's ~symmetric, doesn't change the winner); EV energy is a flat preset (free office charging), so the miles slider scales gas but not EV charging.</li>
+      <li><b>“Net cost” counts resale equity you can't spend</b> with one car + ~$0 cash. Cross-check the <i>monthly all-in</i> and <i>walk-away-whole</i> columns before deciding.</li>
+    </ul>
+    <p style="margin:10px 0 0;font-size:13px"><b>Bottom line:</b> reliable for the <b>pick</b> — used MY @ 6% cheapest to own, then Ioniq 5 @ 0% / MY @ 0.99%; the lease is pure rent. The <i>size</i> of the edge (used MY @ 6% vs keeping the Kia, 5-yr net) swings with assumptions:
+      <b>~$11.7k</b> at these defaults · <b>~$10.5k</b> at gas $4.30 · <b>~$5.5k</b> under a conservative stack (low gas + winter $120 charging + conservative resale) · and roughly <b>break-even</b> in the worst realistic case (a conventional ~10% used rate <i>plus</i> all of the above) or <b>~$3.7k</b> if the office charger fails. Translation: the switch wins comfortably <i>if</i> you land a low rate and keep cheap charging; it's a coin flip if you finance at 10% into a pessimistic world. The 6% rate and the charging are the whole bet.</p>
+  </div>
+
+  <div class="card">
+    <h2>What flips the answer — read before deciding</h2>
+    <ul class="care">
+      <li><b>Holding period is the biggest lever.</b> Under ~36 months every <i>buy</i> is still underwater (the rolled $9k Kia
+        gap + WA tax). Over ~48 months the Ioniq&nbsp;0% wins clean. If you might sell early, the <b>Model Y @ 0.99%</b> is safest —
+        it's the first to go equity-positive (walk-away-whole ~month 33).</li>
+      <li><b>The lease is rent, not a win.</b> Its low cash-out builds <b>zero equity</b> — you own nothing and can never walk away
+        whole. And at 23,400 mi/yr the mileage overage already inflates it to ~$790–890/mo all-in. Avoid.</li>
+      <li><b>EV energy assumes your office L2 holds.</b> Cheap ($50) is your normal pattern (free weekday L2 + cheap destination L2,
+        no routine DC). If the office charger is capped/lost, switch the toggle to <code>Office fails $184</code> — the gap to the
+        Kia shrinks and the <b>PHEV/Kia</b> become the hedge (neither needs a charger).</li>
+      <li><b>The PHEV is an estimate, and assumes a reachable 120V outlet at your stall.</b> No outlet → it runs as a 38 mpg hybrid
+        and the energy line jumps. Verify the outlet before treating it as the safe option.</li>
+      <li><b>Ioniq 0% beats taking $7k cash only because the fallback rate is ~6.5%.</b> If you can get sub-5% financing (credit
+        union), take the $7k cash off a lower principal instead.</li>
+      <li><b>Resale is the soft number.</b> A Tesla price cut or the 70k-mile/3yr haircut (you drive 2× average) trims the Model Y's
+        hold-value edge — toggle <b>Conservative resale</b> to see it.</li>
+    </ul>
+  </div>
+
+  <footer>
+    Estimates, June 2026, composited from <code>analyses/ev-switch-*</code> (web-sourced + adversarially verified) and recomputed
+    live in your browser with exact loan amortization. Not financial advice; not affiliated with Tesla, Hyundai, or Kia.
+    Reconfirm VIN-specific quotes, your real APR, and an insurance quote before signing. The $9,000 negative-equity figure (trade-in
+    basis) and the resale curves are the load-bearing assumptions — small changes move the ranking.
+  </footer>
+</div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
