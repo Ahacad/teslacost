@@ -6,25 +6,41 @@ manufacturer sites before signing** — prices, APRs, and offers move week to we
 
 ---
 
-## 1. The Kia (disposal value)
+## 1. The Kia (residual value) — refreshed June 2026 from a multi-source pass
 
-2025 Kia Sportage **AWD, pure gas** (2.5L, non-hybrid), EX/X-Line mid-trim,
-~20,000–30,000 mi (high for age at ~23,400 mi/yr), Seattle/WA market.
+2025 Kia Sportage **AWD, pure gas** (2.5L, non-hybrid), EX/X-Line mid-trim, bought
+**new ~October 2025**, so **~8 months old now** with **~15,500 mi** (high for age at
+~23,400 mi/yr), Seattle/WA market. **Amount owed now: ~$30,000.**
 
-| Metric | Value (USD) | Note |
-|---|---|---|
-| Dealer trade-in | **~$20,000–22,000** (mid ~$21k) | After high-mileage haircut |
-| Private-party | **~$23,000–25,000** (mid ~$24k) | |
-| Instant cash (Carvana/CarMax) | ~$20,000–23,000 | Tracks trade-in band |
-| **Amount owed** | **$30,000** | |
-| **Negative equity (trade)** | **~$9,000** (range $8–10k) | The load-bearing number |
-| Negative equity (private sale) | ~$5,000–6,000 | |
+**Cost basis:** MSRP incl. $1,395 destination ~$33,185 (EX AWD $31,290 / X-Line AWD
+$32,290); real pre-tax transaction ~$30,300 (KBB Fair Purchase −$2.6–3.5k, Oct-2025
+sell-down) = the depreciation basis. WA OTD ~$33.8k ≈ amount financed (implies near-zero
+down). Sales tax is sunk — never recovered in resale.
 
+**Forward residual (high-mileage-adjusted), months from now [0,12,24,36,48,60,72,96]:**
+
+| | 0 | 12 | 24 | 36 | 48 | 60 | 72 | 96 |
+|---|--|--|--|--|--|--|--|--|
+| Private-party | 24,000 | 19,500 | 16,850 | 14,550 | 12,550 | 10,850 | 9,200 | 6,300 |
+| **Dealer trade-in** | **21,000** | 16,950 | 14,550 | 12,500 | 10,700 | 9,200 | 7,750 | 5,250 |
+| Instant cash (≈trade) | 21,700 | 17,500 | 15,050 | 12,900 | 11,050 | 9,500 | 8,050 | 5,400 |
+
+- **Negative equity now: ~$9,000 on trade** ($30k owed − $21k), ~$6,000 on private sale.
+  This is *derived*, not assumed: `negEquity(D) = loanBalance(D) − tradeValue(D)`.
+- **Method:** retained-% by calendar age (real age = 8mo + anchor) from a monotone blend
+  of iSeeCars (3yr 75.7%, 5yr 56.8% retained) and CarEdge (Y1 76.4% … Y5 50.4%), applied
+  to the $30.3k basis; minus a high-mileage haircut (~$/1k-excess-mile decaying from ~$155
+  near 15.5k mi to ~$50 by 200k), excess vs a 12k-mi/yr twin; month-0 calibrated to the
+  field-validated $24k/$21k. Decel check: private $/yr drop 4.5k→2.6k→2.3k→… (monotone).
 - Real-world MPG (highway-heavy): **~29 mpg** (EPA 25 combined; AWD road tests 27–31 hwy).
-- High mileage strips ~$1,700–4,000 vs the 12k-mi/yr baseline and *accelerates*
-  depreciation — the gap **narrows as you pay down**, not as you hold/drive.
-- **Confidence: medium** (triangulated, not a VIN appraisal — KBB/Edmunds/Carvana
-  pages need VIN+ZIP+condition). Sources: Edmunds, KBB, CarGurus, Carvana/CarMax.
+- **The crossover:** on the modeled $30k @ 5.1% / 35-mo-left loan ($924/mo), paydown
+  (~$900/mo) outruns trade depreciation (~$340/mo), so the trade gap **shrinks to zero by
+  ~month 17** — waiting erases the negative equity. *But* a longer real loan (e.g. 72-mo,
+  ~$520/mo) keeps you underwater far longer: confirm your real remaining term.
+- **Confidence: medium** (triangulated, not a VIN appraisal — KBB/Edmunds/Carvana/CarMax
+  pages were bot-walled / need VIN+ZIP+condition; month-0 anchored to the conservative end).
+  Sources: KiaMedia, iSeeCars, CarEdge, KBB, Edmunds, CarGurus. Adversarially verified
+  (curve defensible; the load-bearing caveat is the real loan term).
 
 ---
 
