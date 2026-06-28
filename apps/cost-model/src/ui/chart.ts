@@ -39,6 +39,11 @@ export function drawChart(): void {
   const mx = px(S.hold);
   s += `<line x1="${mx}" y1="${PAD.t}" x2="${mx}" y2="${PAD.t + PH}" stroke="${getCSS('--accent')}" stroke-width="1.4" opacity=".5"/>`;
   s += `<text x="${mx}" y="${PAD.t - 3}" text-anchor="middle" fill="${getCSS('--accent')}" font-size="10.5">hold ${S.hold}mo</text>`;
+  if (S.delay > 0) {
+    const dx = px(S.delay);
+    s += `<line x1="${dx}" y1="${PAD.t}" x2="${dx}" y2="${PAD.t + PH}" stroke="${getCSS('--ink')}" stroke-width="1.2" stroke-dasharray="3 3" opacity=".4"/>`;
+    s += `<text x="${dx}" y="${PAD.t - 3}" text-anchor="middle" fill="${getCSS('--ink')}" font-size="10.5" opacity=".7">switch ${S.delay}mo</text>`;
+  }
   s += `</g>`;
   // lines
   for (const w of ui.VIS) {

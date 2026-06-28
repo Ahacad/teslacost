@@ -35,4 +35,10 @@ export interface State {
   infl: number;
   insMult: number;
   loanTerm: number;
+  /** Months you keep the Kia before trading it in (0 = switch now). */
+  delay: number;
+  /** Current Kia loan, editable to your real statement. */
+  kiaOwed: number;
+  kiaApr: number;
+  kiaMonths: number;
 }

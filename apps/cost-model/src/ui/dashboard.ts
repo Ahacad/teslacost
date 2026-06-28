@@ -2,11 +2,32 @@ import { S } from '../state';
 import { WORLDS, LEASE_PMT } from '../data/worlds';
 import { pmt } from '../domain/amort';
 import {
-  prin, termOf, value, beatsKia, walkAway, monthlyAllIn, gasMonthly, insRaw, energyMonthly,
+  prin, termOf, value, beatsKia, walkAway, monthlyAllIn, gasMonthly, insRaw, energyMonthly, negEquity,
 } from '../domain/finance';
 import { fmt } from './format';
 import { drawChart } from './chart';
 import { updateWorked } from './worked';
+
+/** First month (0..36) the Kia is no longer underwater on a dealer trade, or null within 3 years. */
+function equityCrossover(): number | null {
+  for (let m = 0; m <= 36; m++) if (negEquity(m) <= 0) return m;
+  return null;
+}
+
+function renderDelayReadout(): void {
+  const el = document.getElementById('delayReadout');
+  if (!el) return;
+  const now = negEquity(0);
+  const atD = negEquity(S.delay);
+  const cross = equityCrossover();
+  const tag = (v: number) => (v > 0 ? `${fmt(v)} underwater` : `${fmt(-v)} positive equity`);
+  const crossTxt =
+    cross === null ? 'still underwater at 36 mo' : cross === 0 ? 'already above water' : `breaks even at month ${cross}`;
+  el.innerHTML =
+    `Trade now: <b>${tag(now)}</b>` +
+    (S.delay > 0 ? ` · after ${S.delay} mo: <b>${tag(atD)}</b>` : '') +
+    ` · ${crossTxt}. The rolled gap is financed into the new car (or paid down by waiting).`;
+}
 
 // ---- table + pills + verdict ----
 export function render(): void {
@@ -18,10 +39,12 @@ export function render(): void {
   const cheapestReal = ranked.filter((r) => r.w.owns && r.w.key !== 'kia')[0];
   const kiaVal = value(k, hold);
   const save = kiaVal - cheapestReal.val;
+  const when = S.delay > 0 ? ` (after keeping the Kia ${S.delay} more months)` : '';
   document.getElementById('verdict')!.innerHTML =
-    `At <b>${hold} months</b>, the cheapest world you'd actually own is <b>${cheapestReal.w.label}</b> at ` +
+    `At <b>${hold} months</b>, the cheapest world you'd actually own is <b>${cheapestReal.w.label}</b>${when} at ` +
     `<b>${fmt(cheapestReal.val)}</b> — that's <b>${save >= 0 ? fmt(save) + ' less' : fmt(-save) + ' more'}</b> than keeping the Kia ` +
     `(${fmt(kiaVal)}). ${save >= 0 ? 'Switching saves money' : 'Keeping the Kia is cheaper'} on this horizon and these charging assumptions.`;
+  renderDelayReadout();
   const pills: [string, string, string][] = [
     ['Cheapest (owned)', cheapestReal.w.short, fmt(cheapestReal.val)],
     ['vs keep Kia', save >= 0 ? 'saves' : 'costs', (save >= 0 ? '' : '+') + fmt(Math.abs(save))],

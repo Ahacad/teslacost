@@ -8,14 +8,24 @@ export const LEASE_PMT = 540; // flat modeled lease payment
 export const GAS_MPG = 29; // Kia combined mpg
 export const PHEV_MPG = 38; // PHEV highway mpg running on gas
 
+// Kia DEALER-TRADE value at each anchor month from now (high-mileage-adjusted,
+// 2025 Sportage AWD gas; sources in analyses/ev-switch-facts). The switch-world
+// rollover is financed against this, not the private curve below (`kia.resale`).
+export const KIA_TRADE = [21000, 16950, 14550, 12500, 10700, 9200, 7750, 5250];
+
+// Negative equity baked into each switch world's `principal` at delay 0
+// (= kiaOwed 30000 − KIA_TRADE[0] 21000). The delay slider swaps this constant
+// for the live negEquity(D); at D=0 the two are equal, so the base chart is unchanged.
+export const ROLL_BASE = 9000;
+
 // Line colors mirror the CSS :root palette as hex so the data layer stays
 // DOM-free (pure, node-testable); the stylesheet keeps the same values.
 export const WORLDS: World[] = [
   {
     key: 'kia', label: 'Keep the Kia', short: 'Kia', type: 'gas', color: '#3f4651',
     upfront: 0, principal: 30000, apr: 5.1, term: 35, insurance: 283, maint: 70,
-    resale: [24000, 17000, 13000, 10000, 8000, 7000, 6000, 5000], owns: true,
-    note: 'Baseline. Loan ($30k @ 5.1%) ends month 35 → after that you pay only insurance + gas + maint ($730/mo). Keeping it does NOT crystallize the ~$9k negative equity; you just keep paying. Cost is dominated by gas.',
+    resale: [24000, 19500, 16850, 14550, 12550, 10850, 9200, 6300], owns: true,
+    note: 'Baseline. Loan defaults to $30k @ 5.1% with 35 months left (~$924/mo) — edit it to your real statement. After payoff you pay only insurance + gas + maint (~$730/mo). PRIVATE-party resale (high-mileage-adjusted): $24k now → $9.2k at 6yr. Keeping it does NOT crystallize the negative equity; you just keep paying. Cost is dominated by gas.',
   },
   {
     key: 'ioniq', label: 'Ioniq 5 — buy @ 0%', short: 'Ioniq 0%', type: 'ev', color: '#2f7d56', tag: 'CarPlay',

@@ -4,7 +4,9 @@ import { render } from './dashboard';
 import { updateWorked } from './worked';
 import { onMove, drawChart } from './chart';
 
-type NumKey = 'hold' | 'gas' | 'miles' | 'infl' | 'insMult' | 'loanTerm';
+type NumKey =
+  | 'hold' | 'gas' | 'miles' | 'infl' | 'insMult' | 'loanTerm'
+  | 'delay' | 'kiaOwed' | 'kiaApr' | 'kiaMonths';
 
 function bindRange(id: string, key: NumKey, fmtFn: (v: number) => string): void {
   const el = document.getElementById(id) as HTMLInputElement;
@@ -22,6 +24,10 @@ export function wire(): void {
   bindRange('miles', 'miles', (v) => Math.round(v).toLocaleString());
   bindRange('infl', 'infl', (v) => v.toFixed(1));
   bindRange('insMult', 'insMult', (v) => v.toFixed(2));
+  bindRange('delay', 'delay', (v) => (v === 0 ? 'switch now' : `wait ${v} mo`));
+  bindRange('kiaOwed', 'kiaOwed', (v) => '$' + Math.round(v).toLocaleString());
+  bindRange('kiaApr', 'kiaApr', (v) => v.toFixed(1) + '%');
+  bindRange('kiaMonths', 'kiaMonths', (v) => Math.round(v) + ' mo');
 
   document.querySelectorAll<HTMLElement>('#evCase button').forEach((b) =>
     b.addEventListener('click', () => {
