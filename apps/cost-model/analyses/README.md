@@ -29,6 +29,7 @@ The month payoff ≤ quote, you're clear to move.
 
 ## Files
 
+- [`model-y-premium-awd-seattle-2026-07.md`](model-y-premium-awd-seattle-2026-07.md) — **July 2026: the exact configured build** (Premium AWD + Quicksilver + white interior + tow hitch + roof rack + FSD sub), live-configurator prices, 11.05% Seattle vehicle tax, max checkout ≈ $63.1k, 0.99%/72 promo math, and the FSD-flips-the-verdict finding. Supersedes the generic new-MY figures below.
 - [`ev-switch-baseline.md`](ev-switch-baseline.md) — the personal inputs (situation, loan, driving, charging, constraints).
 - [`ev-switch-facts-2026-06.md`](ev-switch-facts-2026-06.md) — **the raw verified market facts** (prices, range, charging, taxes, credits, APRs, insurance) with sources + confidence.
 - [`ev-switch-decision-2026-06.md`](ev-switch-decision-2026-06.md) — ranking, weighted matrix, TCO, recommendation, sensitivity, action plan.

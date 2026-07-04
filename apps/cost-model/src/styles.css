@@ -1,7 +1,7 @@
 :root{
   --paper:#f3efe6; --paper2:#efe9dc; --card:#fcfaf5; --ink:#23211c; --muted:#6b6557;
   --line:#ddd6c6; --accent:#9c3b2e; --good:#2f7d56; --warn:#a9791f;
-  --kia:#3f4651; --my099:#c0392b; --my627:#e08e86; --usedmy:#1f8a8a;
+  --kia:#3f4651; --my099:#c0392b; --mystd:#e08e86; --usedmy:#1f8a8a;
   --usedmy6:#2c6fb0; --ioniq:#2f7d56; --lease:#b07d1a; --phev:#7a5aa3;
 }
 *{box-sizing:border-box}

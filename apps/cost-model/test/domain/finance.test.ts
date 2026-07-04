@@ -9,7 +9,7 @@ import {
 const w = (key: string) => WORLDS.find((x) => x.key === key)!;
 const DEFAULTS = {
   hold: 60, gas: 4.60, miles: 23400, ev: 50, view: 'net' as const, conserv: false, tradeCredit: true,
-  infl: 0, insMult: 1, loanTerm: 72, delay: 0, kiaOwed: 30000, kiaApr: 5.1, kiaMonths: 35,
+  infl: 0, insMult: 1, loanTerm: 72, delay: 0, kiaOwed: 30000, kiaApr: 5.1, kiaMonths: 35, fsd: true,
 };
 
 beforeEach(() => {
@@ -17,19 +17,20 @@ beforeEach(() => {
 });
 
 // Ground truth = engine output at default state, cross-checked by hand for the Kia
-// (cash 72,088 − resale equity 10,850 = net 61,238). The EV rows are unchanged from the
-// original validated artifact (delay 0 ⇒ negEquity(0) = ROLL_BASE = $9k, so principals match);
-// the Kia row reflects the refreshed high-mileage residual curve (private $24k→$9.2k),
-// and the lease now carries the Kia negative equity in cash (the original model omitted it).
+// (cash 72,088 − resale equity 10,850 = net 61,238). The two new-MY rows carry the July-2026
+// Seattle build (Premium AWD + Quicksilver + white interior + tow hitch, $61,777 OTD @ 11.05%
+// vehicle tax, $109/mo FSD sub, $553 roof rack in upfront) — pins re-derived by an independent
+// closed-form calculation, not copied from engine output. Other rows unchanged from the
+// validated artifact (delay 0 ⇒ negEquity(0) = ROLL_BASE = $9k, so principals match).
 describe('default state reproduces the validated table (Cost @ 60mo)', () => {
   const EXPECT: Record<string, { val: number; mo: number; be: number | null; wa: number | null }> = {
     kia:     { val: 61239, mo: 1587, be: null, wa: 14 },
     ioniq:   { val: 55011, mo: 991,  be: 39,   wa: 52 },
-    my099:   { val: 58679, mo: 1193, be: 44,   wa: 30 },
+    my099:   { val: 69371, mo: 1351, be: null, wa: 33 },
     usedmy6: { val: 53344, mo: 1046, be: 19,   wa: 40 },
     usedmy:  { val: 59358, mo: 1133, be: 52,   wa: 43 },
     phev:    { val: 70040, mo: 1385, be: null, wa: 36 },
-    my627:   { val: 69442, mo: 1383, be: 95,   wa: 39 },
+    mystd:   { val: 79441, mo: 1542, be: null, wa: 40 },
     lease:   { val: 56400, mo: 790,  be: 9,    wa: null },
   };
   for (const [key, e] of Object.entries(EXPECT)) {
@@ -92,6 +93,32 @@ describe('inflation barely moves the 5-yr verdict (still favors switching)', () 
     expect(value(w('usedmy6'), 60)).toBeLessThan(value(w('kia'), 60));
     S.infl = 5;
     expect(value(w('usedmy6'), 60)).toBeLessThan(value(w('kia'), 60));
+  });
+});
+
+describe('FSD subscription is a toggleable run cost on the new-MY worlds only', () => {
+  it('turning FSD off drops my099 monthly all-in by exactly $109', () => {
+    const on = monthlyAllIn(w('my099'));
+    S.fsd = false;
+    expect(Math.round(on - monthlyAllIn(w('my099')))).toBe(109);
+    expect(Math.round(monthlyAllIn(w('my099')))).toBe(1242);
+  });
+  it('without FSD the build does beat the Kia — at month 72', () => {
+    S.fsd = false;
+    expect(beatsKia(w('my099'))).toBe(72);
+  });
+  it('the Kia and used-MY worlds carry no subscription', () => {
+    const kiaOn = monthlyAllIn(w('kia'));
+    const usedOn = monthlyAllIn(w('usedmy6'));
+    S.fsd = false;
+    expect(monthlyAllIn(w('kia'))).toBe(kiaOn);
+    expect(monthlyAllIn(w('usedmy6'))).toBe(usedOn);
+  });
+  it('with a delayed switch the sub is paid only after the trade month', () => {
+    S.delay = 12;
+    const on = cashOut(w('my099'), 24);
+    S.fsd = false;
+    expect(on - cashOut(w('my099'), 24)).toBeCloseTo(109 * 12, 6);
   });
 });
 

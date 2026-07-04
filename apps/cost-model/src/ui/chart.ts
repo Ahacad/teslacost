@@ -49,7 +49,7 @@ export function drawChart(): void {
   for (const w of ui.VIS) {
     let d = '';
     for (let m = 0; m <= 96; m++) d += (m ? 'L' : 'M') + px(m).toFixed(1) + ' ' + py(value(w, m), ymax).toFixed(1) + ' ';
-    const dash = w.key === 'lease' || w.key === 'my627' ? 'stroke-dasharray="6 4"' : '';
+    const dash = w.key === 'lease' || w.key === 'mystd' ? 'stroke-dasharray="6 4"' : '';
     const feat = FEAT.has(w.key);
     // Kia + MY 0.99% are always lit; every other line is faded but floats up to lit while it's the hovered/nearest one.
     const lit = feat || ui.hi === w.key;

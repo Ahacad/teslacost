@@ -61,7 +61,7 @@ export function termOf(w: World): number {
 export function resaleAnchors(w: World): number[] {
   if (!S.conserv || !w.owns) return w.resale;
   const cut =
-    w.key === 'my099' || w.key === 'my627' ? 0.90
+    w.key === 'my099' || w.key === 'mystd' ? 0.90
     : w.key === 'usedmy' || w.key === 'usedmy6' ? 0.92
     : 0.95;
   return w.resale.map((v, idx) => {
@@ -84,11 +84,16 @@ export function energyMonthly(w: World): number {
   return w.type === 'ev' || w.type === 'lease' ? S.ev : 0;
 }
 
+/** FSD (or similar) software subscription, paid only while the toggle is on. */
+export function subMonthly(w: World): number {
+  return S.fsd && w.sub ? w.sub : 0;
+}
+
 /** Steady-state monthly all-in AFTER the switch (the comparable figure); the Kia phase is just the Kia. */
 export function monthlyAllIn(w: World): number {
   if (isKia(w)) return kiaPay() + kiaRun();
   const p = w.type === 'lease' ? LEASE_PMT : pmt(prin(w), w.apr, termOf(w));
-  return p + insRaw(w) + w.maint + gasMonthly(w) + energyMonthly(w);
+  return p + insRaw(w) + w.maint + gasMonthly(w) + energyMonthly(w) + subMonthly(w);
 }
 
 /**
@@ -109,7 +114,7 @@ export function cashOut(w: World, m: number): number {
   if (m <= D) return pv;
   // Switch at month D: down payment now (lease covers its rolled negative equity in cash instead).
   const evPay = w.type === 'lease' ? LEASE_PMT : pmt(prin(w), w.apr, termOf(w));
-  const evRun = insRaw(w) + w.maint + gasMonthly(w) + energyMonthly(w);
+  const evRun = insRaw(w) + w.maint + gasMonthly(w) + energyMonthly(w) + subMonthly(w);
   const n = termOf(w);
   pv += (w.type === 'lease' ? Math.max(0, negEquity(D)) : w.upfront) * df(D || 0);
   // Phase 2 — the EV from month D+1 onward; its loan runs n months from the switch.

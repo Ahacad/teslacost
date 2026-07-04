@@ -64,6 +64,10 @@ export function wire(): void {
     S.tradeCredit = (e.target as HTMLInputElement).checked;
     render();
   });
+  (document.getElementById('fsd') as HTMLInputElement).addEventListener('change', (e) => {
+    S.fsd = (e.target as HTMLInputElement).checked;
+    render();
+  });
 
   // worked-example world picker
   const sel = document.getElementById('exWorld') as HTMLSelectElement;

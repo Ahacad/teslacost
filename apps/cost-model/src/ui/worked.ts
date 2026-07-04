@@ -2,7 +2,7 @@ import { S, ui } from '../state';
 import { MONTHS, WORLDS } from '../data/worlds';
 import { pmt, balance, interp } from '../domain/amort';
 import {
-  df, prin, termOf, resaleAnchors, gasMonthly, energyMonthly, insRaw, cashOut, equity, value, negEquity, delayOf,
+  df, prin, termOf, resaleAnchors, gasMonthly, energyMonthly, subMonthly, insRaw, cashOut, equity, value, negEquity, delayOf,
 } from '../domain/finance';
 import { num } from './format';
 
@@ -57,7 +57,7 @@ export function updateWorked(): void {
   const anch = resaleAnchors(w);
   const r = isKiaW ? interp(anch, m) : interp(anch, age);
   const ins = insRaw(w);
-  const run = ins + w.maint + gasMonthly(w) + energyMonthly(w);
+  const run = ins + w.maint + gasMonthly(w) + energyMonthly(w) + subMonthly(w);
 
   // resale interpolation bracket (on the relevant age)
   const ra = isKiaW ? m : age;
@@ -91,7 +91,7 @@ export function updateWorked(): void {
     `${payLine}\n` +
     `${balLine}\n` +
     `resale(age ${ageLabel}) = ${num(anch[ai - 1])} + ${num(t, 2)}×(${num(anch[ai])}−${num(anch[ai - 1])}) = <b>$${num(r)}</b>\n` +
-    `run   = ins ${num(ins)} + maint ${w.maint}${gasMonthly(w) > 0 ? ` + ${w.type === 'phev' ? 'energy' : 'gas'} ${num(gasMonthly(w))}` : ''}${energyMonthly(w) > 0 ? ` + energy ${S.ev}` : ''} = ${num(run)}/mo\n` +
+    `run   = ins ${num(ins)} + maint ${w.maint}${gasMonthly(w) > 0 ? ` + ${w.type === 'phev' ? 'energy' : 'gas'} ${num(gasMonthly(w))}` : ''}${energyMonthly(w) > 0 ? ` + energy ${S.ev}` : ''}${subMonthly(w) > 0 ? ` + FSD ${num(subMonthly(w))}` : ''} = ${num(run)}/mo\n` +
     (D > 0 ? `cash(${m}) = [Kia ${D} mo] + [${w.short} ${m - D} mo] = <b>$${num(cash)}</b>${rate ? `   (today's $ @ ${S.infl}%)` : ''}\n` : `cash(${m}) = <b>$${num(cash)}</b>${rate ? `   (today's $ @ ${S.infl}%)` : ''}\n`) +
     `equity = resale − balance = ${num(r)} − ${num(b)} = $${num(eq)}${rate ? `  → today's $: ×${num(df(m), 4)}` : ''}\n` +
     `net    = cash − equity = <span class="ok">$${num(net)}</span>   ← matches the “Cost @ ${m}mo” cell`;

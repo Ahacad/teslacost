@@ -22,6 +22,8 @@ export interface World {
   note: string;
   /** Dealer-trade switch → eligible for the WA trade-in tax credit. */
   tradeIn?: boolean;
+  /** Monthly software subscription (FSD, WA tax included), paid only while S.fsd is on. */
+  sub?: number;
 }
 
 export interface State {
@@ -41,4 +43,6 @@ export interface State {
   kiaOwed: number;
   kiaApr: number;
   kiaMonths: number;
+  /** Pay the FSD subscription on worlds that carry one. */
+  fsd: boolean;
 }
