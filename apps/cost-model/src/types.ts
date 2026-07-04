@@ -24,6 +24,9 @@ export interface World {
   tradeIn?: boolean;
   /** Monthly software subscription (FSD, WA tax included), paid only while S.fsd is on. */
   sub?: number;
+  /** Display-only: the OTD price and down payment already netted into `principal`. */
+  otd?: number;
+  down?: number;
 }
 
 export interface State {

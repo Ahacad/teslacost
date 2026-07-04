@@ -7,6 +7,7 @@ import {
 import { fmt } from './format';
 import { drawChart } from './chart';
 import { updateWorked } from './worked';
+import { renderBreakdown } from './breakdown';
 
 /** First month (0..36) the Kia is no longer underwater on a dealer trade, or null within 3 years. */
 function equityCrossover(): number | null {
@@ -90,5 +91,6 @@ export function render(): void {
       <summary><span class="dot" style="background:${w.color}"></span>${w.label} — ${fmt(monthlyAllIn(w))}/mo all-in</summary>
       <div class="body">${breakdown}.<br>${w.note}</div></details>`;
   }).join('');
+  renderBreakdown();
   updateWorked();
 }

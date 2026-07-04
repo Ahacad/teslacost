@@ -80,3 +80,14 @@ i.v{font-style:italic;color:var(--accent);font-family:ui-serif,Georgia,serif}
   background:#23211c;color:#e9e2d2;border-radius:9px;padding:13px 15px;overflow-x:auto;white-space:pre-wrap}
 .worked b{color:#ffd479} .worked .ok{color:#7fd6a0}
 select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line);border-radius:7px;background:#fff;color:var(--ink)}
+
+/* itemized monthly breakdown */
+.bk-bar{display:flex;height:26px;border-radius:7px;overflow:hidden;border:1px solid var(--line);margin:2px 0 10px}
+.bk-bar div{min-width:3px}
+.bk-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13.5px;
+  padding:5px 2px;border-bottom:1px dashed var(--line);font-variant-numeric:tabular-nums}
+.bk-row small{color:var(--muted);font-size:12px}
+.bk-row.off{opacity:.45}
+.bk-row.total{border-bottom:none;font-weight:700;font-size:15px;padding-top:8px}
+.bk-row .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:baseline}
+.bk-foot{color:var(--muted);font-size:12.5px;margin-top:8px;line-height:1.5}
