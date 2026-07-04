@@ -57,7 +57,7 @@ export function render(): void {
     .join('');
   const isp = document.getElementById('insSpread');
   if (isp)
-    isp.textContent = `Kia $${Math.round(insRaw(WORLDS[0]))} · Model Y $${Math.round(insRaw(WORLDS[2]))} · Ioniq $${Math.round(insRaw(WORLDS[1]))} · PHEV $${Math.round(insRaw(WORLDS[5]))}/mo`;
+    isp.textContent = `Ioniq $${Math.round(insRaw(WORLDS[1]))} · used MY $${Math.round(insRaw(WORLDS[3]))} · PHEV $${Math.round(insRaw(WORLDS[5]))} · lease $${Math.round(insRaw(WORLDS[7]))}/mo`;
   document.getElementById('hcol')!.textContent = 'Cost @ ' + hold + 'mo';
   document.getElementById('hold2')!.textContent = String(hold);
   const tb = document.querySelector('#tbl tbody')!;

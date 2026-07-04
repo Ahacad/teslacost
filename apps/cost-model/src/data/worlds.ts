@@ -26,7 +26,7 @@ export const WORLDS: World[] = [
     key: 'kia', label: 'Keep the Kia', short: 'Kia', type: 'gas', color: '#3f4651',
     upfront: 0, principal: 30000, apr: 5.1, term: 35, insurance: 283, maint: 70,
     resale: [24000, 19500, 16850, 14550, 12550, 10850, 9200, 6300], owns: true,
-    note: 'Baseline. Loan defaults to $30k @ 5.1% with 35 months left (~$924/mo) — edit it to your real statement. After payoff you pay only insurance + gas + maint (~$730/mo). PRIVATE-party resale (high-mileage-adjusted): $24k now → $9.2k at 6yr. Keeping it does NOT crystallize the negative equity; you just keep paying. Cost is dominated by gas.',
+    note: 'Baseline. Loan defaults to $30k @ 5.1% with 35 months left (~$924/mo) — edit it (and the $283/mo insurance) to your real statement. After payoff you pay only insurance + gas + maint (~$660/mo at the default gas price). PRIVATE-party resale (high-mileage-adjusted): $24k now → $9.2k at 6yr. Keeping it does NOT crystallize the negative equity; you just keep paying. Cost is dominated by gas.',
   },
   {
     key: 'ioniq', label: 'Ioniq 5 — buy @ 0%', short: 'Ioniq 0%', type: 'ev', color: '#2f7d56', tag: 'CarPlay',
@@ -36,9 +36,9 @@ export const WORLDS: World[] = [
   },
   {
     key: 'my099', label: 'MY Premium AWD (your build) @ 0.99%', short: 'MY 0.99%', type: 'ev', color: '#c0392b',
-    upfront: 3853, principal: 67477, apr: 0.99, term: 72, insurance: 230, maint: 30, tradeIn: true, sub: 109, otd: 61777, down: 3300,
+    upfront: 3853, principal: 67477, apr: 0.99, term: 72, insurance: 417, maint: 30, tradeIn: true, sub: 109, otd: 61777, down: 3300,
     resale: [61777, 46200, 40000, 34900, 30800, 26700, 22600, 18500], owns: true,
-    note: 'YOUR configured car (read off the live configurator 7/4/26, Seattle ZIP): Premium AWD $49,990 + Quicksilver $2,000 + white interior $1,000 + tow hitch $1,000 + $1,390 dest + $250 order = $55,630 pre-tax, × 1.1105 WA vehicle tax (Seattle 10.55% + 0.5% MV) = $61,777 OTD. Principal = OTD − $3,300 down + $9,000 rolled gap; upfront = down + $553 roof rack (incl. tax). FSD is subscription-only now (buy-outright ended 2/14/26): $99/mo + WA tax ≈ $109 — toggle above. First registration ≈ $805 (RTA ~$550/yr recurs; +$225/yr EV fees from renewal) sits outside every world, as does the Kia’s own renewal. 0.99%/72 promo confirmed live, min 5% down. No CarPlay.',
+    note: 'YOUR configured car (read off the live configurator 7/4/26, Seattle ZIP): Premium AWD $49,990 + Quicksilver $2,000 + white interior $1,000 + tow hitch $1,000 + $1,390 dest + $250 order = $55,630 pre-tax, × 1.1105 WA vehicle tax (Seattle 10.55% + 0.5% MV) = $61,777 OTD. Principal = OTD − $3,300 down + $9,000 rolled gap; upfront = down + $553 roof rack (incl. tax). FSD is subscription-only now (buy-outright ended 2/14/26): $99/mo + WA tax ≈ $109 — toggle above. First registration ≈ $805 (RTA ~$550/yr recurs; +$225/yr EV fees from renewal) sits outside every world, as does the Kia’s own renewal. 0.99%/72 promo confirmed live, min 5% down. Insurance = your real quote (Progressive $2,500/6 mo ≈ $417/mo; GEICO wanted $500/mo) — editable above. No CarPlay.',
   },
   {
     key: 'usedmy6', label: 'Used Model Y @ 6%', short: 'Used MY 6%', type: 'ev', color: '#2c6fb0',
@@ -60,7 +60,7 @@ export const WORLDS: World[] = [
   },
   {
     key: 'mystd', label: 'Same build @ 5.64% (standard rate)', short: 'MY 5.64%', type: 'ev', color: '#e08e86',
-    upfront: 553, principal: 70777, apr: 5.64, term: 72, insurance: 230, maint: 30, tradeIn: true, sub: 109, otd: 61777, down: 0,
+    upfront: 553, principal: 70777, apr: 5.64, term: 72, insurance: 417, maint: 30, tradeIn: true, sub: 109, otd: 61777, down: 0,
     resale: [61777, 46200, 40000, 34900, 30800, 26700, 22600, 18500], owns: true,
     note: 'Identical build if you miss the promo: Tesla’s standard advertised rate (5.64%/72, read off the live configurator 7/4/26; market prime average ~6.2%). No down, so principal = $61,777 OTD + $9,000 gap. The rate adds ~$180/mo over the 0.99% row — that spread IS the promo’s value (~$12k over the loan). Loan-interest deduction (≤$10k/yr, 2025–28) only survives below $100–150k MAGI single — assume $0.',
   },

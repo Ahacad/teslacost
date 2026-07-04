@@ -47,8 +47,10 @@ export function df(t: number): number {
   return r ? 1 / Math.pow(1 + r, t / 12) : 1;
 }
 
-/** Per-car insurance, scaled to your own quote level (keeps the per-car spread). */
+/** Per-car insurance: real quotes for the Kia and the new MY; the estimated cars scale with the slider. */
 export function insRaw(w: World): number {
+  if (isKia(w)) return S.insKia;
+  if (w.key === 'my099' || w.key === 'mystd') return S.insMy;
   return w.insurance * S.insMult;
 }
 

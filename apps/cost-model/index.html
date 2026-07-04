@@ -54,6 +54,10 @@
             <label style="font-size:12px">Months left <b><span id="kiaMonthsV">35</span> mo</b></label>
             <input type="range" id="kiaMonths" min="0" max="72" step="1" value="35">
           </div>
+          <div style="flex:1;min-width:130px">
+            <label style="font-size:12px">Insurance <b>$<span id="insKiaV">283</span>/mo</b></label>
+            <input type="range" id="insKia" min="100" max="600" step="1" value="283">
+          </div>
         </div>
       </div>
       <div class="ctl">
@@ -89,9 +93,14 @@
         <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Re-prices every future dollar into <i>today's</i> money (present value). <b>0% = raw nominal dollars</b> (as validated). Higher rate shrinks far-off costs <i>and</i> resale — it modestly favors keeping the Kia, whose cost is spread out vs the EV's front-loaded price.</div>
       </div>
       <div class="ctl">
-        <label>Insurance level <b>×<span id="insMultV">1.00</span></b></label>
+        <label>Model Y insurance (your real quote) <b>$<span id="insMyV">417</span>/mo</b></label>
+        <input type="range" id="insMy" min="150" max="650" step="1" value="417">
+        <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Your real 6-month quotes, July 2026: <b>Progressive $2,500 ≈ $417/mo</b> (the default) · GEICO $3,000 = $500/mo. Applies to both new-MY rows; the old $230 was a generic-profile estimate, not a quote. Shop 2–3 more insurers before signing — Tesla premiums spread widely between carriers.</div>
+      </div>
+      <div class="ctl">
+        <label>Estimated cars' insurance <b>×<span id="insMultV">1.00</span></b></label>
         <input type="range" id="insMult" min="0.5" max="2" step="0.05" value="1">
-        <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Scales every car's premium to your own quote (the per-car spread is kept): <span id="insSpread"></span>. Insurance is a soft, personal number — set it to real quotes; the gap <i>between</i> cars matters more than the level.</div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Scales only the rows still on generic estimates: <span id="insSpread"></span>. Your real MY quotes ran ~1.8× the old estimate — if that ratio holds for your profile, drag to ×1.5–1.8 and watch the used/Ioniq rows: at ×1.8 <b>every switch loses to the Kia at 5 years</b>.</div>
       </div>
       <div class="ctl" style="grid-column:1/-1">
         <div class="row" style="justify-content:space-between">
@@ -174,6 +183,7 @@
       <b>Verdict: the math is correct</b> (every figure reproduces to the cent, including the new 6% row) and <b>the ranking is robust</b> —
       but the headline <i>dollar gap</i> is gas-sensitive, so don't anchor on it. Corrections already applied + the limits to keep in mind:</p>
     <ul class="care" style="font-size:12.8px">
+      <li><b style="color:var(--good)">Updated · July 4, 2026: real insurance quotes replace the estimate.</b> Your actual 6-month Model Y quotes — GEICO $3,000 (=$500/mo) and Progressive $2,500 (≈$417/mo) — replace the model's old $230/mo guess; the default is now your best real quote, editable above, and the Kia's $283/mo is editable next to its loan. That alone adds ~$187/mo ≈ <b>+$11.2k over 5 years</b> to both new-MY rows: your build is now ~<b>+$19.4k</b> vs keeping the Kia at 5 yr with FSD, and even FSD-off no longer breaks even inside 96 months. The used-MY/Ioniq rows are still generic estimates (~1.8× light if your quote ratio holds — at ×1.8 the used-MY edge flips to <b>Kia wins</b>): get a real used-MY quote before acting on the "pick".</li>
       <li><b style="color:var(--good)">Updated · July 2026: the new-MY rows are now YOUR configured build</b> (Premium AWD $49,990 + Quicksilver $2,000 + white interior $1,000 + tow hitch $1,000, read off the live configurator with a Seattle ZIP), taxed at the 2026 rate (10.55% + 0.5% MV = 11.05%), plus the $553 roof rack in upfront and the $109/mo FSD subscription (toggle above; buying FSD outright ended 2/14/26). This <b>flips the June verdict for the new car</b>: with FSD the build never beats keeping the Kia inside 96 months (+$8.1k at 5 yr); without FSD it breaks even only at month 72. Full worked math incl. max checkout (≈$63.1k) and registration: <code>analyses/model-y-premium-awd-seattle-2026-07.md</code>. The fallback-rate row now uses Tesla’s live standard 5.64% (was the 6.27% market average).</li>
       <li><b style="color:var(--good)">Updated · Kia residual (real data).</b> The keep-the-Kia resale was refreshed to a high-mileage-adjusted curve for a 2025 Sportage AWD gas, ~8 mo old, ~15.5k mi (KiaMedia MSRP + iSeeCars/CarEdge depreciation + KBB/Edmunds values): private <b>$24.0k now → $9.2k at 6yr</b>, dealer-trade <b>$21.0k → $7.8k</b>. The Sportage holds value better than the prior guess, so keeping it is cheaper than before and the switch edge is <b>thinner</b> (used MY @ 6% now ~$7.9k ahead at 5yr, not ~$11.7k). Month-0 is anchored to the conservative end of the field ranges; get a real Carvana/CarMax/dealer quote to tighten it.</li>
       <li><b style="color:var(--good)">New · negative equity is derived, not hardcoded.</b> The rolled gap is now <i>loan balance − dealer-trade value</i> at the month you trade (= $9,000 today, by construction), and it <b>moves with the "Trade the Kia in" slider</b> and your editable loan. The lease now also carries this gap in cash (the prior model omitted it, understating the lease by ~$9k).</li>
@@ -187,7 +197,7 @@
       <li><b>“Net cost” counts resale equity you can't spend</b> with one car + ~$0 cash. Cross-check the <i>monthly all-in</i> and <i>walk-away-whole</i> columns before deciding.</li>
     </ul>
     <p style="margin:10px 0 0;font-size:13px"><b>Bottom line:</b> reliable for the <b>pick</b> — used MY @ 6% cheapest to own, then Ioniq 5 @ 0% / MY @ 0.99%; the lease is pure rent. The <i>size</i> of the edge (used MY @ 6% vs keeping the Kia, 5-yr net) swings with assumptions, and the refreshed Kia residual has narrowed it:
-      <b>~$7.9k</b> at these defaults · <b>~$6.7k</b> at gas $4.30 · <b>~$1.6k</b> under a conservative stack (low gas + winter $120 charging + conservative resale) · and the <b>Kia actually wins</b> if the office charger fails (~$0.1k) or in the worst realistic case (a conventional ~10% used rate <i>plus</i> all of the above, ~$4.4k in the Kia's favor). Translation: the switch wins <i>if</i> you land a low rate and keep cheap charging; it flips to keeping the Kia once you stack a high used rate, winter charging, and conservative resale. The 6% rate and the charging are the whole bet — and waiting to trade rarely helps (you burn the Kia's gas while you wait).</p>
+      <b>~$7.9k</b> at these defaults · <b>~$6.7k</b> at gas $4.30 · <b>~$1.6k</b> under a conservative stack (low gas + winter $120 charging + conservative resale) · and the <b>Kia actually wins</b> if the office charger fails (~$0.1k) or in the worst realistic case (a conventional ~10% used rate <i>plus</i> all of the above, ~$4.4k in the Kia's favor). Translation: the switch wins <i>if</i> you land a low rate and keep cheap charging; it flips to keeping the Kia once you stack a high used rate, winter charging, and conservative resale. The 6% rate and the charging are the whole bet — and waiting to trade rarely helps (you burn the Kia's gas while you wait). <b>Insurance reality check (July 4):</b> all of the above still prices the used rows at a generic $230/mo — your real new-MY quotes ran ~1.8× that level, and at ×1.8 the used-MY edge inverts (<b>keeping the Kia wins every world</b>). The pick now hinges on a real used-MY insurance quote.</p>
   </div>
 
   <div class="card">
@@ -211,6 +221,7 @@
         and the energy line jumps. Verify the outlet before treating it as the safe option.</li>
       <li><b>Ioniq 0% beats taking $7k cash only because the fallback rate is ~6.5%.</b> If you can get sub-5% financing (credit
         union), take the $7k cash off a lower principal instead.</li>
+      <li><b>Insurance is no longer a rounding error.</b> Real Model Y quotes came in at $417–500/mo against the $230/mo the model used to assume — that gap alone is bigger than the entire used-MY edge. Get a real quote for the specific car before any switch; the inputs above take the number straight.</li>
       <li><b>Resale is the soft number.</b> A Tesla price cut or the 70k-mile/3yr haircut (you drive 2× average) trims the Model Y's
         hold-value edge — toggle <b>Conservative resale</b> to see it.</li>
     </ul>
@@ -219,7 +230,7 @@
   <footer>
     Estimates, June 2026, composited from <code>analyses/ev-switch-*</code> (web-sourced + adversarially verified) and recomputed
     live in your browser with exact loan amortization. Not financial advice; not affiliated with Tesla, Hyundai, or Kia.
-    Reconfirm VIN-specific quotes, your real APR, and an insurance quote before signing. Your Kia loan (balance / APR / months left),
+    Reconfirm VIN-specific quotes and your real APR before signing; insurance for the Kia and the new MY is set from your real July-2026 quotes — every other row's premium is still an estimate. Your Kia loan (balance / APR / months left),
     the dealer-trade resale curve that sets the negative equity, and the EV resale curves are the load-bearing assumptions — small
     changes move the ranking. Set the Kia-loan inputs to your real statement.
   </footer>

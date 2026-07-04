@@ -48,4 +48,7 @@ export interface State {
   kiaMonths: number;
   /** Pay the FSD subscription on worlds that carry one. */
   fsd: boolean;
+  /** Real insurance quotes, $/mo: your current Kia premium and the new-MY quote (6-mo quote / 6). */
+  insKia: number;
+  insMy: number;
 }

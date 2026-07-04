@@ -5,6 +5,7 @@ export const S: State = {
   view: 'net', conserv: false, tradeCredit: true,
   infl: 0, insMult: 1, loanTerm: 72,
   delay: 0, kiaOwed: 30000, kiaApr: 5.1, kiaMonths: 35, fsd: true,
+  insKia: 283, insMy: 417,
 };
 
 export const hidden = new Set<string>();

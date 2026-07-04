@@ -10,6 +10,7 @@ const w = (key: string) => WORLDS.find((x) => x.key === key)!;
 const DEFAULTS = {
   hold: 60, gas: 4.60, miles: 23400, ev: 50, view: 'net' as const, conserv: false, tradeCredit: true,
   infl: 0, insMult: 1, loanTerm: 72, delay: 0, kiaOwed: 30000, kiaApr: 5.1, kiaMonths: 35, fsd: true,
+  insKia: 283, insMy: 417,
 };
 
 beforeEach(() => {
@@ -19,18 +20,18 @@ beforeEach(() => {
 // Ground truth = engine output at default state, cross-checked by hand for the Kia
 // (cash 72,088 − resale equity 10,850 = net 61,238). The two new-MY rows carry the July-2026
 // Seattle build (Premium AWD + Quicksilver + white interior + tow hitch, $61,777 OTD @ 11.05%
-// vehicle tax, $109/mo FSD sub, $553 roof rack in upfront) — pins re-derived by an independent
+// vehicle tax, $109/mo FSD sub, $553 roof rack in upfront, $417/mo real insurance quote) — pins re-derived by an independent
 // closed-form calculation, not copied from engine output. Other rows unchanged from the
 // validated artifact (delay 0 ⇒ negEquity(0) = ROLL_BASE = $9k, so principals match).
 describe('default state reproduces the validated table (Cost @ 60mo)', () => {
   const EXPECT: Record<string, { val: number; mo: number; be: number | null; wa: number | null }> = {
     kia:     { val: 61239, mo: 1587, be: null, wa: 14 },
     ioniq:   { val: 55011, mo: 991,  be: 39,   wa: 52 },
-    my099:   { val: 69371, mo: 1351, be: null, wa: 33 },
+    my099:   { val: 80591, mo: 1538, be: null, wa: 33 },
     usedmy6: { val: 53344, mo: 1046, be: 19,   wa: 40 },
     usedmy:  { val: 59358, mo: 1133, be: 52,   wa: 43 },
     phev:    { val: 70040, mo: 1385, be: null, wa: 36 },
-    mystd:   { val: 79441, mo: 1542, be: null, wa: 40 },
+    mystd:   { val: 90661, mo: 1729, be: null, wa: 40 },
     lease:   { val: 56400, mo: 790,  be: 9,    wa: null },
   };
   for (const [key, e] of Object.entries(EXPECT)) {
@@ -117,11 +118,11 @@ describe('FSD subscription is a toggleable run cost on the new-MY worlds only', 
     const on = monthlyAllIn(w('my099'));
     S.fsd = false;
     expect(Math.round(on - monthlyAllIn(w('my099')))).toBe(109);
-    expect(Math.round(monthlyAllIn(w('my099')))).toBe(1242);
+    expect(Math.round(monthlyAllIn(w('my099')))).toBe(1429);
   });
-  it('without FSD the build does beat the Kia — at month 72', () => {
+  it('even without FSD the build no longer beats the Kia inside 96 months (insurance reality)', () => {
     S.fsd = false;
-    expect(beatsKia(w('my099'))).toBe(72);
+    expect(beatsKia(w('my099'))).toBe(null);
   });
   it('the Kia and used-MY worlds carry no subscription', () => {
     const kiaOn = monthlyAllIn(w('kia'));
@@ -135,6 +136,40 @@ describe('FSD subscription is a toggleable run cost on the new-MY worlds only', 
     const on = cashOut(w('my099'), 24);
     S.fsd = false;
     expect(on - cashOut(w('my099'), 24)).toBeCloseTo(109 * 12, 6);
+  });
+});
+
+describe('insurance: real quotes for the Kia and new MY; the multiplier scales only estimates', () => {
+  it('the Model Y quote input moves both new-MY rows by the same amount, and only them', () => {
+    const before = { my: monthlyAllIn(w('my099')), std: monthlyAllIn(w('mystd')), used: monthlyAllIn(w('usedmy6')), kia: monthlyAllIn(w('kia')) };
+    S.insMy = 500; // the GEICO quote
+    expect(monthlyAllIn(w('my099')) - before.my).toBeCloseTo(83, 9);
+    expect(monthlyAllIn(w('mystd')) - before.std).toBeCloseTo(83, 9);
+    expect(monthlyAllIn(w('usedmy6'))).toBe(before.used);
+    expect(monthlyAllIn(w('kia'))).toBe(before.kia);
+  });
+  it('at the GEICO quote the build costs ~$24.3k more than the Kia at 5 years', () => {
+    S.insMy = 500;
+    expect(Math.round(value(w('my099'), 60) - value(w('kia'), 60))).toBe(24333);
+  });
+  it('the Kia premium input moves only the Kia', () => {
+    const my = monthlyAllIn(w('my099'));
+    S.insKia = 350;
+    expect(Math.round(monthlyAllIn(w('kia')))).toBe(1654);
+    expect(monthlyAllIn(w('my099'))).toBe(my);
+  });
+  it('the multiplier no longer touches the real-quote cars but scales the estimates', () => {
+    const my = monthlyAllIn(w('my099'));
+    const kia = monthlyAllIn(w('kia'));
+    S.insMult = 1.8;
+    expect(monthlyAllIn(w('my099'))).toBe(my);
+    expect(monthlyAllIn(w('kia'))).toBe(kia);
+    expect(Math.round(insRaw(w('usedmy6')))).toBe(414);
+  });
+  it('at your quote level (×1.8) the used-MY edge inverts: Kia wins at 60 mo, break-even slips to month 85', () => {
+    S.insMult = 1.8;
+    expect(Math.round(value(w('usedmy6'), 60) - value(w('kia'), 60))).toBe(3145);
+    expect(beatsKia(w('usedmy6'))).toBe(85);
   });
 });
 
