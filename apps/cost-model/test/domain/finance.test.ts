@@ -171,6 +171,11 @@ describe('insurance: real quotes for the Kia and new MY; the multiplier scales o
     expect(Math.round(value(w('usedmy6'), 60) - value(w('kia'), 60))).toBe(3145);
     expect(beatsKia(w('usedmy6'))).toBe(85);
   });
+  it('at the realistic used-MY premium (2022-23 MYs quote ~$288/mo = ×1.25) the pick survives, thinner', () => {
+    S.insMult = 1.25;
+    expect(Math.round(value(w('kia'), 60) - value(w('usedmy6'), 60))).toBe(4445);
+    expect(beatsKia(w('usedmy6'))).toBe(30);
+  });
 });
 
 describe('negative equity is derived from the Kia loan, not hardcoded', () => {

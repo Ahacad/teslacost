@@ -29,6 +29,7 @@ The month payoff ≤ quote, you're clear to move.
 
 ## Files
 
+- [`insurance-reality-check-2026-07.md`](insurance-reality-check-2026-07.md) — **July 4, 2026: real insurance quotes** (GEICO $500/mo, Progressive $417/mo vs the $230 estimate), verified market benchmarks (new-MY ≈ $380–400/mo; Progressive at market, GEICO ~25% high), carrier spread, Tesla-Insurance-in-WA timing (~Sept 2026), and the verdict impact (+$19.4k new build; used-MY edge thins to ~$4.4k at realistic premiums).
 - [`model-y-premium-awd-seattle-2026-07.md`](model-y-premium-awd-seattle-2026-07.md) — **July 2026: the exact configured build** (Premium AWD + Quicksilver + white interior + tow hitch + roof rack + FSD sub), live-configurator prices, 11.05% Seattle vehicle tax, max checkout ≈ $63.1k, 0.99%/72 promo math, and the FSD-flips-the-verdict finding. Supersedes the generic new-MY figures below.
 - [`ev-switch-baseline.md`](ev-switch-baseline.md) — the personal inputs (situation, loan, driving, charging, constraints).
 - [`ev-switch-facts-2026-06.md`](ev-switch-facts-2026-06.md) — **the raw verified market facts** (prices, range, charging, taxes, credits, APRs, insurance) with sources + confidence.
