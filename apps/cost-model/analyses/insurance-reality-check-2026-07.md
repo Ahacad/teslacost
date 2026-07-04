@@ -98,3 +98,66 @@ multiplier takes it directly.
 - Test pins re-derived closed-form (Python) — `my099` 60-mo net $80,591
   ($1,538/mo all-in), `mystd` $90,661 ($1,729/mo); sensitivity pins at ×1.25
   and ×1.8; slider-isolation tests (each input moves only the rows it should).
+
+## Where to quote next (verified July 4, 2026 sweep)
+
+Second sweep (11 agents: 4 channel hunts, 7 availability/price verifications)
+answering: which carriers are worth quote effort to beat Progressive's $417/mo?
+
+**Calibration first:** every published "carrier average" below uses a
+40-yr-old / clean-record / 10–12k mi/yr / 2025-model-year profile. Your real
+quotes ran **~1.5× Progressive's own $276/mo average** (GEICO 2.3×) because of
+the $62k new build + 23,400 mi/yr + Seattle. Apply that mentally: a $290-avg
+carrier is a coin flip vs $417 *before* discounts. Realistic landing zone from
+the tier-1 list: **$280–360/mo** (saves $700–1,700/yr).
+
+### Tier 1 — quote these (three online + one phone call)
+
+| Carrier | Signal | How |
+|---|---|---|
+| **PEMCO** (Seattle mutual, WA/OR only) | ~$101/mo WA full-cov average (MoneyGeek 5/26, Camry profile); confirmed Tesla appetite; caveat: topped CR's 2025 rate-increase survey | pemco.com, ~10 min direct |
+| **American Family via Costco** | Cheapest MY carrier in the QuinStreet studies (~$189/mo avg, Apr 2026 — insure.com + insurance.com are the *same* dataset, not two); $293/mo Insurify avg; Costco member tier on top | costco.amfam.com (membership required; rebranded from CONNECT 12/25) |
+| **Travelers** | $233/mo MY avg (QuinStreet 4/26); the only major advertising an explicit **EV discount (5–15%)** + IntelliDrive ≤30% (can surcharge in WA — drive gently the first 90 days) | travelers.com direct |
+| **Nationwide** | $229/mo 2025-MY (MoneyGeek 6/11/26, cheapest mainstream in that table); SmartRide ≤40%; do NOT take SmartMiles (pay-per-mile) at 23,400 mi/yr | nationwide.com (may hand off to an agent) |
+
+### Tier 2 — one independent-agent call covers the rest
+
+- **Mutual of Enumclaw** — cheapest verified WA full-coverage average
+  ($137/mo, ValuePenguin 6/30/26) but **agent-only**, rural-skewed book,
+  +31.3% approved 2025 increase; EV appetite unknown — that's the question the
+  quote answers.
+- **Liberty Mutual** (Safeco brand retired Apr 2026 — agents quote it as LM
+  now) + Grange/CIG as same-sitting add-ons. One Seattle independent agency
+  (e.g. Secord, 206-783-4024) runs 5–8 carriers including the WA-only mutuals
+  no comparison site shows.
+- **State Farm** — $223–265/mo MY averages; **Drive Safe & Save is the safest
+  telematics for an EV** (discount-only, no surcharge risk in WA; instant
+  torque can't hurt you, though high verified mileage caps the discount).
+  Needs its own agent/online quote.
+- **Amica** — ~$275/mo MY avg; dividend policies return 5–20% of premium.
+
+### Skip (verified reasons)
+
+- **Farmers** ($447/mo MY avg — worse than your quote), **Allstate** ($347 avg,
+  gap dies under your mileage/trim), **Chubb** (agreed-value luxury, not price).
+- **USAA** ($187/mo, cheapest published) — military affiliation only.
+- **Oregon Mutual** — exited personal lines in ALL states (2022). Dead end.
+- **Lemonade** — WA is pay-per-mile-only for them; wrong product at 23,400 mi/yr
+  (as is Mile Auto/Metromile atop "cheapest Tesla" listicles).
+- **BECU/TruStage path** — just a ~5% referral discount on Liberty Mutual;
+  redundant with the agent call. BECU's real perk is discounted AAA membership.
+- **AAA Washington** — underwritten by MAPFRE; the "AAA is cheap for Teslas"
+  reputation belongs to *other* AAA clubs (CSAA/SoCal) and does not transfer.
+- **Progressive Snapshot** on the existing quote — avg saving ~$27/mo and ~2 in
+  10 participants see an *increase*; can't close the gap to tier-1.
+
+### Tesla Insurance (re-verified 7/4/26)
+
+Still **not quotable in WA**: filing pending with the OIC, proposed effective
+**Sept 1, 2026** (would be state #16). New from the filing: two scoring tracks
+— standard Safety Score and Safety Score with FSD (Supervised), the latter
+with ~10% extra off when >50% of monthly miles are FSD. Two 2026 listicles
+claiming it's already live in WA are wrong (contradict the filing status).
+**Play:** bind a 6-month tier-1 policy now, drive with Safety Score enabled,
+re-quote Tesla in the app ~Sept 1; its monthly repricing weights mileage, so
+23,400 mi/yr cuts against it.
