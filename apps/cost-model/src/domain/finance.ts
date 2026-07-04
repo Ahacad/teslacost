@@ -1,6 +1,6 @@
 import type { World } from '../types';
 import { S } from '../state';
-import { MONTHS, WORLDS, KIA_TRADE, ROLL_BASE, TRADE_CREDIT, LEASE_PMT, GAS_MPG, PHEV_MPG } from '../data/worlds';
+import { MONTHS, WORLDS, KIA_TRADE, ROLL_BASE, TRADE_CREDIT, LEASE_PMT, GAS_MPG, PHEV_MPG, MILES_BASE } from '../data/worlds';
 import { pmt, balance, interp } from './amort';
 
 const KIA = WORLDS[0]; // the keep-the-Kia world; its loan is overridden by the editable S.kia* fields
@@ -75,13 +75,14 @@ export function gasMonthly(w: World): number {
   if (w.type === 'gas') return ((S.miles / GAS_MPG) * S.gas) / 12;
   if (w.type === 'phev') {
     const wknd = S.miles * 0.64;
-    return 20 + ((wknd / PHEV_MPG) * S.gas) / 12;
+    return 20 * (S.miles / MILES_BASE) + ((wknd / PHEV_MPG) * S.gas) / 12;
   }
   return 0;
 }
 
+/** EV charging: the $/mo case is costed at MILES_BASE mi/yr and scales linearly with miles driven. */
 export function energyMonthly(w: World): number {
-  return w.type === 'ev' || w.type === 'lease' ? S.ev : 0;
+  return w.type === 'ev' || w.type === 'lease' ? S.ev * (S.miles / MILES_BASE) : 0;
 }
 
 /** FSD (or similar) software subscription, paid only while the toggle is on. */

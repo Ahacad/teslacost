@@ -3,7 +3,7 @@ import { S } from '../../src/state';
 import { WORLDS } from '../../src/data/worlds';
 import { pmt } from '../../src/domain/amort';
 import {
-  cashOut, value, equity, df, beatsKia, walkAway, monthlyAllIn, prin, termOf, insRaw, negEquity,
+  cashOut, value, equity, df, beatsKia, walkAway, monthlyAllIn, prin, termOf, insRaw, negEquity, energyMonthly,
 } from '../../src/domain/finance';
 
 const w = (key: string) => WORLDS.find((x) => x.key === key)!;
@@ -93,6 +93,22 @@ describe('inflation barely moves the 5-yr verdict (still favors switching)', () 
     expect(value(w('usedmy6'), 60)).toBeLessThan(value(w('kia'), 60));
     S.infl = 5;
     expect(value(w('usedmy6'), 60)).toBeLessThan(value(w('kia'), 60));
+  });
+});
+
+describe('EV charging scales with miles driven (like the Kia\'s gas bill)', () => {
+  it('at the calibration mileage (23,400) the case price applies unscaled', () => {
+    expect(energyMonthly(w('my099'))).toBe(50);
+  });
+  it('halving miles halves EV energy, and the Tesla line moves by exactly that', () => {
+    const base = monthlyAllIn(w('my099'));
+    S.miles = 11700;
+    expect(energyMonthly(w('my099'))).toBeCloseTo(25, 9);
+    expect(base - monthlyAllIn(w('my099'))).toBeCloseTo(25, 9);
+  });
+  it('the winter case scales too, on the lease as well', () => {
+    S.ev = 120; S.miles = 30000;
+    expect(energyMonthly(w('lease'))).toBeCloseTo(120 * 30000 / 23400, 9);
   });
 });
 

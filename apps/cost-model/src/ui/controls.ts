@@ -1,5 +1,5 @@
 import { S, ui } from '../state';
-import { WORLDS } from '../data/worlds';
+import { WORLDS, MILES_BASE } from '../data/worlds';
 import { render } from './dashboard';
 import { updateWorked } from './worked';
 import { onMove, drawChart } from './chart';
@@ -18,10 +18,17 @@ function bindRange(id: string, key: NumKey, fmtFn: (v: number) => string): void 
   });
 }
 
+function evLabel(): void {
+  const scaled = Math.round((S.ev * S.miles) / MILES_BASE);
+  document.getElementById('evV')!.textContent =
+    (S.ev === 50 ? 'Cheap' : S.ev === 120 ? 'Winter/paid' : 'Office fails') + ' · ~$' + scaled + '/mo';
+}
+
 export function wire(): void {
   bindRange('hold', 'hold', (v) => String(v));
   bindRange('gas', 'gas', (v) => v.toFixed(2));
   bindRange('miles', 'miles', (v) => Math.round(v).toLocaleString());
+  document.getElementById('miles')!.addEventListener('input', evLabel);
   bindRange('infl', 'infl', (v) => v.toFixed(1));
   bindRange('insMult', 'insMult', (v) => v.toFixed(2));
   bindRange('delay', 'delay', (v) => (v === 0 ? 'switch now' : `wait ${v} mo`));
@@ -34,8 +41,7 @@ export function wire(): void {
       document.querySelectorAll('#evCase button').forEach((x) => x.classList.remove('on'));
       b.classList.add('on');
       S.ev = parseFloat(b.dataset.v!);
-      document.getElementById('evV')!.textContent =
-        (S.ev === 50 ? 'Cheap' : S.ev === 120 ? 'Winter/paid' : 'Office fails') + ' · $' + S.ev + '/mo';
+      evLabel();
       render();
     }),
   );

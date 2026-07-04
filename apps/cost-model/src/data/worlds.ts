@@ -6,6 +6,7 @@ export const MONTHS = [0, 12, 24, 36, 48, 60, 72, 96];
 export const TRADE_CREDIT = 2320; // WA trade-in tax credit per dealer-trade switch
 export const LEASE_PMT = 540; // flat modeled lease payment
 export const GAS_MPG = 29; // Kia combined mpg
+export const MILES_BASE = 23400; // mi/yr the $50/$120/$184 charging cases were costed at
 export const PHEV_MPG = 38; // PHEV highway mpg running on gas
 
 // Kia DEALER-TRADE value at each anchor month from now (high-mileage-adjusted,

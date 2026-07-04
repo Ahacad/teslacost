@@ -22,12 +22,12 @@ export function updateWorked(): void {
   if (w.type === 'lease') {
     const D = delayOf(w);
     const ins = insRaw(w);
-    const op = ins + S.ev;
+    const op = ins + energyMonthly(w);
     const head = D > 0 ? `<b>${w.label}</b> — wait ${D} mo in the Kia, then lease (no loan, no equity).\n` : `<b>${w.label}</b> — a lease: no loan, no equity.\n`;
     box.innerHTML =
       head +
       (D > 0 ? `phase 1 = keep the Kia ${D} mo; negative equity at trade = ${num(negEquity(D))} (paid in cash on a lease)\n` : '') +
-      `run   = insurance ${num(ins)} + energy ${S.ev} = ${num(op)}/mo\n` +
+      `run   = insurance ${num(ins)} + energy ${num(energyMonthly(w))} = ${num(op)}/mo\n` +
       `cash(${m}) = <b>$${num(cash)}</b>${rate ? `   (today's $ @ ${S.infl}%)` : ''}\n` +
       `equity = $0  (you own nothing)\n` +
       `net    = cash − equity = <span class="ok">$${num(net)}</span>   ← matches the table`;
@@ -91,7 +91,7 @@ export function updateWorked(): void {
     `${payLine}\n` +
     `${balLine}\n` +
     `resale(age ${ageLabel}) = ${num(anch[ai - 1])} + ${num(t, 2)}×(${num(anch[ai])}−${num(anch[ai - 1])}) = <b>$${num(r)}</b>\n` +
-    `run   = ins ${num(ins)} + maint ${w.maint}${gasMonthly(w) > 0 ? ` + ${w.type === 'phev' ? 'energy' : 'gas'} ${num(gasMonthly(w))}` : ''}${energyMonthly(w) > 0 ? ` + energy ${S.ev}` : ''}${subMonthly(w) > 0 ? ` + FSD ${num(subMonthly(w))}` : ''} = ${num(run)}/mo\n` +
+    `run   = ins ${num(ins)} + maint ${w.maint}${gasMonthly(w) > 0 ? ` + ${w.type === 'phev' ? 'energy' : 'gas'} ${num(gasMonthly(w))}` : ''}${energyMonthly(w) > 0 ? ` + energy ${num(energyMonthly(w))}` : ''}${subMonthly(w) > 0 ? ` + FSD ${num(subMonthly(w))}` : ''} = ${num(run)}/mo\n` +
     (D > 0 ? `cash(${m}) = [Kia ${D} mo] + [${w.short} ${m - D} mo] = <b>$${num(cash)}</b>${rate ? `   (today's $ @ ${S.infl}%)` : ''}\n` : `cash(${m}) = <b>$${num(cash)}</b>${rate ? `   (today's $ @ ${S.infl}%)` : ''}\n`) +
     `equity = resale − balance = ${num(r)} − ${num(b)} = $${num(eq)}${rate ? `  → today's $: ×${num(df(m), 4)}` : ''}\n` +
     `net    = cash − equity = <span class="ok">$${num(net)}</span>   ← matches the “Cost @ ${m}mo” cell`;
