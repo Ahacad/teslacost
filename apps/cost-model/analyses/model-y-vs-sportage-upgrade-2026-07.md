@@ -118,12 +118,17 @@ cabin the refresh fixed.
 
 ## Space & practicality — mild downgrade
 
-- Behind row 2 the Sportage wins by ~10 cu ft: 39.6 vs ~29.0 cu ft (both
+- Behind row 2 the Sportage wins by ~10 cu ft: 39.6 vs 29.0 cu ft (both
   verified against official spec sheets; worst case for the gap is 9.4 cu ft
   if the 30.2 source family is right). That's the number you feel weekly.
-- Seats folded the MY pulls slightly ahead once the frunk counts: 75.5 vs
-  74.1 cu ft — plus a drainable frunk (cooler), deep sub-trunk well, and
-  power-fold/reclining rear seats vs the Kia's manual bench.
+- Seats folded the MY only pulls ahead *once the frunk counts*: 75.5 vs 74.1
+  cu ft — but that 75.5 is Tesla's frunk-inclusive, two-passenger "max total,"
+  not a like-for-like SAE figure. Box-for-box (behind first row) the Kia
+  actually leads 74.1 vs 71.4; the MY wins back the max only with its 4.1 cu ft
+  drainable frunk (cooler), plus a deep sub-trunk well and power-fold/reclining
+  rear seats vs the Kia's manual bench. Full accounting +
+  measurement-standard traps in
+  [`cargo-space-my-vs-sportage-2026-07.md`](cargo-space-my-vs-sportage-2026-07.md).
 - Rear-seat room is a near-wash (legroom 41.3 vs 40.5 in; headroom tied).
   Roof load is a wash (165 lb both). Ground clearance is not: 8.3 vs 6.6 in —
   it matters for forest-service roads and deep-snow days.
