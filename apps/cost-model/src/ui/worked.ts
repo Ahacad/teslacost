@@ -2,7 +2,7 @@ import { S, ui } from '../state';
 import { MONTHS, WORLDS } from '../data/worlds';
 import { pmt, balance, interp } from '../domain/amort';
 import {
-  df, prin, termOf, resaleAnchors, gasMonthly, energyMonthly, subMonthly, insRaw, cashOut, equity, value, negEquity, delayOf,
+  df, prin, termOf, resaleAnchors, gasMonthly, energyMonthly, subMonthly, insRaw, cashOut, equity, value, negEquity, delayOf, aprOf,
 } from '../domain/finance';
 import { num } from './format';
 
@@ -47,7 +47,7 @@ export function updateWorked(): void {
     return;
   }
 
-  const apr = isKiaW ? S.kiaApr : w.apr;
+  const apr = isKiaW ? S.kiaApr : aprOf(w);
   const n = isKiaW ? S.kiaMonths : termOf(w);
   const P = isKiaW ? S.kiaOwed : prin(w);
   const age = Math.max(0, m - D); // months on the car you end up holding at month m

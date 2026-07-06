@@ -11,7 +11,7 @@ const w = (key: string) => WORLDS.find((x) => x.key === key)!;
 const DEFAULTS = {
   hold: 60, gas: 4.60, miles: 23400, ev: 50, view: 'net' as const, conserv: false, tradeCredit: true,
   infl: 0, insMult: 1, loanTerm: 72, delay: 0, kiaOwed: 30000, kiaApr: 5.1, kiaMonths: 35, fsd: true,
-  insKia: 283, insMy: 417,
+  insKia: 283, insMy: 417, kiaOffer: 21000, buyApr: 0,
 };
 
 beforeEach(() => {
@@ -57,6 +57,33 @@ describe('monthly decomposition sums to monthlyAllIn (compare card invariant)', 
     const kia = w('kia');
     const parts = pmt(S.kiaOwed, S.kiaApr, S.kiaMonths) + insRaw(kia) + kia.maint + gasMonthly(kia) + subMonthly(kia);
     expect(parts).toBeCloseTo(monthlyAllIn(kia), 9);
+  });
+});
+
+describe('real Kia trade-in offer scales the negative equity (must-add)', () => {
+  it('default 21000 reproduces the modeled $9k gap', () => {
+    expect(Math.round(negEquity(0))).toBe(9000); // 30000 owed − 21000 trade
+  });
+  it('a lower offer deepens the gap and rolls exactly that much more into every switch principal', () => {
+    const before = prin(w('usedmy6'));
+    S.kiaOffer = 18000;
+    expect(Math.round(negEquity(0))).toBe(12000); // 30000 − 18000
+    expect(prin(w('usedmy6')) - before).toBeCloseTo(3000, 6);
+  });
+});
+
+describe('new-buy APR override dial (must-add)', () => {
+  it('leaves the real promos (Tesla 0.99% / Ioniq 0%) untouched', () => {
+    S.buyApr = 8;
+    expect(Math.round(monthlyAllIn(w('my099')))).toBe(1538);
+    expect(Math.round(monthlyAllIn(w('ioniq')))).toBe(991);
+  });
+  it('overrides the shop-around used-MY rows to the dialed rate, so the two converge', () => {
+    S.buyApr = 8;
+    const a = monthlyAllIn(w('usedmy6'));
+    expect(a).toBeCloseTo(monthlyAllIn(w('usedmy')), 6); // same car, one rate
+    const x = w('usedmy6');
+    expect(a).toBeCloseTo(pmt(prin(x), 8, termOf(x)) + insRaw(x) + x.maint + energyMonthly(x), 6);
   });
 });
 

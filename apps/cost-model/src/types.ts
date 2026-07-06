@@ -51,4 +51,8 @@ export interface State {
   /** Real insurance quotes, $/mo: your current Kia premium and the new-MY quote (6-mo quote / 6). */
   insKia: number;
   insMy: number;
+  /** Your real Kia trade-in / instant-cash offer today ($); scales the whole dealer-trade curve. Default 21000 = modeled value. */
+  kiaOffer: number;
+  /** APR (%) override for the shop-around financed buys (used-MY / PHEV / standard-rate MY); 0 = each row keeps its own rate. */
+  buyApr: number;
 }
