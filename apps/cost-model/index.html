@@ -40,7 +40,7 @@
         <div id="delayReadout" style="font-size:11.5px;color:var(--muted);margin-top:3px"></div>
       </div>
       <div class="ctl" style="grid-column:1/-1">
-        <label>Your Kia loan today <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">— set these to your real statement; the "should I wait?" answer pivots on the months left</span></label>
+        <label>Your Kia today <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">— set these to your real statement + a real trade-in quote; the offer sets today's negative equity, and the "should I wait?" answer pivots on the months left</span></label>
         <div class="row" style="gap:18px;flex-wrap:wrap;margin-top:4px">
           <div style="flex:1;min-width:170px">
             <label style="font-size:12px">Balance owed <b>$<span id="kiaOwedV">30,000</span></b></label>
@@ -57,6 +57,10 @@
           <div style="flex:1;min-width:130px">
             <label style="font-size:12px">Insurance <b>$<span id="insKiaV">283</span>/mo</b></label>
             <input type="range" id="insKia" min="100" max="600" step="1" value="283">
+          </div>
+          <div style="flex:1;min-width:150px">
+            <label style="font-size:12px">Trade-in offer <b>$<span id="kiaOfferV">21,000</span></b></label>
+            <input type="range" id="kiaOffer" min="10000" max="28000" step="250" value="21000">
           </div>
         </div>
       </div>
@@ -86,6 +90,11 @@
           <button data-v="72" class="on">72 mo</button>
         </div>
         <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Applies to every financed switch (the Kia keeps its 35 months left; the lease its 36). Shorter term → higher payment, less total interest, equity sooner. APR is held fixed across terms (real quotes often shave the rate a little on shorter loans); the per-world notes quote the 72-mo base.</div>
+      </div>
+      <div class="ctl">
+        <label>New-buy APR override <b id="buyAprV">row rate</b></label>
+        <input type="range" id="buyApr" min="0" max="12" step="0.25" value="0">
+        <div style="font-size:11.5px;color:var(--muted);margin-top:3px">Sweeps the financed <b>used-MY / PHEV / standard-rate MY</b> rate — the "6–10% is the whole bet" band. <b>0 = each row's own rate</b>; the Tesla 0.99% and Ioniq 0% promos stay fixed. Costs and break-even update live (the two used-MY rows converge here — same car, one rate — while their labels keep the base rate).</div>
       </div>
       <div class="ctl">
         <label>Inflation / discount rate <b><span id="inflV">0.0</span>%/yr</b></label>

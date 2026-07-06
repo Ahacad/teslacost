@@ -20,7 +20,9 @@ function kiaCurve(anchors: number[]): number[] {
     return v * f;
   });
 }
-const kiaTrade = (m: number): number => interp(kiaCurve(KIA_TRADE), m);
+// The whole dealer-trade curve is scaled to your real offer: S.kiaOffer sets today's
+// value (default 21000 = KIA_TRADE[0]) and the modeled depreciation shape is preserved.
+const kiaTrade = (m: number): number => interp(kiaCurve(KIA_TRADE), m) * (S.kiaOffer / KIA_TRADE[0]);
 const kiaPrivate = (m: number): number => interp(resaleAnchors(KIA), m);
 
 /** Kia negative equity if you trade at month D = loan balance − dealer-trade value (can go negative = positive equity). */
@@ -60,6 +62,14 @@ export function termOf(w: World): number {
   return w.type === 'lease' ? w.term : S.loanTerm;
 }
 
+/** Real promo rates the buy-APR dial must NOT touch (Tesla 0.99% / Ioniq 0%). */
+const RATE_LOCKED = new Set(['my099', 'ioniq']);
+
+/** Effective APR: the buy-APR dial overrides the shop-around financed buys; promos and the Kia keep their own rate. */
+export function aprOf(w: World): number {
+  return S.buyApr > 0 && !!w.tradeIn && !RATE_LOCKED.has(w.key) ? S.buyApr : w.apr;
+}
+
 export function resaleAnchors(w: World): number[] {
   if (!S.conserv || !w.owns) return w.resale;
   const cut =
@@ -95,7 +105,7 @@ export function subMonthly(w: World): number {
 /** Steady-state monthly all-in AFTER the switch (the comparable figure); the Kia phase is just the Kia. */
 export function monthlyAllIn(w: World): number {
   if (isKia(w)) return kiaPay() + kiaRun();
-  const p = w.type === 'lease' ? LEASE_PMT : pmt(prin(w), w.apr, termOf(w));
+  const p = w.type === 'lease' ? LEASE_PMT : pmt(prin(w), aprOf(w), termOf(w));
   return p + insRaw(w) + w.maint + gasMonthly(w) + energyMonthly(w) + subMonthly(w);
 }
 
@@ -116,7 +126,7 @@ export function cashOut(w: World, m: number): number {
   for (let t = 1; t <= Math.min(m, D); t++) pv += ((t <= S.kiaMonths ? kiaPay() : 0) + kiaRun()) * df(t);
   if (m <= D) return pv;
   // Switch at month D: down payment now (lease covers its rolled negative equity in cash instead).
-  const evPay = w.type === 'lease' ? LEASE_PMT : pmt(prin(w), w.apr, termOf(w));
+  const evPay = w.type === 'lease' ? LEASE_PMT : pmt(prin(w), aprOf(w), termOf(w));
   const evRun = insRaw(w) + w.maint + gasMonthly(w) + energyMonthly(w) + subMonthly(w);
   const n = termOf(w);
   pv += (w.type === 'lease' ? Math.max(0, negEquity(D)) : w.upfront) * df(D || 0);
@@ -135,7 +145,7 @@ export function equity(w: World, m: number): number {
   if (m <= D) return kiaPrivate(m) - kiaBal(m); // still own the Kia during the wait (even if the destination is a lease)
   if (!w.owns) return 0; // a lease owns nothing once you're in it
   const age = m - D;
-  return interp(resaleAnchors(w), age) - balance(prin(w), w.apr, termOf(w), age);
+  return interp(resaleAnchors(w), age) - balance(prin(w), aprOf(w), termOf(w), age);
 }
 
 /** Net = cash out − resale equity (a future receipt, so discounted too); cash view skips equity. */

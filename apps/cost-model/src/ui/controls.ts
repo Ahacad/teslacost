@@ -6,7 +6,8 @@ import { onMove, drawChart } from './chart';
 
 type NumKey =
   | 'hold' | 'gas' | 'miles' | 'infl' | 'insMult' | 'loanTerm'
-  | 'delay' | 'kiaOwed' | 'kiaApr' | 'kiaMonths' | 'insKia' | 'insMy';
+  | 'delay' | 'kiaOwed' | 'kiaApr' | 'kiaMonths' | 'insKia' | 'insMy'
+  | 'kiaOffer' | 'buyApr';
 
 function bindRange(id: string, key: NumKey, fmtFn: (v: number) => string): void {
   const el = document.getElementById(id) as HTMLInputElement;
@@ -32,11 +33,13 @@ export function wire(): void {
   bindRange('infl', 'infl', (v) => v.toFixed(1));
   bindRange('insMult', 'insMult', (v) => v.toFixed(2));
   bindRange('delay', 'delay', (v) => (v === 0 ? 'switch now' : `wait ${v} mo`));
-  bindRange('kiaOwed', 'kiaOwed', (v) => '$' + Math.round(v).toLocaleString());
+  bindRange('kiaOwed', 'kiaOwed', (v) => Math.round(v).toLocaleString());
   bindRange('kiaApr', 'kiaApr', (v) => v.toFixed(1) + '%');
   bindRange('kiaMonths', 'kiaMonths', (v) => Math.round(v) + ' mo');
   bindRange('insKia', 'insKia', (v) => String(Math.round(v)));
   bindRange('insMy', 'insMy', (v) => String(Math.round(v)));
+  bindRange('kiaOffer', 'kiaOffer', (v) => Math.round(v).toLocaleString());
+  bindRange('buyApr', 'buyApr', (v) => (v === 0 ? 'row rate' : v.toFixed(2) + '%'));
 
   document.querySelectorAll<HTMLElement>('#evCase button').forEach((b) =>
     b.addEventListener('click', () => {

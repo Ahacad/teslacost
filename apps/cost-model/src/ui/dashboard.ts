@@ -2,7 +2,7 @@ import { S } from '../state';
 import { WORLDS, LEASE_PMT } from '../data/worlds';
 import { pmt } from '../domain/amort';
 import {
-  prin, termOf, value, beatsKia, walkAway, monthlyAllIn, gasMonthly, insRaw, energyMonthly, subMonthly, negEquity,
+  prin, termOf, value, beatsKia, walkAway, monthlyAllIn, gasMonthly, insRaw, energyMonthly, subMonthly, negEquity, aprOf,
 } from '../domain/finance';
 import { fmt } from './format';
 import { drawChart } from './chart';
@@ -81,7 +81,7 @@ export function render(): void {
     tb.appendChild(tr);
   }
   document.getElementById('cards')!.innerHTML = WORLDS.map((w) => {
-    const p = w.type === 'lease' ? LEASE_PMT : pmt(prin(w), w.apr, termOf(w));
+    const p = w.type === 'lease' ? LEASE_PMT : pmt(prin(w), aprOf(w), termOf(w));
     const breakdown =
       w.type === 'lease'
         ? `lease $${LEASE_PMT} + insurance $${Math.round(insRaw(w))} + energy ${fmt(energyMonthly(w))} = <b>${fmt(monthlyAllIn(w))}/mo</b>, $0 equity`
