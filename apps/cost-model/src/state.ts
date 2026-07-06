@@ -1,7 +1,7 @@
 import type { State, World } from './types';
 
 export const S: State = {
-  hold: 60, gas: 4.60, miles: 23400, ev: 50,
+  hold: 24, gas: 4.60, miles: 23400, ev: 50,
   view: 'net', conserv: false, tradeCredit: true,
   infl: 0, insMult: 1, loanTerm: 72,
   delay: 0, kiaOwed: 30000, kiaApr: 5.1, kiaMonths: 35, fsd: true,

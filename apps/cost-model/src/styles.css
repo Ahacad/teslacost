@@ -3,6 +3,10 @@
   --line:#ddd6c6; --accent:#9c3b2e; --good:#2f7d56; --warn:#a9791f;
   --kia:#3f4651; --my099:#c0392b; --mystd:#e08e86; --usedmy:#1f8a8a;
   --usedmy6:#2c6fb0; --ioniq:#2f7d56; --lease:#b07d1a; --phev:#7a5aa3;
+  /* Monthly-cost categories — one validated, CVD-safe hue per category, shared by
+     both the Model Y breakdown and the Model-Y-vs-Kia comparison. Order is the
+     stacking order; adjacency was checked for colorblind separation. */
+  --cat-pay:#c0392b; --cat-ins:#2c6fb0; --cat-maint:#b07d1a; --cat-fuel:#1c8a4e; --cat-fsd:#7a5aa3;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:radial-gradient(120% 120% at 50% 0%,var(--paper2),var(--paper));color:var(--ink);
@@ -91,3 +95,12 @@ select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line);
 .bk-row.total{border-bottom:none;font-weight:700;font-size:15px;padding-top:8px}
 .bk-row .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:baseline}
 .bk-foot{color:var(--muted);font-size:12.5px;margin-top:8px;line-height:1.5}
+
+/* Model Y vs Kia comparison — the parallel-bar SVG sizes itself; the table is the
+   precise readout + color legend. */
+#myVsKia svg{width:100%;height:auto;display:block;cursor:default;margin:2px 0 4px}
+.cmp-tbl{margin-top:6px}
+.cmp-tbl th,.cmp-tbl td{padding:6px 9px}
+.cmp-tbl td:first-child,.cmp-tbl th:first-child{text-align:left;white-space:nowrap}
+.cmp-tbl .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:middle}
+.cmp-tbl tr.cmp-tot td{font-weight:700;border-top:2px solid var(--line);border-bottom:none}
