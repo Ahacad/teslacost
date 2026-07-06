@@ -31,8 +31,8 @@
     <h2>Your assumptions <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">— slide and the table below (and chart above) update live</span></h2>
     <div class="controls">
       <div class="ctl">
-        <label>Holding period <b><span id="holdV">60</span> mo</b></label>
-        <input type="range" id="hold" min="12" max="96" step="1" value="60">
+        <label>Holding period <b><span id="holdV">24</span> mo</b></label>
+        <input type="range" id="hold" min="12" max="96" step="1" value="24">
       </div>
       <div class="ctl">
         <label>Trade the Kia in <b id="delayV">switch now</b></label>
@@ -122,10 +122,15 @@
   </div>
 
   <div class="card">
-    <h2>At your holding period (<span id="hold2">60</span> months)</h2>
+    <h2>Model Y vs your Kia Sportage — where each monthly dollar goes <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">— same $/px scale; dotted lines link the same category across both bars</span></h2>
+    <div id="myVsKia"></div>
+  </div>
+
+  <div class="card">
+    <h2>At your holding period (<span id="hold2">24</span> months)</h2>
     <table id="tbl">
       <thead><tr>
-        <th>World</th><th>Upfront</th><th>Monthly all-in</th><th id="hcol">Cost @ 60mo</th>
+        <th>World</th><th>Upfront</th><th>Monthly all-in</th><th id="hcol">Cost @ 24mo</th>
         <th>vs Kia</th><th>Beats Kia</th><th>Walk-away whole</th><th>Owns?</th>
       </tr></thead>
       <tbody></tbody>
@@ -167,7 +172,7 @@
     <div class="row" style="margin:14px 0 8px">
       <label style="font-size:13px;color:var(--muted)">Worked example — plug in real numbers for:</label>
       <select id="exWorld"></select>
-      <span style="font-size:13px;color:var(--muted)">at month <b id="exHold">60</b></span>
+      <span style="font-size:13px;color:var(--muted)">at month <b id="exHold">24</b></span>
     </div>
     <div class="worked" id="worked"></div>
   </div>

@@ -16,11 +16,11 @@ export function renderBreakdown(): void {
   const P = prin(w);
   const pay = pmt(P, w.apr, termOf(w));
   const parts = [
-    { k: 'Loan payment', v: pay, c: 'var(--my099)', note: `${fmt(P)} @ ${w.apr}% / ${termOf(w)} mo` },
-    { k: 'Insurance', v: insRaw(w), c: 'var(--usedmy6)', note: 'your real quote (Progressive ÷ 6; GEICO wanted $500)' },
-    { k: 'Maintenance', v: w.maint, c: 'var(--phev)', note: 'tires/wipers/misc, flat' },
-    { k: 'Charging', v: energyMonthly(w), c: 'var(--ioniq)', note: `$${S.ev} case × ${(S.miles / 23400).toFixed(2)} miles level` },
-    { k: 'FSD', v: subMonthly(w), c: 'var(--lease)', note: S.fsd ? '$99 + WA tax, cancelable monthly' : 'toggled off' },
+    { k: 'Loan payment', v: pay, c: 'var(--cat-pay)', note: `${fmt(P)} @ ${w.apr}% / ${termOf(w)} mo` },
+    { k: 'Insurance', v: insRaw(w), c: 'var(--cat-ins)', note: 'your real quote (Progressive ÷ 6; GEICO wanted $500)' },
+    { k: 'Maintenance', v: w.maint, c: 'var(--cat-maint)', note: 'tires/wipers/misc, flat' },
+    { k: 'Charging', v: energyMonthly(w), c: 'var(--cat-fuel)', note: `$${S.ev} case × ${(S.miles / 23400).toFixed(2)} miles level` },
+    { k: 'FSD', v: subMonthly(w), c: 'var(--cat-fsd)', note: S.fsd ? '$99 + WA tax, cancelable monthly' : 'toggled off' },
   ];
   const total = monthlyAllIn(w);
   const kiaTotal = monthlyAllIn(kia);

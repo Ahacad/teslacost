@@ -4,6 +4,7 @@ import { WORLDS } from '../../src/data/worlds';
 import { pmt } from '../../src/domain/amort';
 import {
   cashOut, value, equity, df, beatsKia, walkAway, monthlyAllIn, prin, termOf, insRaw, negEquity, energyMonthly,
+  gasMonthly, subMonthly,
 } from '../../src/domain/finance';
 
 const w = (key: string) => WORLDS.find((x) => x.key === key)!;
@@ -42,6 +43,21 @@ describe('default state reproduces the validated table (Cost @ 60mo)', () => {
       expect(walkAway(w(key))).toBe(e.wa);
     });
   }
+});
+
+// The MY-vs-Kia comparison bars decompose each car's monthly into the same five
+// categories; the segments MUST sum to monthlyAllIn() or the two views disagree.
+describe('monthly decomposition sums to monthlyAllIn (compare card invariant)', () => {
+  it('Model Y: payment + insurance + maint + charging + FSD', () => {
+    const my = w('my099');
+    const parts = pmt(prin(my), my.apr, termOf(my)) + insRaw(my) + my.maint + energyMonthly(my) + subMonthly(my);
+    expect(parts).toBeCloseTo(monthlyAllIn(my), 9);
+  });
+  it('Kia Sportage: payment + insurance + maint + gas (no FSD)', () => {
+    const kia = w('kia');
+    const parts = pmt(S.kiaOwed, S.kiaApr, S.kiaMonths) + insRaw(kia) + kia.maint + gasMonthly(kia) + subMonthly(kia);
+    expect(parts).toBeCloseTo(monthlyAllIn(kia), 9);
+  });
 });
 
 describe('amortization identities', () => {
