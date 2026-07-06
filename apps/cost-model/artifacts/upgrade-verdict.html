@@ -263,7 +263,56 @@
     .cards{grid-template-columns:1fr}
     .fixes{grid-template-columns:1fr}
     .bi-seg{margin-left:0; margin-top:4px}
+    .wi-grid{grid-template-columns:1fr}
   }
+
+  /* ---- Worth It? (interactive) ---- */
+  .wi-lead{color:var(--muted); max-width:72ch; margin:2px 0 16px; font-size:.98rem}
+  .wi-lead b{color:var(--ink); font-weight:650}
+  .wi-lead em{color:var(--ink); font-style:italic}
+  .wi-price{
+    display:flex; flex-wrap:wrap; align-items:center; gap:16px 24px;
+    background:var(--panel); color:var(--ink-lit); border-radius:14px; padding:20px 24px; margin:0 0 18px;
+    background-image:radial-gradient(120% 160% at 50% -30%, #22272F 0%, var(--panel) 60%);
+  }
+  .wi-price .pv{font-family:var(--mono); font-size:2rem; font-weight:700; letter-spacing:-.02em; color:var(--tesla-lit); line-height:1; font-variant-numeric:tabular-nums}
+  .wi-price .pk{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted-lit); margin-top:5px}
+  .wi-price .pnote{font-size:.86rem; color:var(--muted-lit); max-width:42ch; line-height:1.45}
+  .wi-scen{display:inline-flex; border:1px solid var(--line-dark); border-radius:999px; overflow:hidden}
+  .wi-scen button{font-family:var(--mono); font-size:.68rem; font-weight:600; padding:7px 12px; border:0; background:transparent; color:var(--muted-lit); cursor:pointer}
+  .wi-scen button[aria-pressed="true"]{background:var(--tesla); color:#fff}
+  .wi-chgtoggle{font-family:var(--mono); font-size:.68rem; font-weight:600; padding:7px 12px; border-radius:999px; border:1px solid var(--line-dark); background:transparent; color:var(--muted-lit); cursor:pointer}
+  .wi-chgtoggle[aria-pressed="true"]{background:var(--kia); color:#fff; border-color:var(--kia)}
+
+  .wi-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .wi-col{border:1px solid var(--line); border-radius:14px; background:var(--surface); padding:18px 20px}
+  .wi-col h3{font-size:.96rem; font-weight:750; margin:0 0 3px; letter-spacing:-.01em}
+  .wi-col.you h3{color:var(--kia)} .wi-col.mkt h3{color:var(--tesla)}
+  .wi-col .h-sub{color:var(--faint); font-size:.8rem; margin:0 0 14px; line-height:1.4}
+  .wi-row{margin:0 0 13px}
+  .wi-row .rl{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:5px}
+  .wi-row .rl .lab{font-size:.88rem; font-weight:600; color:var(--ink)}
+  .wi-row .rl .lab.neg{color:var(--kia)}
+  .wi-row .rl .amt{font-family:var(--mono); font-weight:700; font-size:.9rem; color:var(--ink); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .wi-row input[type=range]{width:100%; margin:0; accent-color:var(--kia); height:20px; cursor:pointer}
+  .wi-row.mktrow{display:flex; justify-content:space-between; align-items:baseline; gap:10px; padding:7px 0; border-bottom:1px solid var(--line)}
+  .wi-row.mktrow:last-of-type{border-bottom:0}
+  .wi-row.mktrow .lab{font-size:.88rem; font-weight:600; color:var(--ink)}
+  .wi-row.mktrow .lab.neg{color:var(--kia)}
+  .wi-row.mktrow .lab small{display:block; font-weight:400; color:var(--faint); font-size:.73rem; letter-spacing:0; max-width:38ch}
+  .wi-row.mktrow .amt{font-family:var(--mono); font-weight:700; font-size:.9rem; font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink)}
+  .wi-sum{display:flex; justify-content:space-between; align-items:baseline; margin-top:14px; padding-top:14px; border-top:2px solid var(--line)}
+  .wi-sum .sl{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+  .wi-sum .sv{font-family:var(--mono); font-size:1.5rem; font-weight:700; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+  .wi-verdict-row{font-size:.86rem; margin-top:10px; line-height:1.5; color:var(--muted)}
+  .wi-verdict-row b{color:var(--ink)}
+  .wi-verdict-row .good{color:var(--kia); font-weight:700} .wi-verdict-row .bad{color:var(--tesla); font-weight:700}
+
+  .wi-final{border:1px solid var(--line); border-left:3px solid var(--ink); border-radius:12px; background:var(--surface); padding:20px 24px; margin-top:16px}
+  .wi-final h3{font-size:1.12rem; font-weight:750; margin:0 0 10px}
+  .wi-final p{margin:0; color:#2C313A; font-size:.99rem; line-height:1.62}
+  .wi-final b{color:var(--ink)}
+  .wi-note{color:var(--faint); font-size:.8rem; margin-top:12px; line-height:1.5}
 </style>
 
 <div class="doc">
@@ -546,6 +595,45 @@
     <p class="sub" style="margin-top:16px">The single biggest swing is <b>FSD: $109/mo ≈ $6.5k over five years, pure cost</b> — a subscription adds nothing at resale. It's cancelable monthly, so subscribing only for road-trip months roughly halves it.</p>
   </section>
 
+  <!-- WORTH IT -->
+  <section id="worthit">
+    <div class="sec-head">
+      <h2>Is it worth it?</h2>
+      <span class="note">The upgrade is real (Net +30.9). But it costs ~$322/mo. Is that a fair price?</span>
+    </div>
+    <p class="wi-lead">The money is already settled: <b>~$322/mo</b> is the <em>net</em> cost — it has already credited your fuel savings and subtracted the higher insurance, depreciation, and FSD rent. So what that $322/mo actually <em>buys</em> is the <b>experience bundle</b>: quicker, quieter, smoother, better tech, safer, hands-free on the commute — minus less cargo and no CarPlay. The question is whether that bundle is worth $322/mo. Two honest answers below: <b>what it's worth to you</b>, and <b>what the market charges</b> for the same upgrades elsewhere.</p>
+
+    <div class="wi-price">
+      <div><div class="pv" id="wiPrice">$322<span style="font-size:1rem">/mo</span></div><div class="pk" id="wiPriceK">your build · FSD on · +$19.4k / 5yr</div></div>
+      <span class="wi-scen" role="group" aria-label="which scenario">
+        <button data-scen="my" aria-pressed="true">Your build · FSD on</button>
+        <button data-scen="nofsd" aria-pressed="false">FSD off</button>
+      </span>
+      <button class="wi-chgtoggle" id="wiChg" aria-pressed="false">+ add work-charging credit (−$26)</button>
+      <p class="pnote">Your free L2 charging at Amazon covers most commute miles, trimming the net cost below the model's home-charging figure.</p>
+    </div>
+
+    <div class="wi-grid">
+      <div class="wi-col you">
+        <h3>What it's worth to you</h3>
+        <p class="h-sub">Drag each to what you'd happily pay per month for that upgrade. Starting points are guesses from your life — move them.</p>
+        <div id="wiSliders"></div>
+        <div class="wi-sum"><span class="sl">Your value of the bundle</span><span class="sv" id="wiYouSum" style="color:var(--kia)">$0</span></div>
+        <div class="wi-verdict-row" id="wiYouVerdict"></div>
+      </div>
+      <div class="wi-col mkt">
+        <h3>What the market charges</h3>
+        <p class="h-sub" id="wiMktSub">Each upgrade priced at what you'd pay for it elsewhere (subscriptions + amortized option premiums), verified against real 2025–26 sources.</p>
+        <div id="wiMktRows"></div>
+        <div class="wi-sum"><span class="sl">Market fair value</span><span class="sv" id="wiMktSum" style="color:var(--tesla)">$0</span></div>
+        <div class="wi-verdict-row" id="wiMktVerdict"></div>
+      </div>
+    </div>
+
+    <div class="wi-final" id="wiFinal"></div>
+    <p class="wi-note" id="wiMktNote"></p>
+  </section>
+
   <!-- THREE DOWNGRADES -->
   <section>
     <div class="sec-head"><h2>The three real downgrades</h2></div>
@@ -786,5 +874,103 @@
   });
 
   render();
+})();
+</script>
+
+<script>
+(function(){
+  var fsdOn=true, freeChg=false;
+  var LINES=[
+   {k:'performance', label:'Performance & fun',        sub:'3.9s vs ~10s 0-60',                                  def:45, neg:false, max:150},
+   {k:'refinement',  label:'Ride comfort & quiet',     sub:'acoustic glass + retuned suspension — your highway miles', def:65, neg:false, max:150},
+   {k:'adas',        label:'Hands-free on the commute',sub:'FSD Supervised — 60 mi/day + long trips',            def:55, neg:false, max:150, fsd:true},
+   {k:'tech',        label:'Screens, software & nav',  sub:'15.4"+8" rear, OTA, live-traffic nav',               def:20, neg:false, max:120},
+   {k:'safety',      label:'Crash safety',             sub:'NHTSA 5★ every sub-test',                        def:30, neg:false, max:120},
+   {k:'losses',      label:'− What you give up',   sub:'less cargo, no CarPlay, lower clearance, more service', def:25, neg:true,  max:100}
+  ];
+  // MARKET: US 2025-26 $/mo anchors, adversarially verified (worth-it-market-anchors
+  // workflow: 6 sourced + 6 refute-checked; values below are the post-verify stand-behind).
+  var MARKET={
+   performance:{v:125, src:'perf-trim step ~$7.5k (Model 3 Perf vs LR) ÷60'},
+   refinement: {v:15,  src:'acoustic glass + passive dampers (refresh is not adaptive)'},
+   adas:       {v:50,  src:'median: FSD $99, BlueCruise $50, Super Cruise $40 /mo'},
+   tech:       {v:22,  src:'Premium Connectivity $9.99/mo + screen/nav premium'},
+   safety:     {v:13,  src:'ADAS-safety pkg ~$0.9k ÷60 (a 5★ rating is free)'},
+   losses:     {v:11,  src:'CarPlay + ~10 cu ft cargo, weakly monetized (McKinsey WTP)'}
+  };
+  var you={}; LINES.forEach(function(l){you[l.k]=l.def;});
+
+  function activeLines(){ return LINES.filter(function(l){return !(l.fsd && !fsdOn);}); }
+  function price(){ return (fsdOn?322:213) - (freeChg?26:0); }
+  function money(n){ return (n<0?'−$':'$')+Math.abs(Math.round(n)); }
+
+  function buildSliders(){
+    document.getElementById('wiSliders').innerHTML = activeLines().map(function(l){
+      return '<div class="wi-row" data-k="'+l.k+'">'+
+        '<div class="rl"><span class="lab'+(l.neg?' neg':'')+'">'+l.label+'</span>'+
+        '<span class="amt" id="amt-'+l.k+'"></span></div>'+
+        '<input type="range" min="0" max="'+l.max+'" step="5" value="'+you[l.k]+'" data-k="'+l.k+'" aria-label="'+l.label+'"></div>';
+    }).join('');
+  }
+  function buildMkt(){
+    document.getElementById('wiMktRows').innerHTML = activeLines().map(function(l){
+      var m=MARKET[l.k];
+      return '<div class="wi-row mktrow"><span class="lab'+(l.neg?' neg':'')+'">'+l.label+
+        '<small>'+m.src+'</small></span><span class="amt">'+money(l.neg?-m.v:m.v)+'/mo</span></div>';
+    }).join('');
+  }
+  function recompute(){
+    var youSum=0, mktSum=0;
+    activeLines().forEach(function(l){
+      var yv=you[l.k], mv=MARKET[l.k].v;
+      youSum += l.neg? -yv : yv;
+      mktSum += l.neg? -mv : mv;
+      var el=document.getElementById('amt-'+l.k); if(el) el.textContent=money(l.neg?-yv:yv)+'/mo';
+    });
+    var p=price();
+    document.getElementById('wiYouSum').textContent=money(youSum)+'/mo';
+    document.getElementById('wiMktSum').textContent=money(mktSum)+'/mo';
+    document.getElementById('wiPrice').innerHTML=money(p)+'<span style="font-size:1rem">/mo</span>';
+    document.getElementById('wiPriceK').textContent=(fsdOn?'your build · FSD on':'FSD off')+(freeChg?' · free work charging':'')+' · net vs Kia';
+
+    var youGap=youSum-p, mktGap=mktSum-p;
+    document.getElementById('wiYouVerdict').innerHTML = youGap>=0
+      ? 'Clears the price by <span class="good">'+money(youGap)+'/mo</span> — worth it to you.'
+      : 'Falls <span class="bad">'+money(-youGap)+'/mo</span> short of the price — a want, not value.';
+    document.getElementById('wiMktVerdict').innerHTML = mktGap>=0
+      ? 'Market values it <span class="good">'+money(mktGap)+'/mo above</span> the price — a relative bargain.'
+      : 'Tesla asks <span class="bad">'+money(-mktGap)+'/mo above</span> market fair value.';
+
+    var f;
+    if(youGap>=0){
+      f='<b>Worth it — on your own numbers.</b> You’d pay '+money(youSum)+'/mo for this bundle and it costs '+money(p)+'/mo, so you come out ahead by '+money(youGap)+'/mo.';
+    } else if(mktGap>=0){
+      f='<b>Fairly priced, but a want — not a saving.</b> The market values this bundle at '+money(mktSum)+'/mo (at or above the '+money(p)+'/mo price), so you’re not overpaying <em>for what it is</em>. But by your own numbers it’s worth '+money(youSum)+'/mo — '+money(-youGap)+'/mo below the price. You’ll enjoy it; you won’t save on it.';
+    } else {
+      f='<b>You’d be overpaying on both counts.</b> The price is '+money(p)+'/mo; the market values the bundle at '+money(mktSum)+'/mo and you’d personally pay '+money(youSum)+'/mo — both below the price. As pure value it doesn’t clear the bar.';
+    }
+    f+=' The only path that costs <em>less</em> than keeping the Kia is a used, pre-refresh Model Y (−$73/mo) — but that car drops the ride, quiet and rear screen you’re valuing most here.';
+    document.getElementById('wiFinal').innerHTML='<h3>The bottom line</h3><p>'+f+'</p>';
+  }
+  function rebuild(){ buildSliders(); buildMkt(); recompute(); }
+
+  document.getElementById('wiSliders').addEventListener('input', function(e){
+    var k=e.target.dataset.k; if(!k) return; you[k]=+e.target.value; recompute();
+  });
+  var scen=document.querySelector('.wi-scen');
+  scen.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    fsdOn = b.dataset.scen==='my';
+    scen.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed', x.dataset.scen===b.dataset.scen?'true':'false');});
+    rebuild();
+  });
+  var chg=document.getElementById('wiChg');
+  chg.addEventListener('click', function(){
+    freeChg=!freeChg; chg.setAttribute('aria-pressed', freeChg?'true':'false');
+    chg.textContent = freeChg?'− free work charging (−$26)':'+ add work-charging credit';
+    recompute();
+  });
+  document.getElementById('wiMktNote').innerHTML='<b>Market anchors</b> are US 2025–26 figures, adversarially verified (6 sourced + 6 refute-checked): hands-free ADAS = median of FSD $99, Ford BlueCruise $50, GM Super Cruise $40/mo; performance = the isolated performance-trim step (~$7.5k) ÷60; refinement is small because the refreshed Model Y rides on <em>passive</em> dampers (the win is acoustic glass, not adaptive suspension); tech = Premium Connectivity $9.99/mo + a modest screen/nav premium; a 5★ safety rating can’t be bought, so only the active-safety kit prices. <b>The FSD trap:</b> inside the $322 you pay ~$109/mo for hands-free driving the market values at ~$50/mo. Sources: tesla.com, ford.com, chevrolet.com, Edmunds/InsideEVs trim data, McKinsey CarPlay willingness-to-pay. They benchmark — your sliders decide.';
+  rebuild();
 })();
 </script>

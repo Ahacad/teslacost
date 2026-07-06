@@ -108,7 +108,9 @@ drive.
 This says nothing about whether it's *worth it*: +30.9 net "experience points"
 is the upside you'd be buying, and the [cost model](../artifacts/upgrade-verdict.html)
 prices that upside at ~$322/mo. The Bump Index is the non-money side of that
-trade, made countable.
+trade, made countable — and [`worth-it-model-2026-07.md`](worth-it-model-2026-07.md)
+weighs that +30.9 against the $322/mo to answer whether it's worth it (short
+version: a want, not a value — market fair value ~$214/mo).
 
 ## How to adjust
 
