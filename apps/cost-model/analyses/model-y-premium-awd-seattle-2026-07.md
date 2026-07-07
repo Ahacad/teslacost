@@ -48,28 +48,58 @@ month free on a new car.
 | Roof rack (incl. tax) | $553 |
 | **Max checkout** | **≈ $63,135** |
 
-Minimum cash to drive away when financing (tax + fees rolled into the loan —
-Tesla allows up to ~120% LTV): $250 order fee + $3,300 down ≈ **$3,550**, plus
-the rack.
+Minimum cash to drive away depends on the rate you want (§4). To **keep the 0.99%
+promo** you must stay inside its box — 5% down of the *car* **plus** taxes and the
+Kia shortfall in cash (≤~100% LTV) ≈ **$10k** at a $26k trade. To pay **~$0 at
+signing** you roll taxes + the shortfall into the loan (>100% LTV), which forfeits
+the promo to Tesla's standard ~5.64%.
 
-## 4. Financing — the 0.99% promo (verified live 7/4/26)
+## 4. Financing — the getaways (0.99% promo vs low-cash), re-verified 2026-07-07
 
-- **0.99% APR, terms up to 72 mo, min 5% down**, Premium RWD/AWD only (entry
-  RWD gets 0%; Performance 5.09–5.64%). No FSD strings. No published end date —
-  it has rolled monthly since Dec 2025, but treat **7/31/26 delivery** as the
-  planning cutoff. "Excellent credit" is not a hard 720; approval is per-application.
-- Clean purchase (no Kia roll): finance $61,777 − $3,300 = **$58,477 → $837/mo**
-  × 72. Total interest ≈ **$1,778** (that's the whole cost of borrowing — the
-  promo is nearly free money).
-- Same loan at the standard 5.64%: $965/mo, ~$11.0k interest → **the promo is
-  worth ~$9k**. Missing it changes the answer more than any option does.
-- With the Kia gap rolled in (the model's default world): $65,157 → **$932/mo**.
-- The OBBBA loan-interest deduction (≤$10k/yr, US-assembled, 2025–28) phases out
-  over **$100k–150k MAGI single** — assume $0 for a Seattle tech salary. At 0.99%
-  there is almost no interest to deduct anyway.
+The 0.99% promo (Premium RWD/AWD, up to 72 mo; Performance and used excluded) is
+real and still live, but it is **gated on a real down payment and ≤~100% LTV** —
+not the $3,300 an earlier draft assumed:
+
+- **Tesla's fine print requires a minimum down payment** — 5% of the *vehicle
+  price* (≈$2,782) **plus taxes and fees in cash**; some 2026 Model Y tiers ran as
+  high as **15% down** (the 1.99% tier). It is **not** 5% of OTD, and it is never
+  $0. Sources: tesla.com/current-offers footnote 7 + CarsDirect tier breakdown.
+- **Rolling the Kia shortfall pushes the loan over 100% LTV**, which Tesla's own
+  trade-in page says *"may lead to an increase in your APR."* There is **no ~120%
+  promo-LTV allowance** — that figure in the prior draft was unsourced and is
+  withdrawn. Tesla's partners *will* finance >100% LTV to absorb taxes + negative
+  equity (~$7k practical cap, strong/800+ credit) — but on the **standard rate**,
+  not the subvented 0.99%.
+- The one common **$0-down trick — applying the $7,500 federal EV credit as the
+  down — is dead** (§30D expired 9/30/25; this trim was over the cap anyway).
+
+At the **$26k trade / $4k shortfall**, the getaways (financed = car+tax+gap − down):
+
+| Getaway | Cash at signing | Rate | $/mo | Lifetime (72 mo) |
+|---|---|---|---|---|
+| **Keep 0.99%** — 5% down + tax + $4k gap in cash | ~$10,060 | 0.99% | $756 | **$64,510** |
+| Low-down middle *(only if a ~2.99% tier is offered — unconfirmed)* | ~$3,300 | ~2.99% | $955 | $68,790 |
+| **Zero-down** — roll tax + gap into the loan | ~$0 | ~5.64% | $1,032 | **$74,290** |
+
+The **$10k isn't all "extra"**: it's $4,000 Kia shortfall + ~$3,274 WA tax (both
+owed either way) + ~$2,782 promo down (which becomes car equity). Only the ~$2,782
+is a genuine add to unlock 0.99%. **Zero-down doesn't erase the shortfall or tax —
+it borrows them at ~5.6%, ~$9.8k more over the loan (+~$276/mo).** So the choice is
+pure cash-flow: front ~$10k to save ~$10k over six years, or keep the cash and pay
+the spread. 0.99% is **purchase-only** — you cannot refinance into it later.
+
+- **Real-world evidence**: buyers *do* roll negative equity into Tesla loans (post-
+  June-2025 policy; ~$7k cap; strong credit) — a Nov-2025 buyer rolled a Model Y
+  shortfall for *"$60 more/month, zero due at signing"*
+  ([TorqueNews](https://www.torquenews.com/18004/i-beat-negative-equity-i-wasnt-going-buy-new-tesla-model-y-juniper-tesla-found-creative-way))
+  — but **no public case shows anyone keeping a promo rate at zero down**; the
+  zero-down deals are standard-rate. TMC: *"you have to settle any negative equity
+  in cash at delivery"* or use outside financing to ~125% LTV (needs 800+ credit).
+  Forums advise clearing the shortfall first.
+- OBBBA loan-interest deduction (≤$10k/yr, 2025–28) phases out over $100–150k MAGI
+  single — assume $0; at 0.99% there's almost no interest to deduct anyway.
 - **No other help exists**: federal §30D dead (9/30/25), WA exemption dead
-  (7/31/25, and its $45k cap excluded this trim anyway), state rebate exhausted,
-  SCL/PSE offer nothing on purchases.
+  (7/31/25), state rebate exhausted, SCL/PSE offer nothing on purchases.
 
 ## 5. Monthly cost of ownership (this build)
 
@@ -78,6 +108,12 @@ case) + **$109 FSD** ≈ **$1,351/mo** all-in — vs ~$1,587/mo keeping the Kia.
 FSD off: **$1,242/mo**.
 
 ## 6. What the model says (60-mo hold, default assumptions)
+
+> **Stale — predates the $26k trade.** These figures used the old $21k trade / $9k
+> shortfall and the pre-correction 0.99%-with-rolled-gap assumption. At the $26k
+> trade ($4k shortfall) every switch world drops ~$5–6k and the 0.99% gap-vs-Kia
+> narrows toward break-even (likely a win without FSD). Re-read the live app after
+> the `kiaOffer=26000` update rather than trusting this table.
 
 | World | Net cost @ 60 mo | vs Kia |
 |---|---|---|
