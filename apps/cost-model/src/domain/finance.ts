@@ -21,7 +21,8 @@ function kiaCurve(anchors: number[]): number[] {
   });
 }
 // The whole dealer-trade curve is scaled to your real offer: S.kiaOffer sets today's
-// value (default 21000 = KIA_TRADE[0]) and the modeled depreciation shape is preserved.
+// value (default 26000 = live Tesla offer; KIA_TRADE[0] 21000 is the shape anchor, so the
+// default scales the curve by 26000/21000) and the modeled depreciation shape is preserved.
 const kiaTrade = (m: number): number => interp(kiaCurve(KIA_TRADE), m) * (S.kiaOffer / KIA_TRADE[0]);
 const kiaPrivate = (m: number): number => interp(resaleAnchors(KIA), m);
 
