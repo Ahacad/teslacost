@@ -7,7 +7,7 @@ import { onMove, drawChart } from './chart';
 type NumKey =
   | 'hold' | 'gas' | 'miles' | 'infl' | 'insMult' | 'loanTerm'
   | 'delay' | 'kiaOwed' | 'kiaApr' | 'kiaMonths' | 'insKia' | 'insMy'
-  | 'kiaOffer' | 'buyApr';
+  | 'kiaOffer' | 'buyApr' | 'myDown';
 
 function bindRange(id: string, key: NumKey, fmtFn: (v: number) => string): void {
   const el = document.getElementById(id) as HTMLInputElement;
@@ -22,7 +22,7 @@ function bindRange(id: string, key: NumKey, fmtFn: (v: number) => string): void 
 function evLabel(): void {
   const scaled = Math.round((S.ev * S.miles) / MILES_BASE);
   document.getElementById('evV')!.textContent =
-    (S.ev === 50 ? 'Cheap' : S.ev === 120 ? 'Winter/paid' : 'Office fails') + ' · ~$' + scaled + '/mo';
+    (S.ev === 25 ? 'Apt free L2' : S.ev === 50 ? 'Cheap' : S.ev === 120 ? 'Winter/paid' : 'Office fails') + ' · ~$' + scaled + '/mo';
 }
 
 export function wire(): void {
@@ -39,6 +39,7 @@ export function wire(): void {
   bindRange('insKia', 'insKia', (v) => String(Math.round(v)));
   bindRange('insMy', 'insMy', (v) => String(Math.round(v)));
   bindRange('kiaOffer', 'kiaOffer', (v) => Math.round(v).toLocaleString());
+  bindRange('myDown', 'myDown', (v) => Math.round(v).toLocaleString());
   bindRange('buyApr', 'buyApr', (v) => (v === 0 ? 'row rate' : v.toFixed(2) + '%'));
 
   document.querySelectorAll<HTMLElement>('#evCase button').forEach((b) =>

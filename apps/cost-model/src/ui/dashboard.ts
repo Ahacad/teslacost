@@ -2,7 +2,7 @@ import { S } from '../state';
 import { WORLDS, LEASE_PMT } from '../data/worlds';
 import { pmt } from '../domain/amort';
 import {
-  prin, termOf, value, beatsKia, walkAway, monthlyAllIn, gasMonthly, insRaw, energyMonthly, subMonthly, negEquity, aprOf,
+  prin, termOf, value, beatsKia, walkAway, monthlyAllIn, gasMonthly, insRaw, energyMonthly, subMonthly, negEquity, aprOf, upfrontOf,
 } from '../domain/finance';
 import { fmt } from './format';
 import { drawChart } from './chart';
@@ -56,9 +56,10 @@ export function render(): void {
   document.getElementById('pills')!.innerHTML = pills
     .map((p) => `<div class="pill"><div class="k">${p[0]}</div><div class="v">${p[2]} <small>${p[1]}</small></div></div>`)
     .join('');
+  const byKey = (key: string) => WORLDS.find((x) => x.key === key)!;
   const isp = document.getElementById('insSpread');
   if (isp)
-    isp.textContent = `Ioniq $${Math.round(insRaw(WORLDS[1]))} · used MY $${Math.round(insRaw(WORLDS[3]))} · PHEV $${Math.round(insRaw(WORLDS[5]))} · lease $${Math.round(insRaw(WORLDS[7]))}/mo`;
+    isp.textContent = `Ioniq $${Math.round(insRaw(byKey('ioniq')))} · used MY $${Math.round(insRaw(byKey('usedmy6')))} · PHEV $${Math.round(insRaw(byKey('phev')))} · lease $${Math.round(insRaw(byKey('lease')))}/mo`;
   document.getElementById('hcol')!.textContent = 'Cost @ ' + hold + 'mo';
   document.getElementById('hold2')!.textContent = String(hold);
   const tb = document.querySelector('#tbl tbody')!;
@@ -69,11 +70,11 @@ export function render(): void {
     const tr = document.createElement('tr');
     if (w.key === cheapestReal.w.key) tr.className = 'win';
     else if (w.key === 'kia') tr.className = 'kia';
-    else if (w.key === 'my099') tr.className = 'my099';
+    else if (w.key === 'my099' || w.key === 'my299') tr.className = 'my099';
     const tags = (w.tag ? `<span class="tag">${w.tag}</span>` : '') + (w.tagBad ? `<span class="tag bad">${w.tagBad}</span>` : '');
     tr.innerHTML =
       `<td><span class="dot" style="background:${w.color}"></span>${w.label}${tags}</td>` +
-      `<td>${fmt(w.upfront)}</td><td>${fmt(r.mo)}</td><td>${fmt(r.val)}</td>` +
+      `<td>${fmt(upfrontOf(w))}</td><td>${fmt(r.mo)}</td><td>${fmt(r.val)}</td>` +
       `<td class="${w.key === 'kia' ? '' : d < 0 ? 'pos' : 'neg'}">${w.key === 'kia' ? '—' : d < 0 ? fmt(d) : '+' + fmt(d)}</td>` +
       `<td>${r.be ? 'mo ' + r.be : '—'}</td>` +
       `<td>${w.owns ? (r.wa ? 'mo ' + r.wa : '>96') : '<span class="neg">never</span>'}</td>` +

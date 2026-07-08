@@ -2,7 +2,7 @@ import { S, ui } from '../state';
 import { MONTHS, WORLDS } from '../data/worlds';
 import { pmt, balance, interp } from '../domain/amort';
 import {
-  df, prin, termOf, resaleAnchors, gasMonthly, energyMonthly, subMonthly, insRaw, cashOut, equity, value, negEquity, delayOf, aprOf,
+  df, prin, termOf, resaleAnchors, gasMonthly, energyMonthly, subMonthly, insRaw, cashOut, equity, value, negEquity, delayOf, aprOf, upfrontOf,
 } from '../domain/finance';
 import { num } from './format';
 
@@ -70,11 +70,19 @@ export function updateWorked(): void {
   // Principal line — for a delayed switch, show how the rolled negative equity enters P.
   const pLine = isKiaW
     ? `<b>${w.label}</b>   P = $${num(P)} owed   n = ${n} mo left   APR = ${apr}%\n`
-    : D > 0
-      ? `<b>${w.label}</b> — wait ${D} mo, then switch.\n` +
-        `roll  = Kia balance b(${D})=${num(balance(S.kiaOwed, S.kiaApr, S.kiaMonths, D))} − trade value = negative equity ${num(negEquity(D))}\n` +
-        `P     = own price ${num(w.principal - 9000)} + rolled ${num(negEquity(D))}${S.tradeCredit ? ' − credit 2,320' : ''} = $${num(P)}   n = ${n} mo   APR = ${apr}%\n`
-      : `<b>${w.label}</b>   P = $${num(P)}   n = ${n} mo   APR = ${apr}%\n`;
+    : w.tier === 'promo'
+      ? `<b>${w.label}</b> — 0.99% band: loan capped at 95% of pre-tax price; tax + gap paid in cash.\n` +
+        `cash  = 5% down + tax + rack + gap = ${num(upfrontOf(w))} at signing${D > 0 ? ` (trade month ${D})` : ''}\n` +
+        `P     = $${num(P)}   n = ${n} mo   APR = ${apr}%\n`
+      : w.tier === 'roll'
+        ? `<b>${w.label}</b> — 2.99% band: everything financed above your $${num(S.myDown)} down (>100% LTV).\n` +
+          `P     = OTD − trade credit + gap ${num(negEquity(D))}${D > 0 ? ` (at month ${D})` : ''} − down = $${num(P)}   n = ${n} mo   APR = ${apr}%\n` +
+          `cash  = ${num(upfrontOf(w))} at signing\n`
+        : D > 0
+          ? `<b>${w.label}</b> — wait ${D} mo, then switch.\n` +
+            `roll  = Kia balance b(${D})=${num(balance(S.kiaOwed, S.kiaApr, S.kiaMonths, D))} − trade value = negative equity ${num(negEquity(D))}\n` +
+            `P     = own price ${num(w.principal - 9000)} + rolled ${num(negEquity(D))} = $${num(P)}   n = ${n} mo   APR = ${apr}%\n`
+          : `<b>${w.label}</b>   P = $${num(P)}   n = ${n} mo   APR = ${apr}%\n`;
 
   const payLine =
     apr === 0

@@ -3,20 +3,28 @@ import type { World } from '../types';
 /** Resale anchor months; everything between is straight-line interpolated. */
 export const MONTHS = [0, 12, 24, 36, 48, 60, 72, 96];
 
-export const TRADE_CREDIT = 2320; // WA trade-in tax credit per dealer-trade switch
+export const TAX_RATE = 0.1105; // Seattle vehicle sales tax (10.55% combined + 0.5% MV, Q3 2026)
 export const LEASE_PMT = 540; // flat modeled lease payment
 export const GAS_MPG = 29; // Kia combined mpg
-export const MILES_BASE = 23400; // mi/yr the $50/$120/$184 charging cases were costed at
+export const MILES_BASE = 23400; // mi/yr the charging cases were costed at
 export const PHEV_MPG = 38; // PHEV highway mpg running on gas
+
+// The configured Model Y build (Premium AWD + options + dest/order), pre-tax.
+// Tesla's promo tiers key off this: the 0.99% band requires a down payment of
+// 5% of it PLUS all taxes and fees (amount financed ≤ 100% of price); financing
+// past 100% LTV (taxes/fees/negative equity rolled in) prices the next band, 2.99%.
+export const MY_PRETAX = 55630;
+export const MY_DOWN5 = 0.05 * MY_PRETAX; // 2,781.50
+export const MY_RACK = 553; // roof rack bought outside the loan, incl. tax
 
 // Kia DEALER-TRADE value at each anchor month from now (high-mileage-adjusted,
 // 2025 Sportage AWD gas; sources in analyses/ev-switch-facts). The switch-world
 // rollover is financed against this, not the private curve below (`kia.resale`).
 export const KIA_TRADE = [21000, 16950, 14550, 12500, 10700, 9200, 7750, 5250];
 
-// Negative equity baked into each switch world's `principal` at delay 0
-// (= kiaOwed 30000 − KIA_TRADE[0] 21000). The delay slider swaps this constant
-// for the live negEquity(D); at D=0 the two are equal, so the base chart is unchanged.
+// Negative equity baked into each non-tiered switch world's `principal` at the
+// curve's own month-0 value (kiaOwed 30000 − KIA_TRADE[0] 21000). The engine
+// swaps this constant for the live negEquity(D), which reflects the real offer.
 export const ROLL_BASE = 9000;
 
 // Line colors mirror the CSS :root palette as hex so the data layer stays
@@ -35,10 +43,16 @@ export const WORLDS: World[] = [
     note: 'Principal = $44,531 OTD (incl. WA tax) − ~$2,320 trade-in tax credit + $9,000 rolled Kia gap, financed at 0%/72. Cheapest payment of any buy, cheapest insurance, has Apple CarPlay. Catch: Hyundai depreciates fast, so you stay underwater until ~month 53.',
   },
   {
-    key: 'my099', label: 'MY Premium AWD (your build) @ 0.99%', short: 'MY 0.99%', type: 'ev', color: '#c0392b',
-    upfront: 3853, principal: 67477, apr: 0.99, term: 72, insurance: 417, maint: 30, tradeIn: true, sub: 109, otd: 61777, down: 3300,
-    resale: [61777, 46200, 40000, 34900, 30800, 26700, 22600, 18500], owns: true,
-    note: 'YOUR configured car (read off the live configurator 7/4/26, Seattle ZIP): Premium AWD $49,990 + Quicksilver $2,000 + white interior $1,000 + tow hitch $1,000 + $1,390 dest + $250 order = $55,630 pre-tax, × 1.1105 WA vehicle tax (Seattle 10.55% + 0.5% MV) = $61,777 OTD. Principal = OTD − $3,300 down + $9,000 rolled gap; upfront = down + $553 roof rack (incl. tax). FSD is subscription-only now (buy-outright ended 2/14/26): $99/mo + WA tax ≈ $109 — toggle above. First registration ≈ $805 (RTA ~$550/yr recurs; +$225/yr EV fees from renewal) sits outside every world, as does the Kia’s own renewal. 0.99%/72 promo confirmed live, min 5% down. Insurance = your real quote (Progressive $2,500/6 mo ≈ $417/mo; GEICO wanted $500/mo) — editable above. No CarPlay.',
+    key: 'my099', label: 'MY Premium AWD @ 0.99% (promo tier: 5%+tax+gap in cash)', short: 'MY 0.99%', type: 'ev', color: '#c0392b',
+    tier: 'promo', upfront: 0, principal: MY_PRETAX - MY_DOWN5, apr: 0.99, term: 72, insurance: 417, maint: 30, tradeIn: true, sub: 109, otd: 61777, down: MY_DOWN5,
+    resale: [55630, 46200, 40000, 34900, 30800, 26700, 22600, 18500], owns: true,
+    note: 'YOUR configured car (live configurator 7/4/26, Seattle ZIP): Premium AWD $49,990 + Quicksilver $2,000 + white interior $1,000 + tow hitch $1,000 + $1,390 dest + $250 order = $55,630 pre-tax. THE PROMO TIER IS A CASH GATE: Tesla’s 0.99% band requires down ≥ 5% of price ($2,782) + ALL taxes and fees, i.e. amount financed ≤ 100% LTV — so the WA tax (11.05% of price − trade-in value), the rolled Kia gap, and the $553 roof rack are all paid in CASH at signing (upfront updates live with the offer and trade month). Financed = 95% of pre-tax price. Slide "Trade the Kia in" to see the cash gate shrink as the loan amortizes. FSD sub $99+tax ≈ $109/mo (toggle). First registration ≈ $805 + RTA ~$550/yr + $225/yr EV fees sit outside every world. Insurance = your real quote. No CarPlay.',
+  },
+  {
+    key: 'my299', label: 'Same build @ 2.99% (roll-everything tier, $2k down)', short: 'MY 2.99%', type: 'ev', color: '#e67e22',
+    tier: 'roll', upfront: 0, principal: 70777, apr: 2.99, term: 72, insurance: 417, maint: 30, tradeIn: true, sub: 109, otd: 61777, down: 2000,
+    resale: [55630, 46200, 40000, 34900, 30800, 26700, 22600, 18500], owns: true,
+    note: 'Identical build through Tesla’s SUB-THRESHOLD band: put ~$2k down (slider below), roll the WA tax, fees, and the Kia gap into the loan (>100% LTV), and the configurator reprices 0.99% → 2.99% — the unpublished tier verified from Tesla’s own pricing matrix (downPaymentMatrix / subventedInterestRate). Financed = $61,777 OTD − trade-in tax credit + rolled gap − down. Cash at signing = down + $553 rack only. Costs ~$4.1k more interest than the 0.99% tier over 72 mo — the price of keeping ~$8k in your pocket today. Bank must approve >100% LTV (partners cap ~120%; Tesla warns the APR "may increase"). Enforcement is inconsistent — one Feb 2026 buyer kept 0.99% with $100 down; apply and let the bank answer.',
   },
   {
     key: 'usedmy6', label: 'Used Model Y @ 6%', short: 'Used MY 6%', type: 'ev', color: '#2c6fb0',
@@ -61,7 +75,7 @@ export const WORLDS: World[] = [
   {
     key: 'mystd', label: 'Same build @ 5.64% (standard rate)', short: 'MY 5.64%', type: 'ev', color: '#e08e86',
     upfront: 553, principal: 70777, apr: 5.64, term: 72, insurance: 417, maint: 30, tradeIn: true, sub: 109, otd: 61777, down: 0,
-    resale: [61777, 46200, 40000, 34900, 30800, 26700, 22600, 18500], owns: true,
+    resale: [55630, 46200, 40000, 34900, 30800, 26700, 22600, 18500], owns: true,
     note: 'Identical build if you miss the promo: Tesla’s standard advertised rate (5.64%/72, read off the live configurator 7/4/26; market prime average ~6.2%). No down, so principal = $61,777 OTD + $9,000 gap. The rate adds ~$180/mo over the 0.99% row — that spread IS the promo’s value (~$12k over the loan). Loan-interest deduction (≤$10k/yr, 2025–28) only survives below $100–150k MAGI single — assume $0.',
   },
   {

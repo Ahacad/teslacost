@@ -1,12 +1,12 @@
 import type { State, World } from './types';
 
 export const S: State = {
-  hold: 24, gas: 4.60, miles: 23400, ev: 50,
+  hold: 24, gas: 4.60, miles: 23400, ev: 25,
   view: 'net', conserv: false, tradeCredit: true,
   infl: 0, insMult: 1, loanTerm: 72,
-  delay: 0, kiaOwed: 30000, kiaApr: 5.1, kiaMonths: 35, fsd: true,
+  delay: 0, kiaOwed: 30100, kiaApr: 5.19, kiaMonths: 35, fsd: true,
   insKia: 283, insMy: 417,
-  kiaOffer: 21000, buyApr: 0,
+  kiaOffer: 26000, buyApr: 0, myDown: 2000,
 };
 
 export const hidden = new Set<string>();

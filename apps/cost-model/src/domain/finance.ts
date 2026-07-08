@@ -1,6 +1,6 @@
 import type { World } from '../types';
 import { S } from '../state';
-import { MONTHS, WORLDS, KIA_TRADE, ROLL_BASE, TRADE_CREDIT, LEASE_PMT, GAS_MPG, PHEV_MPG, MILES_BASE } from '../data/worlds';
+import { MONTHS, WORLDS, KIA_TRADE, ROLL_BASE, TAX_RATE, MY_PRETAX, MY_DOWN5, MY_RACK, LEASE_PMT, GAS_MPG, PHEV_MPG, MILES_BASE } from '../data/worlds';
 import { pmt, balance, interp } from './amort';
 
 const KIA = WORLDS[0]; // the keep-the-Kia world; its loan is overridden by the editable S.kia* fields
@@ -30,17 +30,43 @@ export function negEquity(D: number): number {
   return kiaBal(D) - kiaTrade(D);
 }
 
+/** WA trade-in tax credit at trade month D: the trade value comes off the taxable price. */
+export function tradeCredit(D: number): number {
+  return S.tradeCredit ? kiaTrade(D) * TAX_RATE : 0;
+}
+
 /** Months you keep the Kia before this world's switch (0 for the Kia itself; the global delay otherwise). */
 export function delayOf(w: World): number {
   return isKia(w) ? 0 : S.delay;
 }
 
-/** Amount financed on the EV when you switch at the delay month: own price + rolled negative equity − WA trade credit. */
+/**
+ * Amount financed on the EV at the trade month. Tesla's promo tier caps the loan
+ * at 95% of the pre-tax price (tax/fees/gap must be cash), so its principal is
+ * fixed; the roll tier finances everything above S.myDown; untiered worlds keep
+ * the original OTD + rolled-gap structure.
+ */
 export function prin(w: World): number {
   if (!w.tradeIn) return w.principal; // Kia (own loan, handled via S) and the lease (0)
-  const rolled = negEquity(delayOf(w));
-  const credit = S.tradeCredit ? TRADE_CREDIT : 0;
-  return Math.max(0, w.principal - ROLL_BASE + rolled - credit);
+  if (w.tier === 'promo') return w.principal;
+  const D = delayOf(w);
+  const base = w.principal - ROLL_BASE + negEquity(D) - tradeCredit(D);
+  return Math.max(0, w.tier === 'roll' ? base - S.myDown : base);
+}
+
+/**
+ * Cash at signing. The promo tier's is the 0.99% gate itself — 5% of price + WA
+ * tax net of the trade credit + the Kia gap + the rack — and moves with the offer
+ * and trade month; the roll tier pays only S.myDown + rack.
+ */
+export function upfrontOf(w: World): number {
+  if (w.tier === 'promo') {
+    const D = delayOf(w);
+    const tax = (MY_PRETAX - (S.tradeCredit ? kiaTrade(D) : 0)) * TAX_RATE;
+    return Math.max(0, MY_DOWN5 + tax + MY_RACK + negEquity(D));
+  }
+  if (w.tier === 'roll') return S.myDown + MY_RACK;
+  return w.upfront;
 }
 
 /** Present-value factor for a dollar spent at month t (1 when the rate is 0). */
@@ -52,7 +78,7 @@ export function df(t: number): number {
 /** Per-car insurance: real quotes for the Kia and the new MY; the estimated cars scale with the slider. */
 export function insRaw(w: World): number {
   if (isKia(w)) return S.insKia;
-  if (w.key === 'my099' || w.key === 'mystd') return S.insMy;
+  if (w.key === 'my099' || w.key === 'my299' || w.key === 'mystd') return S.insMy;
   return w.insurance * S.insMult;
 }
 
@@ -62,8 +88,8 @@ export function termOf(w: World): number {
   return w.type === 'lease' ? w.term : S.loanTerm;
 }
 
-/** Real promo rates the buy-APR dial must NOT touch (Tesla 0.99% / Ioniq 0%). */
-const RATE_LOCKED = new Set(['my099', 'ioniq']);
+/** Real promo/tier rates the buy-APR dial must NOT touch (Tesla 0.99%/2.99% bands / Ioniq 0%). */
+const RATE_LOCKED = new Set(['my099', 'my299', 'ioniq']);
 
 /** Effective APR: the buy-APR dial overrides the shop-around financed buys; promos and the Kia keep their own rate. */
 export function aprOf(w: World): number {
@@ -73,7 +99,7 @@ export function aprOf(w: World): number {
 export function resaleAnchors(w: World): number[] {
   if (!S.conserv || !w.owns) return w.resale;
   const cut =
-    w.key === 'my099' || w.key === 'mystd' ? 0.90
+    w.key === 'my099' || w.key === 'my299' || w.key === 'mystd' ? 0.90
     : w.key === 'usedmy' || w.key === 'usedmy6' ? 0.92
     : 0.95;
   return w.resale.map((v, idx) => {
@@ -129,7 +155,7 @@ export function cashOut(w: World, m: number): number {
   const evPay = w.type === 'lease' ? LEASE_PMT : pmt(prin(w), aprOf(w), termOf(w));
   const evRun = insRaw(w) + w.maint + gasMonthly(w) + energyMonthly(w) + subMonthly(w);
   const n = termOf(w);
-  pv += (w.type === 'lease' ? Math.max(0, negEquity(D)) : w.upfront) * df(D || 0);
+  pv += (w.type === 'lease' ? Math.max(0, negEquity(D)) : upfrontOf(w)) * df(D || 0);
   // Phase 2 — the EV from month D+1 onward; its loan runs n months from the switch.
   for (let t = D + 1; t <= m; t++) {
     const age = t - D;

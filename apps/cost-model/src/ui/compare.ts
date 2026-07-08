@@ -1,7 +1,7 @@
 import { S } from '../state';
 import { WORLDS } from '../data/worlds';
 import { pmt } from '../domain/amort';
-import { prin, termOf, insRaw, energyMonthly, gasMonthly, subMonthly, monthlyAllIn } from '../domain/finance';
+import { prin, termOf, insRaw, energyMonthly, gasMonthly, subMonthly, monthlyAllIn, upfrontOf } from '../domain/finance';
 import { fmt, getCSS } from './format';
 
 // Geometry (viewBox units). Two horizontal bars on ONE shared $/px scale so bar
@@ -145,7 +145,7 @@ export function renderCompare(): void {
   const foot =
     `On the same scale, the Model Y's all-in monthly is <b>${fmt(Math.abs(dTot))}/mo ${dTot <= 0 ? 'lower' : 'higher'}</b> than the Kia Sportage right now. ` +
     `Biggest swings: ${phrase(swings[0])}, then ${phrase(swings[1])}. ` +
-    `<small>Monthly only — it ignores the Model Y's ${fmt(my.upfront)} upfront and the resale/equity that the table below nets out over your holding period.</small>`;
+    `<small>Monthly only — it ignores the Model Y's ${fmt(upfrontOf(my))} upfront and the resale/equity that the table below nets out over your holding period.</small>`;
 
   el.innerHTML =
     svg +
