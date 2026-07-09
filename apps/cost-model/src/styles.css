@@ -11,7 +11,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;background:radial-gradient(120% 120% at 50% 0%,var(--paper2),var(--paper));color:var(--ink);
   font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial}
-.wrap{max-width:1060px;margin:0 auto;padding:28px 20px 64px}
+.wrap{max-width:1060px;margin:0 auto;padding:28px 20px 150px}
 h1{font-size:25px;margin:0 0 4px;letter-spacing:-.01em}
 .sub{color:var(--muted);margin:0 0 18px;font-size:14px}
 .verdict{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--good);
@@ -95,6 +95,33 @@ select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line);
 .bk-row.total{border-bottom:none;font-weight:700;font-size:15px;padding-top:8px}
 .bk-row .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:baseline}
 .bk-foot{color:var(--muted);font-size:12.5px;margin-top:8px;line-height:1.5}
+
+/* Floating assumptions dock — pinned to the bottom so the cumulative chart and the
+   monthly bars stay visible while sliders move. Collapsed = the two most-used
+   sliders + view toggle; "All assumptions" expands the full grid, scrolling
+   internally so it never covers the whole page. */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(252,250,245,.94);
+  backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+  border-top:1px solid var(--line);box-shadow:0 -6px 24px rgba(0,0,0,.09)}
+.dock-inner{max-width:1060px;margin:0 auto;padding:10px 20px 12px}
+.dock-bar{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.dock-bar .ctl{flex:1;min-width:200px}
+.dock-bar .ctl label{margin-bottom:3px}
+.dock-bar .seg{flex:0 0 auto}
+.dock-toggle{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;
+  padding:8px 12px;font-size:12.5px;font-weight:600;cursor:pointer;transition:.12s}
+.dock-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.dock-toggle .chev{display:inline-block;transition:transform .18s;margin-left:4px}
+.dock.open .dock-toggle .chev{transform:rotate(180deg)}
+.dock-readout{font-size:11.5px;color:var(--muted);margin-top:4px;min-height:0}
+.dock-more{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);
+  max-height:min(52vh,460px);overflow-y:auto;overscroll-behavior:contain}
+.dock.open .dock-more{display:block}
+@media(max-width:720px){
+  .dock-bar{gap:12px}
+  .dock-bar .ctl{min-width:150px}
+  .wrap{padding-bottom:190px}
+}
 
 /* Model Y vs Kia comparison — the parallel-bar SVG sizes itself; the table is the
    precise readout + color legend. */

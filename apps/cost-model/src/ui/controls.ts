@@ -81,6 +81,14 @@ export function wire(): void {
     render();
   });
 
+  // floating dock expand/collapse
+  const dock = document.getElementById('dock')!;
+  const toggle = document.getElementById('dockToggle')!;
+  toggle.addEventListener('click', () => {
+    const open = dock.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
   // worked-example world picker
   const sel = document.getElementById('exWorld') as HTMLSelectElement;
   sel.innerHTML = WORLDS.map((w) => `<option value="${w.key}" ${w.key === ui.exSel ? 'selected' : ''}>${w.label}</option>`).join('');
