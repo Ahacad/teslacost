@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Model Y vs Sportage — Upgrade Verdict</title>
+<!-- Standalone snapshot of the "Model Y vs Sportage — Upgrade Verdict" interactive
+     report (companion to model-y-vs-sportage-upgrade-2026-07.md). Self-contained:
+     all CSS/JS inline, no external requests. Open directly in any browser. -->
+<style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style>
+</head>
+<body>
+<style>
+  :root{
+    --ground:#EEF0F3; --surface:#FFFFFF;
+    --panel:#14171C; --panel-2:#1B1F26;
+    --ink:#171A1F; --muted:#616B78; --faint:#9AA2AE;
+    --line:#DCE0E6; --line-dark:#2A2F39;
+    --tesla:#E11B21; --tesla-soft:rgba(225,27,33,.10);
+    --kia:#10796A; --kia-soft:rgba(16,121,106,.11);
+    --wash:#7E8590;
+    --tesla-lit:#FF5257; --kia-lit:#33C6A8; --ink-lit:#ECEFF3; --muted-lit:#9AA3B0;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Menlo,Consolas,monospace;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0}
+  .doc{
+    background:var(--ground); color:var(--ink);
+    font-family:var(--sans); font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+  .eyebrow{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  h1,h2,h3{text-wrap:balance; margin:0}
+  a{color:inherit}
+
+  /* ---- Masthead ---- */
+  .mast{padding:52px 0 30px}
+  .mast .eyebrow{color:var(--muted)}
+  .mast h1{
+    font-size:clamp(2rem,5.2vw,3.15rem); line-height:1.04; font-weight:800;
+    letter-spacing:-.02em; margin:.5rem 0 .7rem;
+  }
+  .mast h1 .yes{color:var(--tesla)}
+  .mast h1 .no{color:var(--ink)}
+  .lede{max-width:66ch; color:var(--muted); font-size:1.06rem}
+  .lede b{color:var(--ink); font-weight:650}
+
+  /* ---- Tale of the tape ---- */
+  .tape{
+    display:grid; grid-template-columns:1fr auto 1fr; gap:0;
+    margin:30px 0 8px; border:1px solid var(--line); border-radius:14px;
+    background:var(--surface); overflow:hidden;
+  }
+  .car{padding:22px 24px}
+  .car .side{
+    font-family:var(--mono); font-size:.7rem; letter-spacing:.14em;
+    text-transform:uppercase; margin-bottom:8px;
+  }
+  .car.kia{border-right:0}
+  .car.kia .side{color:var(--kia)}
+  .car.tesla .side{color:var(--tesla); text-align:right}
+  .car.tesla{text-align:right}
+  .car .name{font-size:1.18rem; font-weight:750; letter-spacing:-.01em; line-height:1.15}
+  .car .own{
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--faint); margin-top:4px;
+  }
+  .car .spec{margin-top:12px; color:var(--muted); font-size:.9rem; line-height:1.5}
+  .car .spec .n{color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums}
+  .versus{
+    display:flex; align-items:center; justify-content:center;
+    padding:0 6px; background:var(--ground);
+    font-family:var(--mono); font-weight:700; font-size:.8rem; color:var(--faint);
+    border-left:1px solid var(--line); border-right:1px solid var(--line);
+  }
+
+  /* ---- Verdict panel (the one bold moment) ---- */
+  .verdict{
+    background:var(--panel); color:var(--ink-lit);
+    border-radius:16px; margin:26px 0 10px; padding:30px 30px 26px;
+    background-image:radial-gradient(120% 140% at 50% -20%, #22272F 0%, var(--panel) 60%);
+  }
+  .verdict .eyebrow{color:var(--muted-lit)}
+  .readouts{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:16px}
+  .ro{
+    border:1px solid var(--line-dark); border-radius:12px; padding:18px 20px;
+    background:rgba(255,255,255,.02);
+  }
+  .ro .q{font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted-lit)}
+  .ro .a{font-size:1.6rem; font-weight:800; letter-spacing:-.01em; margin:6px 0 6px; line-height:1.05}
+  .ro.machine .a{color:var(--tesla-lit)}
+  .ro.money .a{color:var(--ink-lit)}
+  .ro p{margin:0; font-size:.9rem; color:var(--muted-lit); line-height:1.45}
+  .bignum{
+    display:flex; flex-wrap:wrap; gap:26px; margin-top:22px;
+    padding-top:20px; border-top:1px solid var(--line-dark);
+  }
+  .bignum .stat{min-width:120px}
+  .bignum .v{font-family:var(--mono); font-size:1.5rem; font-weight:700; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+  .bignum .v.red{color:var(--tesla-lit)} .bignum .v.tl{color:var(--kia-lit)}
+  .bignum .k{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted-lit); margin-top:3px}
+
+  /* ---- Section frame ---- */
+  section{padding:34px 0 6px}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:6px; flex-wrap:wrap}
+  .sec-head h2{font-size:1.5rem; font-weight:780; letter-spacing:-.015em}
+  .sec-head .note{color:var(--muted); font-size:.92rem}
+  .sub{color:var(--muted); max-width:70ch; margin:2px 0 20px; font-size:.98rem}
+
+  /* ---- Scorecard ---- */
+  .scroll{overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--surface)}
+  table.score{width:100%; border-collapse:collapse; min-width:720px}
+  table.score th, table.score td{padding:13px 16px; text-align:left; vertical-align:middle}
+  table.score thead th{
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; border-bottom:1px solid var(--line); background:#F7F8FA;
+    position:sticky; top:0;
+  }
+  table.score tbody tr{border-bottom:1px solid var(--line)}
+  table.score tbody tr:last-child{border-bottom:0}
+  table.score tbody tr:hover{background:#F7F8FA}
+  .dim{font-weight:650; letter-spacing:-.005em}
+  .dim small{display:block; font-weight:400; color:var(--faint); font-size:.78rem; margin-top:2px; letter-spacing:0}
+  td.val{font-size:.9rem; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
+  td.val b{color:var(--ink); font-weight:650}
+
+  /* winner chip */
+  .chip{
+    display:inline-flex; align-items:center; gap:6px; font-family:var(--mono);
+    font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; font-weight:600;
+    padding:4px 9px; border-radius:999px; white-space:nowrap;
+  }
+  .chip.t{color:var(--tesla); background:var(--tesla-soft)}
+  .chip.k{color:var(--kia); background:var(--kia-soft)}
+  .chip.w{color:var(--wash); background:rgba(126,133,144,.12)}
+  .chip .dot{width:6px; height:6px; border-radius:50%; background:currentColor}
+
+  /* magnitude meter */
+  .meter{position:relative; width:132px; height:16px}
+  .meter .track{position:absolute; inset:6px 0; border-radius:3px; background:#EDEFF2}
+  .meter .center{position:absolute; left:50%; top:2px; bottom:2px; width:1px; background:var(--line); transform:translateX(-.5px)}
+  .meter .fill{position:absolute; top:6px; bottom:6px; border-radius:3px}
+  .meter .fill.t{left:50%; background:var(--tesla)}
+  .meter .fill.k{right:50%; background:var(--kia)}
+  .meter .fill.w{left:calc(50% - 5px); width:10px; background:var(--wash)}
+  .mag{font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-top:3px; display:block}
+  td.adv{width:150px}
+
+  /* tally strip */
+  .tally{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 2px}
+  .tally .t-card{flex:1; min-width:150px; border:1px solid var(--line); border-radius:12px; padding:14px 16px; background:var(--surface)}
+  .tally .t-card .big{font-family:var(--mono); font-size:1.7rem; font-weight:700; letter-spacing:-.02em; line-height:1}
+  .tally .t-card.t .big{color:var(--tesla)} .tally .t-card.k .big{color:var(--kia)} .tally .t-card.w .big{color:var(--wash)}
+  .tally .t-card .lbl{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:6px}
+  .tally .t-card .who{font-size:.82rem; color:var(--faint); margin-top:2px}
+
+  /* money scenarios */
+  table.money{width:100%; border-collapse:collapse; min-width:640px}
+  table.money th, table.money td{padding:12px 16px; text-align:left}
+  table.money thead th{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--line); background:#F7F8FA}
+  table.money tbody tr{border-bottom:1px solid var(--line)}
+  table.money tbody tr:last-child{border-bottom:0}
+  table.money td.num{font-family:var(--mono); font-variant-numeric:tabular-nums; text-align:right; font-weight:650}
+  table.money td.num.kiawin{color:var(--kia)} table.money td.num.teslawin{color:var(--tesla)}
+  table.money tr.hero td{background:var(--tesla-soft)}
+  table.money .scn b{font-weight:650}
+  table.money .scn small{display:block; color:var(--faint); font-size:.76rem}
+
+  /* callout cards */
+  .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:6px}
+  .card{border:1px solid var(--line); border-radius:13px; padding:18px 18px; background:var(--surface)}
+  .card .k{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--tesla); margin-bottom:8px}
+  .card.down .k{color:var(--kia)}
+  .card h3{font-size:1.02rem; font-weight:700; margin-bottom:5px; letter-spacing:-.01em}
+  .card p{margin:0; font-size:.88rem; color:var(--muted); line-height:1.5}
+
+  /* conclusion block */
+  .concl{border:1px solid var(--line); border-left:3px solid var(--tesla); border-radius:12px; background:var(--surface); padding:22px 24px; margin-top:8px}
+  .concl h3{font-size:1.12rem; font-weight:750; margin-bottom:10px}
+  .concl p{margin:0 0 12px; color:#2C313A; font-size:.98rem; line-height:1.6}
+  .concl p:last-child{margin-bottom:0}
+  .concl b{color:var(--ink)}
+  .refresh{background:var(--kia-soft); border:1px solid rgba(16,121,106,.25); border-left:3px solid var(--kia); border-radius:12px; padding:18px 22px; margin-top:14px}
+  .refresh .k{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--kia); margin-bottom:6px}
+  .refresh p{margin:0; font-size:.92rem; color:#2C313A; line-height:1.55}
+  .refresh b{color:var(--ink)}
+
+  /* corrections */
+  .fixes{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:6px}
+  .fix{border:1px dashed var(--line); border-radius:12px; padding:16px 18px; background:#F8F9FB}
+  .fix .tag{font-family:var(--mono); font-size:.64rem; letter-spacing:.1em; text-transform:uppercase; color:var(--tesla); font-weight:700}
+  .fix p{margin:6px 0 0; font-size:.86rem; color:var(--muted); line-height:1.5}
+  .fix p b{color:var(--ink)}
+
+  /* footer */
+  footer{margin:44px 0 60px; padding-top:20px; border-top:1px solid var(--line); color:var(--faint); font-size:.82rem; line-height:1.6}
+  footer .eyebrow{color:var(--muted); display:block; margin-bottom:8px}
+  footer b{color:var(--muted)}
+
+  /* ---- Bump Index (interactive) ---- */
+  .bi-lead{color:var(--muted); max-width:72ch; margin:2px 0 16px; font-size:.98rem}
+  .bi-lead em{color:var(--ink); font-style:italic}
+  .bi-lead b{color:var(--ink); font-weight:650}
+  .bi-formula{
+    font-family:var(--mono); font-size:.8rem; color:var(--ink);
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:12px 14px; margin:0 0 20px; line-height:1.9; overflow-x:auto; white-space:nowrap;
+  }
+  .bi-formula .obj{color:var(--tesla); font-weight:700}
+  .bi-formula .you{color:var(--kia); font-weight:700}
+  .bi-formula .fnt{color:var(--faint)}
+
+  .bi-panel{border:1px solid var(--line); border-radius:14px; background:var(--surface); padding:18px 20px; margin-bottom:16px}
+  .bi-panel h3{font-size:.7rem; font-family:var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:0 0 13px; font-weight:600}
+  .bi-profile{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:11px}
+  .bi-fact{font-size:.86rem; color:var(--muted); line-height:1.45; padding-left:15px; position:relative}
+  .bi-fact::before{content:"›"; position:absolute; left:0; top:-1px; color:var(--kia); font-weight:800}
+  .bi-fact b{color:var(--ink); font-weight:650}
+
+  .bi-controls{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+  .bi-toggle{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.02em; font-weight:600;
+    padding:8px 13px; border-radius:999px; border:1px solid var(--line); background:var(--surface);
+    color:var(--muted); cursor:pointer; user-select:none; transition:background .12s,color .12s,border-color .12s;
+  }
+  .bi-toggle:hover{border-color:var(--faint)}
+  .bi-toggle[aria-pressed="true"]{background:var(--ink); color:#fff; border-color:var(--ink)}
+  .bi-toggle .st{opacity:.55; font-weight:400; margin-left:5px}
+  .bi-seg{display:inline-flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; margin-left:auto}
+  .bi-seg button{font-family:var(--mono); font-size:.72rem; font-weight:600; padding:8px 14px; border:0; background:var(--surface); color:var(--muted); cursor:pointer}
+  .bi-seg button[aria-pressed="true"]{background:var(--kia); color:#fff}
+
+  .bi-tiles{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0}
+  .bi-tile{flex:1; min-width:128px; border:1px solid var(--line); border-radius:12px; padding:15px 16px; background:var(--surface); text-align:center}
+  .bi-tile.bump{border-top:3px solid var(--kia)}
+  .bi-tile.boon{border-top:3px solid var(--tesla)}
+  .bi-tile.net{border-top:3px solid var(--ink)}
+  .bi-tile .v{font-family:var(--mono); font-size:1.95rem; font-weight:700; letter-spacing:-.02em; line-height:1; font-variant-numeric:tabular-nums}
+  .bi-tile.bump .v{color:var(--kia)} .bi-tile.boon .v{color:var(--tesla)} .bi-tile.net .v{color:var(--ink)}
+  .bi-tile .l{font-family:var(--mono); font-size:.63rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:8px}
+  .bi-tile .s{font-size:.75rem; color:var(--faint); margin-top:3px}
+
+  table.bidx{width:100%; border-collapse:collapse; min-width:660px}
+  table.bidx th, table.bidx td{padding:11px 14px; text-align:left; vertical-align:middle}
+  table.bidx thead th{font-family:var(--mono); font-size:.63rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:600; border-bottom:1px solid var(--line); background:#F7F8FA}
+  table.bidx tbody tr{border-bottom:1px solid var(--line)}
+  table.bidx tbody tr:last-child{border-bottom:0}
+  table.bidx tbody tr.off{opacity:.42}
+  table.bidx .d-lab{font-weight:640; letter-spacing:-.005em; font-size:.92rem}
+  table.bidx .d-lab small{display:block; font-weight:400; color:var(--faint); font-size:.75rem; margin-top:2px; letter-spacing:0; white-space:normal; max-width:34ch}
+  table.bidx td.dots{font-family:var(--mono); letter-spacing:.1em; white-space:nowrap; font-size:.88rem; color:var(--ink)}
+  table.bidx td.wt{font-family:var(--mono); color:var(--muted); font-variant-numeric:tabular-nums; font-size:.82rem}
+  table.bidx td.pts{font-family:var(--mono); font-weight:700; text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; font-size:.95rem}
+  table.bidx td.pts.boon{color:var(--tesla)} table.bidx td.pts.bump{color:var(--kia)} table.bidx td.pts.wash{color:var(--faint)}
+  .sidechip{display:inline-block; font-family:var(--mono); font-size:.58rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700; padding:3px 8px; border-radius:999px; white-space:nowrap}
+  .sidechip.boon{color:var(--tesla); background:var(--tesla-soft)} .sidechip.bump{color:var(--kia); background:var(--kia-soft)} .sidechip.wash{color:var(--wash); background:rgba(126,133,144,.12)}
+
+  .bi-verdict{border:1px solid var(--line); border-left:3px solid var(--kia); border-radius:12px; background:var(--surface); padding:18px 22px; margin-top:16px}
+  .bi-verdict p{margin:0; color:#2C313A; font-size:.99rem; line-height:1.62}
+  .bi-verdict b{color:var(--ink)}
+  .bi-note{color:var(--faint); font-size:.8rem; margin-top:12px; line-height:1.5}
+
+  @media (max-width:720px){
+    .readouts{grid-template-columns:1fr}
+    .tape{grid-template-columns:1fr}
+    .car.tesla,.car.tesla .side{text-align:left}
+    .versus{border:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:8px}
+    .cards{grid-template-columns:1fr}
+    .fixes{grid-template-columns:1fr}
+    .bi-seg{margin-left:0; margin-top:4px}
+    .wi-grid{grid-template-columns:1fr}
+  }
+
+  /* ---- Worth It? (interactive) ---- */
+  .wi-lead{color:var(--muted); max-width:72ch; margin:2px 0 16px; font-size:.98rem}
+  .wi-lead b{color:var(--ink); font-weight:650}
+  .wi-lead em{color:var(--ink); font-style:italic}
+  .wi-price{
+    display:flex; flex-wrap:wrap; align-items:center; gap:16px 24px;
+    background:var(--panel); color:var(--ink-lit); border-radius:14px; padding:20px 24px; margin:0 0 18px;
+    background-image:radial-gradient(120% 160% at 50% -30%, #22272F 0%, var(--panel) 60%);
+  }
+  .wi-price .pv{font-family:var(--mono); font-size:2rem; font-weight:700; letter-spacing:-.02em; color:var(--tesla-lit); line-height:1; font-variant-numeric:tabular-nums}
+  .wi-price .pk{font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted-lit); margin-top:5px}
+  .wi-price .pnote{font-size:.86rem; color:var(--muted-lit); max-width:42ch; line-height:1.45}
+  .wi-scen{display:inline-flex; border:1px solid var(--line-dark); border-radius:999px; overflow:hidden}
+  .wi-scen button{font-family:var(--mono); font-size:.68rem; font-weight:600; padding:7px 12px; border:0; background:transparent; color:var(--muted-lit); cursor:pointer}
+  .wi-scen button[aria-pressed="true"]{background:var(--tesla); color:#fff}
+  .wi-chgtoggle{font-family:var(--mono); font-size:.68rem; font-weight:600; padding:7px 12px; border-radius:999px; border:1px solid var(--line-dark); background:transparent; color:var(--muted-lit); cursor:pointer}
+  .wi-chgtoggle[aria-pressed="true"]{background:var(--kia); color:#fff; border-color:var(--kia)}
+
+  .wi-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .wi-col{border:1px solid var(--line); border-radius:14px; background:var(--surface); padding:18px 20px}
+  .wi-col h3{font-size:.96rem; font-weight:750; margin:0 0 3px; letter-spacing:-.01em}
+  .wi-col.you h3{color:var(--kia)} .wi-col.mkt h3{color:var(--tesla)}
+  .wi-col .h-sub{color:var(--faint); font-size:.8rem; margin:0 0 14px; line-height:1.4}
+  .wi-row{margin:0 0 13px}
+  .wi-row .rl{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:5px}
+  .wi-row .rl .lab{font-size:.88rem; font-weight:600; color:var(--ink)}
+  .wi-row .rl .lab.neg{color:var(--kia)}
+  .wi-row .rl .amt{font-family:var(--mono); font-weight:700; font-size:.9rem; color:var(--ink); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .wi-row input[type=range]{width:100%; margin:0; accent-color:var(--kia); height:20px; cursor:pointer}
+  .wi-row.mktrow{display:flex; justify-content:space-between; align-items:baseline; gap:10px; padding:7px 0; border-bottom:1px solid var(--line)}
+  .wi-row.mktrow:last-of-type{border-bottom:0}
+  .wi-row.mktrow .lab{font-size:.88rem; font-weight:600; color:var(--ink)}
+  .wi-row.mktrow .lab.neg{color:var(--kia)}
+  .wi-row.mktrow .lab small{display:block; font-weight:400; color:var(--faint); font-size:.73rem; letter-spacing:0; max-width:38ch}
+  .wi-row.mktrow .amt{font-family:var(--mono); font-weight:700; font-size:.9rem; font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink)}
+  .wi-sum{display:flex; justify-content:space-between; align-items:baseline; margin-top:14px; padding-top:14px; border-top:2px solid var(--line)}
+  .wi-sum .sl{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+  .wi-sum .sv{font-family:var(--mono); font-size:1.5rem; font-weight:700; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+  .wi-verdict-row{font-size:.86rem; margin-top:10px; line-height:1.5; color:var(--muted)}
+  .wi-verdict-row b{color:var(--ink)}
+  .wi-verdict-row .good{color:var(--kia); font-weight:700} .wi-verdict-row .bad{color:var(--tesla); font-weight:700}
+
+  .wi-final{border:1px solid var(--line); border-left:3px solid var(--ink); border-radius:12px; background:var(--surface); padding:20px 24px; margin-top:16px}
+  .wi-final h3{font-size:1.12rem; font-weight:750; margin:0 0 10px}
+  .wi-final p{margin:0; color:#2C313A; font-size:.99rem; line-height:1.62}
+  .wi-final b{color:var(--ink)}
+  .wi-note{color:var(--faint); font-size:.8rem; margin-top:12px; line-height:1.5}
+</style>
+
+<div class="doc">
+<div class="wrap">
+
+  <!-- MASTHEAD -->
+  <header class="mast">
+    <span class="eyebrow">Upgrade verdict · Seattle · July 5, 2026</span>
+    <h1>Is the Model Y an upgrade?<br><span class="yes">Yes, as a machine.</span> <span class="no">No, as a money move.</span></h1>
+    <p class="lede">Setting price aside, the refreshed <b>2026 Tesla Model Y Premium AWD</b> is a genuinely better car than the <b>2025 Kia Sportage X-Line</b> it would replace — decisive on speed, tech, safety, quiet, and running cost. Priced honestly it's a <b>~$320/mo luxury choice</b> (+$19.4k over keeping the Kia across five years), not a saving. And that "clear upgrade" verdict belongs to the <b>new refreshed car</b> — the cheapest way in (a used Model Y) is pre-refresh and loses much of what makes it one.</p>
+  </header>
+
+  <!-- TALE OF THE TAPE -->
+  <div class="tape">
+    <div class="car kia">
+      <div class="side">◄ Incumbent</div>
+      <div class="name">2025 Kia Sportage X-Line</div>
+      <div class="own">Owned · ~$21k value</div>
+      <div class="spec">2.5L NA · <span class="n">187 hp</span> / 178 lb-ft · 8-sp auto AWD<br><span class="n">23/27/25</span> mpg · <span class="n">~10 s</span> 0–60 · IIHS Top Safety Pick</div>
+    </div>
+    <div class="versus">VS</div>
+    <div class="car tesla">
+      <div class="side">Challenger ►</div>
+      <div class="name">2026 Model Y Premium AWD</div>
+      <div class="own">The build · ~$63.1k max checkout</div>
+      <div class="spec">Dual-motor AWD · <span class="n">~397 hp</span> / 389 lb-ft · <span class="n">327 mi</span><br><span class="n">3.9 s</span> 0–60 · <span class="n">250 kW</span> DC · NHTSA 5★ all sub-tests</div>
+    </div>
+  </div>
+
+  <!-- VERDICT PANEL -->
+  <div class="verdict">
+    <span class="eyebrow">The bottom line</span>
+    <div class="readouts">
+      <div class="ro machine">
+        <div class="q">As a machine</div>
+        <div class="a">Real upgrade</div>
+        <p>The 2026 "Juniper" refresh removed the old Model Y's two disqualifiers — harsh ride and cabin noise. Big wins on performance, tech, crash safety, quiet, and energy cost.</p>
+      </div>
+      <div class="ro money">
+        <div class="q">As a money move</div>
+        <div class="a">A luxury spend</div>
+        <p>Monthly cash flow is nearly identical, but over 5 years the build costs +$19.4k more than keeping the Kia — that's depreciation + insurance + the FSD subscription, not the payment.</p>
+      </div>
+    </div>
+    <div class="bignum">
+      <div class="stat"><div class="v red">+$19.4k</div><div class="k">5-yr net vs Kia</div></div>
+      <div class="stat"><div class="v red">≈$322/mo</div><div class="k">cost of the upgrade</div></div>
+      <div class="stat"><div class="v tl">$1,538</div><div class="k">MY /mo all-in</div></div>
+      <div class="stat"><div class="v">$1,587</div><div class="k">Kia /mo all-in</div></div>
+      <div class="stat"><div class="v red">never</div><div class="k">break-even ≤96 mo</div></div>
+    </div>
+  </div>
+
+  <!-- SCORECARD -->
+  <section>
+    <div class="sec-head">
+      <h2>The scorecard</h2>
+      <span class="note">Every aspect, ranked from the biggest Tesla advantage down to the biggest Kia advantage.</span>
+    </div>
+    <p class="sub">The advantage meter reads left (Kia ◄) to right (► Tesla); bar length is the size of the gap. Notice the sweep from red at the top to teal at the bottom — that shape <em>is</em> the verdict.</p>
+
+    <div class="scroll">
+      <table class="score">
+        <thead>
+          <tr>
+            <th style="min-width:230px">Dimension</th>
+            <th>Kia Sportage X-Line</th>
+            <th>Model Y Premium AWD</th>
+            <th style="width:170px">Advantage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="dim">Acceleration &amp; passing<small>the weakest area of the gas car vs the strongest of the EV</small></td>
+            <td class="val">~10 s 0–60<br><b>187 hp</b>, 8-sp</td>
+            <td class="val"><b>3.9 s</b> 0–60 (C&amp;D)<br>~397 hp, instant</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill t" style="width:46%"></div></div><span class="mag">Tesla · massive</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Fuel / energy cost<small>23,400 mi/yr, Seattle rates</small></td>
+            <td class="val">~<b>$5,020</b>/yr gas<br>$5.36/gal</td>
+            <td class="val">~<b>$530</b>/yr charging<br>8.05¢/kWh off-peak</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill t" style="width:46%"></div></div><span class="mag">Tesla · massive</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Ride &amp; refinement<small>post-refresh hardware, not press spin</small></td>
+            <td class="val">firm-ish, coarse<br>8-sp not smoothest</td>
+            <td class="val"><b>"light-years better"</b><br>3% stiffer body, retuned</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill t" style="width:32%"></div></div><span class="mag">Tesla · clear</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Cabin quiet<small>independent meters @ 70 mph</small></td>
+            <td class="val">louder</td>
+            <td class="val"><b>64–66 dB</b> acoustic glass<br>vs 67–71 pre-refresh</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill t" style="width:32%"></div></div><span class="mag">Tesla · clear</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Screens &amp; software<small>whole-vehicle OTA, phone-key, Sentry</small></td>
+            <td class="val">one 12.3"<br>infotainment OTA only</td>
+            <td class="val"><b>15.4" + 8" rear</b><br>monthly whole-car OTA</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill t" style="width:32%"></div></div><span class="mag">Tesla · clear</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Driver assist (ADAS)<small>*with the $99/mo FSD sub, which the build carries</small></td>
+            <td class="val">LFA standard<br>hands-on lane-keep</td>
+            <td class="val"><b>FSD Supervised v14</b><br>city streets + lane changes</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill t" style="width:32%"></div></div><span class="mag">Tesla · clear*</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Crash safety<small>refresh-specific ratings</small></td>
+            <td class="val">IIHS Top Safety Pick<br>(not TSP+)</td>
+            <td class="val"><b>NHTSA 5★ every sub-test</b><br>Euro NCAP Best-in-Class</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill t" style="width:18%"></div></div><span class="mag">Tesla · mild</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Towing rating<small>flips to a downgrade for frequent long hauls</small></td>
+            <td class="val">2,500 lb braked<br>1,653 unbraked</td>
+            <td class="val"><b>3,500 lb</b> (Tow Pkg)<br>but ~50% range loss towing</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill t" style="width:16%"></div></div><span class="mag">Tesla · mild</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Cargo features<small>the Tesla's answer to less volume</small></td>
+            <td class="val">under-floor well<br>2 compartments</td>
+            <td class="val"><b>frunk + sub-trunk</b><br>3 sealed zones, power-fold</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill t" style="width:16%"></div></div><span class="mag">Tesla · mild</span></td>
+          </tr>
+
+          <tr>
+            <td class="dim">Max cargo (seats folded)<small>the "MY wins" headline is apples-to-oranges</small></td>
+            <td class="val"><b>74.1</b> cu ft box-for-box</td>
+            <td class="val">71.4 cu ft; 75.5 <em>only</em> w/ frunk</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill w"></div></div><span class="mag">Wash</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Reliability (predicted)<small>refresh year not yet directly measured</small></td>
+            <td class="val">JD Power VDS favors Kia<br>193 vs 226 PP100</td>
+            <td class="val">CR 9th brand (Kia 10th)<br>"most reliable EV"</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill w"></div></div><span class="mag">Wash</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Rear-seat room</td>
+            <td class="val">legroom <b>41.3"</b></td>
+            <td class="val">legroom 40.5"; headroom tied</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill w"></div></div><span class="mag">Wash</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Road trips (no trailer)<small>84 WA Supercharger sites incl. Snoqualmie</small></td>
+            <td class="val">gas anywhere</td>
+            <td class="val">Sea–Pdx nonstop; ~14% winter loss</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill w"></div></div><span class="mag">Wash</span></td>
+          </tr>
+
+          <tr>
+            <td class="dim">Everyday cargo (behind row 2)<small>the number you feel every week</small></td>
+            <td class="val"><b>39.6</b> cu ft<br>tall, square, flat floor</td>
+            <td class="val">29.0 cu ft<br>sloped hatch roofline</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill k" style="width:32%"></div></div><span class="mag">Kia · clear (~10 cu ft)</span></td>
+          </tr>
+          <tr>
+            <td class="dim">CarPlay / Android Auto<small>the most-cited switcher regression</small></td>
+            <td class="val"><b>wireless, every trim</b></td>
+            <td class="val">none (still, as of Jun 2026)</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill k" style="width:32%"></div></div><span class="mag">Kia · clear</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Depreciation (the asset)<small>3-year retention, CarEdge</small></td>
+            <td class="val">−<b>40.0%</b></td>
+            <td class="val">−58.1% (15–30 pt gap)</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill k" style="width:32%"></div></div><span class="mag">Kia · clear</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Insurance<small>real Seattle quotes for this build</small></td>
+            <td class="val">~<b>$205–283</b>/mo</td>
+            <td class="val">$417/mo (Progressive, real)</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill k" style="width:30%"></div></div><span class="mag">Kia · clear</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Ground clearance<small>forest-service roads, deep snow</small></td>
+            <td class="val"><b>8.3 in</b></td>
+            <td class="val">6.6 in</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill k" style="width:18%"></div></div><span class="mag">Kia · mild</span></td>
+          </tr>
+          <tr>
+            <td class="dim">Service &amp; ownership friction<small>Seattle-specific</small></td>
+            <td class="val">dealer network<br>routine gas service</td>
+            <td class="val">week-plus waits; active<br>suspension-creak campaign</td>
+            <td class="adv"><div class="meter"><div class="track"></div><div class="center"></div><div class="fill k" style="width:18%"></div></div><span class="mag">Kia · mild</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tally">
+      <div class="t-card t"><div class="big">9</div><div class="lbl">Tesla wins</div><div class="who">incl. the 2 largest gaps</div></div>
+      <div class="t-card w"><div class="big">4</div><div class="lbl">Washes</div><div class="who">near-ties either way</div></div>
+      <div class="t-card k"><div class="big">6</div><div class="lbl">Kia wins</div><div class="who">cargo · cost of ownership</div></div>
+    </div>
+  </section>
+
+  <!-- BUMP INDEX -->
+  <section id="bumpindex">
+    <div class="sec-head">
+      <h2>The Bump Index</h2>
+      <span class="note">How many road-bumps — counted objectively, then tuned to your life.</span>
+    </div>
+    <p class="bi-lead">The scorecard says <em>who wins each row</em>. It doesn't say <em>how much a switch would actually cost you in friction</em> — and a raw "6 Kia wins" is dishonest, because it counts missing CarPlay the same as +$19k of depreciation. So every dimension gets <b>one reproducible score</b>: nobody has to trust a vibe. A <b>bump</b> is a row the Kia wins; a <b>boon</b> is a row the Tesla wins. The <b>count of bumps</b> is the headline you asked for; the <b>Bump Index</b> weights each by how hard it bites and how often <em>you'd</em> hit it.</p>
+    <div class="bi-formula">points&nbsp;=&nbsp;<span class="obj">side</span> <span class="fnt">(+boon / −bump)</span> &nbsp;×&nbsp; <span class="obj">magnitude</span> <span class="fnt">(●●● massive · ●●○ clear · ●○○ mild — fixed by the evidence above)</span> &nbsp;×&nbsp; <span class="you">exposure</span> <span class="fnt">(how often you meet it)</span> &nbsp;×&nbsp; <span class="you">weight</span> <span class="fnt">(how much you care)</span></div>
+
+    <div class="bi-panel">
+      <h3>Your profile — what I tuned the weights to</h3>
+      <div class="bi-profile" id="biProfile"></div>
+    </div>
+
+    <div class="bi-panel">
+      <h3>Adjust — flip anything that isn't you</h3>
+      <div class="bi-controls" id="biControls"></div>
+    </div>
+
+    <div class="bi-tiles" id="biTiles"></div>
+
+    <div class="scroll">
+      <table class="bidx">
+        <thead><tr>
+          <th style="min-width:230px">Dimension</th>
+          <th>Side</th>
+          <th title="fixed by the evidence above">Magnitude</th>
+          <th title="how often you meet it">Exposure</th>
+          <th title="how much you care about this category">Weight</th>
+          <th style="text-align:right">Points</th>
+        </tr></thead>
+        <tbody id="biRows"></tbody>
+      </table>
+    </div>
+
+    <div class="bi-verdict" id="biVerdict"></div>
+    <p class="bi-note" id="biNote"></p>
+  </section>
+
+  <!-- MONEY -->
+  <section>
+    <div class="sec-head">
+      <h2>What it actually costs</h2>
+      <span class="note">5-year net cost vs keeping the Kia — the model's own numbers.</span>
+    </div>
+    <p class="sub">The monthly payment isn't the story: the two cars cost within ~$50/mo of each other to run. The gap is depreciation, insurance, and the FSD subscription — and it doesn't close inside 8 years for the new build.</p>
+    <div class="scroll">
+      <table class="money">
+        <thead>
+          <tr><th>Scenario</th><th style="text-align:right">5-yr net vs Kia</th><th style="text-align:right">Break-even</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hero">
+            <td class="scn"><b>Your build · FSD on · real insurance $417</b><small>the actual configured car</small></td>
+            <td class="num teslawin">+$19,400</td>
+            <td class="num">never (≤96 mo)</td>
+          </tr>
+          <tr>
+            <td class="scn">Your build · FSD off · $417<small>drop the $109/mo sub</small></td>
+            <td class="num teslawin">+$12,800</td>
+            <td class="num">never</td>
+          </tr>
+          <tr>
+            <td class="scn">Your build · FSD on · GEICO $500<small>the pricier real quote</small></td>
+            <td class="num teslawin">+$24,300</td>
+            <td class="num">never</td>
+          </tr>
+          <tr>
+            <td class="scn">Used MY @ 6% · realistic insurance<small>×1.25 ≈ $288/mo — but a pre-refresh car</small></td>
+            <td class="num kiawin">−$4,400</td>
+            <td class="num">month 30</td>
+          </tr>
+          <tr>
+            <td class="scn">Used MY @ 6% · stress insurance<small>×1.8 ≈ $414/mo</small></td>
+            <td class="num teslawin">+$3,100</td>
+            <td class="num">month 85</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub" style="margin-top:16px">The single biggest swing is <b>FSD: $109/mo ≈ $6.5k over five years, pure cost</b> — a subscription adds nothing at resale. It's cancelable monthly, so subscribing only for road-trip months roughly halves it.</p>
+  </section>
+
+  <!-- WORTH IT -->
+  <section id="worthit">
+    <div class="sec-head">
+      <h2>Is it worth it?</h2>
+      <span class="note">The upgrade is real (Net +30.9). But it costs ~$322/mo. Is that a fair price?</span>
+    </div>
+    <p class="wi-lead">The money is already settled: <b>~$322/mo</b> is the <em>net</em> cost — it has already credited your fuel savings and subtracted the higher insurance, depreciation, and FSD rent. So what that $322/mo actually <em>buys</em> is the <b>experience bundle</b>: quicker, quieter, smoother, better tech, safer, hands-free on the commute — minus less cargo and no CarPlay. The question is whether that bundle is worth $322/mo. Two honest answers below: <b>what it's worth to you</b>, and <b>what the market charges</b> for the same upgrades elsewhere.</p>
+
+    <div class="wi-price">
+      <div><div class="pv" id="wiPrice">$322<span style="font-size:1rem">/mo</span></div><div class="pk" id="wiPriceK">your build · FSD on · +$19.4k / 5yr</div></div>
+      <span class="wi-scen" role="group" aria-label="which scenario">
+        <button data-scen="my" aria-pressed="true">Your build · FSD on</button>
+        <button data-scen="nofsd" aria-pressed="false">FSD off</button>
+      </span>
+      <button class="wi-chgtoggle" id="wiChg" aria-pressed="false">+ add work-charging credit (−$26)</button>
+      <p class="pnote">Your free L2 charging at Amazon covers most commute miles, trimming the net cost below the model's home-charging figure.</p>
+    </div>
+
+    <div class="wi-grid">
+      <div class="wi-col you">
+        <h3>What it's worth to you</h3>
+        <p class="h-sub">Drag each to what you'd happily pay per month for that upgrade. Starting points are guesses from your life — move them.</p>
+        <div id="wiSliders"></div>
+        <div class="wi-sum"><span class="sl">Your value of the bundle</span><span class="sv" id="wiYouSum" style="color:var(--kia)">$0</span></div>
+        <div class="wi-verdict-row" id="wiYouVerdict"></div>
+      </div>
+      <div class="wi-col mkt">
+        <h3>What the market charges</h3>
+        <p class="h-sub" id="wiMktSub">Each upgrade priced at what you'd pay for it elsewhere (subscriptions + amortized option premiums), verified against real 2025–26 sources.</p>
+        <div id="wiMktRows"></div>
+        <div class="wi-sum"><span class="sl">Market fair value</span><span class="sv" id="wiMktSum" style="color:var(--tesla)">$0</span></div>
+        <div class="wi-verdict-row" id="wiMktVerdict"></div>
+      </div>
+    </div>
+
+    <div class="wi-final" id="wiFinal"></div>
+    <p class="wi-note" id="wiMktNote"></p>
+  </section>
+
+  <!-- THREE DOWNGRADES -->
+  <section>
+    <div class="sec-head"><h2>The three real downgrades</h2></div>
+    <div class="cards">
+      <div class="card down">
+        <div class="k">Every week</div>
+        <h3>~10 cu ft less cargo</h3>
+        <p>Behind the raised back seat the Sportage holds 39.6 vs 29.0 cu ft — a tall, square, flat hold that's simply easier to load for the Costco run. The MY answers with a frunk and power-fold seats, but loses the weekly volume.</p>
+      </div>
+      <div class="card down">
+        <div class="k">Every drive</div>
+        <h3>No CarPlay / Android Auto</h3>
+        <p>Still unshipped as of June 2026. The most-cited switcher regression — the Kia has it wireless on every trim. Tesla's long-term reviewer: "I got used to it, but I never truly enjoyed it."</p>
+      </div>
+      <div class="card down">
+        <div class="k">Over the years</div>
+        <h3>Depreciation + service</h3>
+        <p>−58% vs −40% over three years, plus Seattle Tesla service means week-plus waits and an active suspension-creak campaign on this exact trim. The Kia is the cheaper, lower-friction thing to own.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section>
+    <div class="sec-head"><h2>Conclusion</h2></div>
+    <div class="concl">
+      <h3>Is the Tesla an upgrade? Yes — but know what kind.</h3>
+      <p><b>As a machine, it's not close.</b> Nine dimensions to the Tesla including the two widest gaps on the board (acceleration and energy cost), against six for the Kia that cluster in cargo and cost-of-ownership. The 2026 Juniper refresh is what earns the verdict: it fixed the old Model Y's harsh ride and loud cabin, the two things that used to make this an even fight.</p>
+      <p><b>As a purchase, it's a want, not a saving.</b> The build costs ~$322/mo more than keeping the Kia — roughly the price of a luxury upgrade you'd pay happily <em>if</em> you value the speed, quiet, and tech, and can absorb the ~10 cu ft cargo cut and the missing CarPlay. If the goal is money, keep the Kia; if it's the driving experience, the Tesla delivers it and then some.</p>
+    </div>
+    <div class="refresh">
+      <div class="k">The catch on the cheap path</div>
+      <p><b>The one way to make this pencil out — a used Model Y (−$4.4k vs the Kia) — buys a pre-refresh car.</b> A 2022–23 build has the harsh ride, the louder 67–71 dB cabin, no rear screen, and it's the exact population the TÜV suspension data indicts. You'd get the powertrain and tech upgrade, but sacrifice most of what makes the <em>new</em> car the clear upgrade above. Discount the used path's "upgrade" accordingly.</p>
+    </div>
+  </section>
+
+  <!-- CORRECTIONS -->
+  <section>
+    <div class="sec-head"><h2>What verification changed</h2><span class="note">Kept visible — 2 of 15 load-bearing checks were refuted or corrected.</span></div>
+    <div class="fixes">
+      <div class="fix">
+        <span class="tag">Refuted</span>
+        <p><b>"Every Model Y includes Autosteer free."</b> False since Jan 23, 2026 — new US cars ship with Traffic-Aware Cruise only; lane-centering lives inside the $99/mo FSD sub. Without it, the Tesla's standard ADAS is arguably weaker than the Kia's standard LFA. (The build carries the sub, so the scorecard rates it "clear*".)</p>
+      </div>
+      <div class="fix">
+        <span class="tag">Refuted</span>
+        <p><b>The "Sportage rides substantially smoother" forum quote.</b> Fetched all three pages of the cited thread — the quote doesn't exist. The thread actually ranks the refreshed MY's ride second only to the CR-V Hybrid and the quietest of the group. Any remaining Sportage comfort edge is contested, not established.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="eyebrow">Method &amp; sources</span>
+    Synthesized from this project's verified analyses (July 4–5, 2026): a 6-dimension / 23-agent upgrade study with every load-bearing claim independently re-verified, plus dedicated cargo and insurance deep-dives. Figures are specific to <b>this exact build</b> (Premium AWD + Quicksilver + tow hitch + roof rack + FSD sub) registered in Seattle 98109, at 23,400 mi/yr. Primary sources: live tesla.com configurator, kiamedia.com spec sheets, the NHTSA ratings API, Euro NCAP, Consumer Reports, Car and Driver, and two real insurance quotes — all pulled 2026. Pre-refresh data is labeled wherever used. Cargo and energy figures read straight off the manufacturers' own current pages. <b>Reconfirm VIN-specific quotes and live pricing before signing.</b>
+  </footer>
+
+</div>
+</div>
+
+<script>
+(function(){
+  // ---- Category weights = "how much you care" (your values layer) ----
+  // Inferred from your life: highway miles + free work charging pull cost &
+  // refinement up; Android + live-traffic-only need pulls infotainment down.
+  var CATS = {
+    perf:   {name:'Performance & refinement', w:1.5},
+    cost:   {name:'Running cost & value',      w:1.5},
+    cargo:  {name:'Cargo & practicality',      w:1.0},
+    tech:   {name:'Screens & infotainment',    w:0.6},
+    adas:   {name:'Driver assist',             w:1.25},
+    safety: {name:'Safety',                    w:1.0},
+    own:    {name:'Ownership & service',       w:1.0},
+    trip:   {name:'Road-trip / tow / off-road',w:1.0}
+  };
+
+  // ---- The dimensions. side: +1 boon (Tesla), -1 bump (Kia), 0 wash. ----
+  // mag: 3 massive / 2 clear / 1 mild / 0 wash — taken straight off the
+  // scorecard's advantage meters (the evidence-graded, objective layer).
+  // exp: this user's exposure (1-3); overridden live by the toggles below.
+  var DIMS = [
+    {id:'accel',    lab:'Acceleration & passing',      cat:'perf',  side:+1, mag:3, exp:3, conf:'High',     ev:'3.9s vs ~10s 0–60 (C&D)'},
+    {id:'energy',   lab:'Fuel / energy cost',          cat:'cost',  side:+1, mag:3, exp:3, conf:'High',     ev:'~$530 vs ~$5,020/yr — and your work L2 is free'},
+    {id:'ride',     lab:'Ride & refinement',           cat:'perf',  side:+1, mag:2, exp:3, conf:'High',     ev:'"light-years better" post-refresh'},
+    {id:'quiet',    lab:'Cabin quiet',                 cat:'perf',  side:+1, mag:2, exp:3, conf:'High',     ev:'64–66 dB vs louder @70mph'},
+    {id:'screens',  lab:'Screens & software',          cat:'tech',  side:+1, mag:2, exp:3, conf:'High',     ev:'15.4"+8" rear, whole-car OTA'},
+    {id:'adas',     lab:'Driver assist (ADAS)',        cat:'adas',  side:+1, mag:2, exp:3, conf:'High',     ev:'FSD Supervised v14 — needs the sub', cond:'fsd'},
+    {id:'safety',   lab:'Crash safety',                cat:'safety',side:+1, mag:1, exp:2, conf:'High',     ev:'NHTSA 5★ every sub-test'},
+    {id:'towrate',  lab:'Towing capability',           cat:'trip',  side:+1, mag:1, exp:2, conf:'High',     ev:'3,500 vs 2,500 lb — only if you tow', cond:'tow'},
+    {id:'cargofeat',lab:'Cargo features',              cat:'cargo', side:+1, mag:1, exp:2, conf:'High',     ev:'frunk + sub-trunk + power-fold seats'},
+    {id:'maxcargo', lab:'Max cargo (seats folded)',    cat:'cargo', side:0,  mag:0, exp:0, conf:'High',     ev:'74.1 vs 71.4 box-for-box — a wash'},
+    {id:'reliab',   lab:'Reliability (predicted)',     cat:'own',   side:0,  mag:0, exp:0, conf:'Medium',   ev:'CR 9th vs Kia 10th — a wash'},
+    {id:'rear',     lab:'Rear-seat room',              cat:'cargo', side:0,  mag:0, exp:0, conf:'High',     ev:'41.3 vs 40.5 in legroom — a wash'},
+    {id:'roadtrip', lab:'Road trips (no trailer)',     cat:'trip',  side:0,  mag:0, exp:0, conf:'Medium',   ev:'Superchargers cover your I-5 runs — a wash'},
+    {id:'cargo',    lab:'Everyday cargo (behind row 2)',cat:'cargo', side:-1, mag:2, exp:2, conf:'High',     ev:'~10 cu ft less; skis ride your roof rack'},
+    {id:'carplay',  lab:'No CarPlay / Android Auto',   cat:'tech',  side:-1, mag:2, exp:1, conf:'High',     ev:"you're on Android; Tesla nav has live traffic", cond:'carplay'},
+    {id:'deprec',   lab:'Depreciation (the asset)',    cat:'cost',  side:-1, mag:2, exp:2, conf:'High',     ev:'−58% vs −40% over 3 yr'},
+    {id:'insure',   lab:'Insurance',                   cat:'cost',  side:-1, mag:2, exp:3, conf:'High',     ev:'$417 vs $205–283/mo (real quotes)'},
+    {id:'fsdcost',  lab:'FSD subscription rent',       cat:'cost',  side:-1, mag:2, exp:2, conf:'High',     ev:'$99–109/mo pure cost, cancelable', cond:'fsd'},
+    {id:'clear',    lab:'Ground clearance',            cat:'trip',  side:-1, mag:1, exp:1, conf:'High',     ev:'6.6 vs 8.3 in — your forest roads, not deep snow'},
+    {id:'service',  lab:'Service & ownership friction',cat:'own',   side:-1, mag:1, exp:2, conf:'Medium',   ev:'week+ waits; suspension-creak campaign on this trim'},
+    {id:'towrange', lab:'Towing range collapse',       cat:'trip',  side:-1, mag:2, exp:2, conf:'High',     ev:'~50% range loss towing — only if you tow', cond:'tow'}
+  ];
+
+  // ---- The controls (exposure toggles) ----
+  var T = {fsd:true, carplay:false, offroad:false, cargoHeavy:false, tow:false};
+  var TOGGLES = [
+    {k:'fsd',        label:'FSD subscribed',        hint:'+ADAS boon, +$99/mo cost'},
+    {k:'carplay',    label:'I rely on CarPlay/AA',  hint:'raises the CarPlay bump'},
+    {k:'offroad',    label:'Deep snow / rough off-road', hint:'raises ground-clearance bump'},
+    {k:'cargoHeavy', label:'I haul big cargo often',hint:'raises the cargo bump'},
+    {k:'tow',        label:'I tow trailers',        hint:'+tow boon, +range-loss bump'}
+  ];
+  var weightMode = 'yours'; // 'yours' | 'equal'
+
+  var PROFILE = [
+    "<b>60 mi/day commute to Amazon with free L2 charging</b> → the energy boon is near-total; running cost weighted high (×1.5).",
+    "<b>Seattle↔Vancouver weekends</b> + Whistler/Rainier trips → lots of highway; ride, quiet & performance weighted high (×1.5).",
+    "<b>Android + Google Maps</b>, and your only real need is live-traffic nav — which Tesla's built-in nav has → CarPlay barely counts (tech ×0.6).",
+    "<b>Skis on the roof rack, bikes on a hitch, no trailers</b> → towing off by default; the cargo bump stays medium.",
+    "<b>Occasional forest roads, no deep snow</b> → ground-clearance exposure kept low (●○○).",
+    "<b>Costco runs + camping gear</b> → the ~10 cu ft everyday-cargo bump kept at medium exposure (●●○)."
+  ];
+
+  function expOf(d){
+    if(d.cond==='fsd')  return T.fsd ? d.exp : 0;
+    if(d.cond==='tow')  return T.tow ? d.exp : 0;
+    if(d.id==='carplay')return T.carplay ? 3 : 1;
+    if(d.id==='clear')  return T.offroad ? 3 : 1;
+    if(d.id==='cargo')  return T.cargoHeavy ? 3 : 2;
+    return d.exp;
+  }
+  function wOf(d){ return weightMode==='equal' ? 1 : CATS[d.cat].w; }
+  function dots(n){ n = Math.max(0,Math.min(3,n)); return '●●●'.slice(0,n) + '○○○'.slice(0,3-n); }
+  function fmt(x){ return (Math.round(x*10)/10).toString(); }
+
+  function compute(){
+    var rows = DIMS.map(function(d){
+      var e = expOf(d), w = wOf(d);
+      var pts = d.side * d.mag * e * w;
+      return {d:d, e:e, w:w, pts:pts};
+    });
+    var bumps = rows.filter(function(r){return r.d.side<0 && r.e>0;});
+    var boons = rows.filter(function(r){return r.d.side>0 && r.e>0;});
+    var bumpIdx = bumps.reduce(function(s,r){return s+Math.abs(r.pts);},0);
+    var boonIdx = boons.reduce(function(s,r){return s+r.pts;},0);
+    return {rows:rows, bumps:bumps, boons:boons, bumpIdx:bumpIdx, boonIdx:boonIdx, net:boonIdx-bumpIdx};
+  }
+
+  function render(){
+    var R = compute();
+    // tiles
+    var ratio = R.bumpIdx>0 ? (R.boonIdx/R.bumpIdx) : Infinity;
+    document.getElementById('biTiles').innerHTML =
+      tile('bump', R.bumps.length, 'Bumps that apply', 'road-friction you\'d meet') +
+      tile('boon', R.boons.length, 'Boons that apply', 'upgrades you\'d feel') +
+      tile('bump', fmt(R.bumpIdx), 'Bump Index', 'weighted downside') +
+      tile('boon', fmt(R.boonIdx), 'Boon Index', 'weighted upside') +
+      tile('net', (R.net>=0?'+':'')+fmt(R.net), 'Net score', (ratio===Infinity?'all upside':'boons '+fmt(ratio)+':1'));
+
+    // rows, sorted boons→washes→bumps by points desc
+    var sorted = R.rows.slice().sort(function(a,b){ return b.pts - a.pts; });
+    document.getElementById('biRows').innerHTML = sorted.map(function(r){
+      var d = r.d;
+      var cls = d.side>0 ? 'boon' : (d.side<0 ? 'bump' : 'wash');
+      var isOff = (d.side!==0 && r.e===0);
+      var sideTxt = d.side>0 ? 'Boon' : (d.side<0 ? 'Bump' : 'Wash');
+      var ptsTxt = d.side===0 ? '0' : (r.pts>0?'+':'') + fmt(r.pts);
+      return '<tr class="'+(isOff?'off':'')+'">' +
+        '<td class="d-lab">'+d.lab+'<small>'+d.ev+(isOff?' · <em>off</em>':'')+'</small></td>' +
+        '<td><span class="sidechip '+cls+'">'+sideTxt+'</span></td>' +
+        '<td class="dots">'+(d.mag>0?dots(d.mag):'—')+'</td>' +
+        '<td class="dots">'+(r.e>0?dots(r.e):'—')+'</td>' +
+        '<td class="wt">×'+fmt(wOf(d))+'</td>' +
+        '<td class="pts '+cls+'">'+ptsTxt+'</td>' +
+      '</tr>';
+    }).join('');
+
+    // verdict
+    var topBumps = R.bumps.slice().sort(function(a,b){return Math.abs(b.pts)-Math.abs(a.pts);}).slice(0,3);
+    var topLabs = topBumps.map(function(r){return r.d.lab.replace(/ \(.*\)/,'');});
+    var allCost = topBumps.length>0 && topBumps.every(function(r){return r.d.cat==='cost';});
+    var offBumps = R.rows.filter(function(r){return r.d.side<0 && r.e===0;});
+    var lowBumps = R.bumps.filter(function(r){return Math.abs(r.pts)<=1.5;});
+    var feared = offBumps.concat(lowBumps).map(function(r){return r.d.lab.replace(/^No /,'').replace(/ \(.*\)/,'');});
+
+    var v = 'For your life, the Model Y carries <b>'+R.bumps.length+' bump'+(R.bumps.length===1?'':'s')+
+      '</b> against <b>'+R.boons.length+' boon'+(R.boons.length===1?'':'s')+'</b>. ';
+    if(R.bumpIdx>0){
+      v += 'Weighted, the boons outweigh the bumps <b>'+fmt(R.boonIdx/R.bumpIdx)+':1</b> '+
+           '(Boon Index '+fmt(R.boonIdx)+' vs Bump Index '+fmt(R.bumpIdx)+'). ';
+    } else {
+      v += 'With these settings there are no bumps left to weigh. ';
+    }
+    if(topLabs.length){
+      v += 'Your heaviest bumps are <b>'+listify(topLabs)+'</b>'+
+           (allCost?' — every one of them financial, not practical. ':'. ');
+    }
+    if(feared.length){
+      v += 'The frictions switchers usually fear — <b>'+listify(uniq(feared).slice(0,4))+
+           '</b> — barely register for you.';
+    }
+    document.getElementById('biVerdict').innerHTML = '<p>'+v+'</p>';
+  }
+
+  function tile(kind, val, label, sub){
+    return '<div class="bi-tile '+kind+'"><div class="v">'+val+'</div>'+
+      '<div class="l">'+label+'</div><div class="s">'+sub+'</div></div>';
+  }
+  function listify(a){ if(a.length<=1) return a.join(''); return a.slice(0,-1).join(', ')+' and '+a[a.length-1]; }
+  function uniq(a){ var s={},o=[]; a.forEach(function(x){if(!s[x]){s[x]=1;o.push(x);}}); return o; }
+
+  // profile
+  document.getElementById('biProfile').innerHTML = PROFILE.map(function(p){return '<div class="bi-fact">'+p+'</div>';}).join('');
+
+  // controls
+  var ctl = document.getElementById('biControls');
+  ctl.innerHTML = TOGGLES.map(function(t){
+    return '<button class="bi-toggle" data-k="'+t.k+'" aria-pressed="'+(T[t.k]?'true':'false')+'">'+
+      t.label+'<span class="st">'+t.hint+'</span></button>';
+  }).join('') +
+    '<span class="bi-seg" role="group" aria-label="weighting">'+
+    '<button data-mode="yours" aria-pressed="true">Your values</button>'+
+    '<button data-mode="equal" aria-pressed="false">Equal weights</button></span>';
+
+  ctl.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    if(b.dataset.k){
+      T[b.dataset.k] = !T[b.dataset.k];
+      b.setAttribute('aria-pressed', T[b.dataset.k]?'true':'false');
+      render();
+    } else if(b.dataset.mode){
+      weightMode = b.dataset.mode;
+      ctl.querySelectorAll('.bi-seg button').forEach(function(x){
+        x.setAttribute('aria-pressed', x.dataset.mode===weightMode?'true':'false');
+      });
+      render();
+    }
+  });
+
+  render();
+})();
+</script>
+
+<script>
+(function(){
+  var fsdOn=true, freeChg=false;
+  var LINES=[
+   {k:'performance', label:'Performance & fun',        sub:'3.9s vs ~10s 0-60',                                  def:45, neg:false, max:150},
+   {k:'refinement',  label:'Ride comfort & quiet',     sub:'acoustic glass + retuned suspension — your highway miles', def:65, neg:false, max:150},
+   {k:'adas',        label:'Hands-free on the commute',sub:'FSD Supervised — 60 mi/day + long trips',            def:55, neg:false, max:150, fsd:true},
+   {k:'tech',        label:'Screens, software & nav',  sub:'15.4"+8" rear, OTA, live-traffic nav',               def:20, neg:false, max:120},
+   {k:'safety',      label:'Crash safety',             sub:'NHTSA 5★ every sub-test',                        def:30, neg:false, max:120},
+   {k:'losses',      label:'− What you give up',   sub:'less cargo, no CarPlay, lower clearance, more service', def:25, neg:true,  max:100}
+  ];
+  // MARKET: US 2025-26 $/mo anchors, adversarially verified (worth-it-market-anchors
+  // workflow: 6 sourced + 6 refute-checked; values below are the post-verify stand-behind).
+  var MARKET={
+   performance:{v:125, src:'perf-trim step ~$7.5k (Model 3 Perf vs LR) ÷60'},
+   refinement: {v:15,  src:'acoustic glass + passive dampers (refresh is not adaptive)'},
+   adas:       {v:50,  src:'median: FSD $99, BlueCruise $50, Super Cruise $40 /mo'},
+   tech:       {v:22,  src:'Premium Connectivity $9.99/mo + screen/nav premium'},
+   safety:     {v:13,  src:'ADAS-safety pkg ~$0.9k ÷60 (a 5★ rating is free)'},
+   losses:     {v:11,  src:'CarPlay + ~10 cu ft cargo, weakly monetized (McKinsey WTP)'}
+  };
+  var you={}; LINES.forEach(function(l){you[l.k]=l.def;});
+
+  function activeLines(){ return LINES.filter(function(l){return !(l.fsd && !fsdOn);}); }
+  function price(){ return (fsdOn?322:213) - (freeChg?26:0); }
+  function money(n){ return (n<0?'−$':'$')+Math.abs(Math.round(n)); }
+
+  function buildSliders(){
+    document.getElementById('wiSliders').innerHTML = activeLines().map(function(l){
+      return '<div class="wi-row" data-k="'+l.k+'">'+
+        '<div class="rl"><span class="lab'+(l.neg?' neg':'')+'">'+l.label+'</span>'+
+        '<span class="amt" id="amt-'+l.k+'"></span></div>'+
+        '<input type="range" min="0" max="'+l.max+'" step="5" value="'+you[l.k]+'" data-k="'+l.k+'" aria-label="'+l.label+'"></div>';
+    }).join('');
+  }
+  function buildMkt(){
+    document.getElementById('wiMktRows').innerHTML = activeLines().map(function(l){
+      var m=MARKET[l.k];
+      return '<div class="wi-row mktrow"><span class="lab'+(l.neg?' neg':'')+'">'+l.label+
+        '<small>'+m.src+'</small></span><span class="amt">'+money(l.neg?-m.v:m.v)+'/mo</span></div>';
+    }).join('');
+  }
+  function recompute(){
+    var youSum=0, mktSum=0;
+    activeLines().forEach(function(l){
+      var yv=you[l.k], mv=MARKET[l.k].v;
+      youSum += l.neg? -yv : yv;
+      mktSum += l.neg? -mv : mv;
+      var el=document.getElementById('amt-'+l.k); if(el) el.textContent=money(l.neg?-yv:yv)+'/mo';
+    });
+    var p=price();
+    document.getElementById('wiYouSum').textContent=money(youSum)+'/mo';
+    document.getElementById('wiMktSum').textContent=money(mktSum)+'/mo';
+    document.getElementById('wiPrice').innerHTML=money(p)+'<span style="font-size:1rem">/mo</span>';
+    document.getElementById('wiPriceK').textContent=(fsdOn?'your build · FSD on':'FSD off')+(freeChg?' · free work charging':'')+' · net vs Kia';
+
+    var youGap=youSum-p, mktGap=mktSum-p;
+    document.getElementById('wiYouVerdict').innerHTML = youGap>=0
+      ? 'Clears the price by <span class="good">'+money(youGap)+'/mo</span> — worth it to you.'
+      : 'Falls <span class="bad">'+money(-youGap)+'/mo</span> short of the price — a want, not value.';
+    document.getElementById('wiMktVerdict').innerHTML = mktGap>=0
+      ? 'Market values it <span class="good">'+money(mktGap)+'/mo above</span> the price — a relative bargain.'
+      : 'Tesla asks <span class="bad">'+money(-mktGap)+'/mo above</span> market fair value.';
+
+    var f;
+    if(youGap>=0){
+      f='<b>Worth it — on your own numbers.</b> You’d pay '+money(youSum)+'/mo for this bundle and it costs '+money(p)+'/mo, so you come out ahead by '+money(youGap)+'/mo.';
+    } else if(mktGap>=0){
+      f='<b>Fairly priced, but a want — not a saving.</b> The market values this bundle at '+money(mktSum)+'/mo (at or above the '+money(p)+'/mo price), so you’re not overpaying <em>for what it is</em>. But by your own numbers it’s worth '+money(youSum)+'/mo — '+money(-youGap)+'/mo below the price. You’ll enjoy it; you won’t save on it.';
+    } else {
+      f='<b>You’d be overpaying on both counts.</b> The price is '+money(p)+'/mo; the market values the bundle at '+money(mktSum)+'/mo and you’d personally pay '+money(youSum)+'/mo — both below the price. As pure value it doesn’t clear the bar.';
+    }
+    f+=' The only path that costs <em>less</em> than keeping the Kia is a used, pre-refresh Model Y (−$73/mo) — but that car drops the ride, quiet and rear screen you’re valuing most here.';
+    document.getElementById('wiFinal').innerHTML='<h3>The bottom line</h3><p>'+f+'</p>';
+  }
+  function rebuild(){ buildSliders(); buildMkt(); recompute(); }
+
+  document.getElementById('wiSliders').addEventListener('input', function(e){
+    var k=e.target.dataset.k; if(!k) return; you[k]=+e.target.value; recompute();
+  });
+  var scen=document.querySelector('.wi-scen');
+  scen.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    fsdOn = b.dataset.scen==='my';
+    scen.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed', x.dataset.scen===b.dataset.scen?'true':'false');});
+    rebuild();
+  });
+  var chg=document.getElementById('wiChg');
+  chg.addEventListener('click', function(){
+    freeChg=!freeChg; chg.setAttribute('aria-pressed', freeChg?'true':'false');
+    chg.textContent = freeChg?'− free work charging (−$26)':'+ add work-charging credit';
+    recompute();
+  });
+  document.getElementById('wiMktNote').innerHTML='<b>Market anchors</b> are US 2025–26 figures, adversarially verified (6 sourced + 6 refute-checked): hands-free ADAS = median of FSD $99, Ford BlueCruise $50, GM Super Cruise $40/mo; performance = the isolated performance-trim step (~$7.5k) ÷60; refinement is small because the refreshed Model Y rides on <em>passive</em> dampers (the win is acoustic glass, not adaptive suspension); tech = Premium Connectivity $9.99/mo + a modest screen/nav premium; a 5★ safety rating can’t be bought, so only the active-safety kit prices. <b>The FSD trap:</b> inside the $322 you pay ~$109/mo for hands-free driving the market values at ~$50/mo. Sources: tesla.com, ford.com, chevrolet.com, Edmunds/InsideEVs trim data, McKinsey CarPlay willingness-to-pay. They benchmark — your sliders decide.';
+  rebuild();
+})();
+</script>
+</body>
+</html>
