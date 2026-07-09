@@ -1,8 +1,9 @@
 import { S } from '../state';
 import { WORLDS } from '../data/worlds';
 import { pmt } from '../domain/amort';
-import { prin, termOf, insRaw, energyMonthly, gasMonthly, subMonthly, monthlyAllIn, upfrontOf } from '../domain/finance';
+import { prin, termOf, insRaw, energyMonthly, gasMonthly, subMonthly, monthlyAllIn, upfrontOf, aprOf } from '../domain/finance';
 import { fmt, getCSS } from './format';
+import { barWorld } from './breakdown';
 
 // Geometry (viewBox units). Two horizontal bars on ONE shared $/px scale so bar
 // length is proportional to total monthly cost; dotted connectors link the same
@@ -31,13 +32,13 @@ interface Cat {
 export function renderCompare(): void {
   const el = document.getElementById('myVsKia');
   if (!el) return;
-  const my = WORLDS.find((w) => w.key === 'my099')!;
+  const my = barWorld();
   const kia = WORLDS[0];
 
   // Each category's live monthly dollars for both cars. Fuel/energy = gas for the
   // Kia, charging for the MY. Sums equal monthlyAllIn() for each car by construction.
   const cats: Cat[] = [
-    { key: 'pay', label: 'Payment', cvar: '--cat-pay', my: pmt(prin(my), my.apr, termOf(my)), kia: pmt(S.kiaOwed, S.kiaApr, S.kiaMonths) },
+    { key: 'pay', label: 'Payment', cvar: '--cat-pay', my: pmt(prin(my), aprOf(my), termOf(my)), kia: pmt(S.kiaOwed, S.kiaApr, S.kiaMonths) },
     { key: 'ins', label: 'Insurance', cvar: '--cat-ins', my: insRaw(my), kia: insRaw(kia) },
     { key: 'maint', label: 'Maintenance', cvar: '--cat-maint', my: my.maint, kia: kia.maint },
     { key: 'fuel', label: 'Fuel / energy', cvar: '--cat-fuel', my: energyMonthly(my), kia: gasMonthly(kia) },
@@ -107,7 +108,7 @@ export function renderCompare(): void {
 
   // --- left gutter labels + the bars themselves ---
   const gutter =
-    `<text x="8" y="${myY + barH / 2 - 3}" font-size="13" font-weight="700" fill="${col.pay}">Model Y</text>` +
+    `<text x="8" y="${myY + barH / 2 - 3}" font-size="13" font-weight="700" fill="${col.pay}">${my.short}</text>` +
     `<text x="8" y="${myY + barH / 2 + 13}" font-size="11.5" fill="${muted}">${fmt(myTotal)}/mo</text>` +
     `<text x="8" y="${kiaY + barH / 2 - 3}" font-size="13" font-weight="700" fill="${getCSS('--kia')}">Kia Sportage</text>` +
     `<text x="8" y="${kiaY + barH / 2 + 13}" font-size="11.5" fill="${muted}">${fmt(kiaTotal)}/mo</text>`;
@@ -143,13 +144,13 @@ export function renderCompare(): void {
     return `${c.label.toLowerCase()} ${d < 0 ? fmt(-d) + '/mo cheaper' : fmt(d) + '/mo pricier'}`;
   };
   const foot =
-    `On the same scale, the Model Y's all-in monthly is <b>${fmt(Math.abs(dTot))}/mo ${dTot <= 0 ? 'lower' : 'higher'}</b> than the Kia Sportage right now. ` +
+    `On the same scale, the ${my.short} build's all-in monthly is <b>${fmt(Math.abs(dTot))}/mo ${dTot <= 0 ? 'lower' : 'higher'}</b> than the Kia Sportage right now. ` +
     `Biggest swings: ${phrase(swings[0])}, then ${phrase(swings[1])}. ` +
-    `<small>Monthly only — it ignores the Model Y's ${fmt(upfrontOf(my))} upfront and the resale/equity that the table below nets out over your holding period.</small>`;
+    `<small>Monthly only — it ignores the ${fmt(upfrontOf(my))} upfront and the resale/equity that the table below nets out over your holding period.</small>`;
 
   el.innerHTML =
     svg +
-    `<table class="cmp-tbl"><thead><tr><th>Category</th><th>Model Y</th><th>Kia Sportage</th><th>Δ (MY−Kia)</th></tr></thead>` +
+    `<table class="cmp-tbl"><thead><tr><th>Category</th><th>${my.short}</th><th>Kia Sportage</th><th>Δ (MY−Kia)</th></tr></thead>` +
     `<tbody>${rows}${totRow}</tbody></table>` +
     `<div class="bk-foot">${foot}</div>`;
 }

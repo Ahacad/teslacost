@@ -60,6 +60,14 @@ export function wire(): void {
       render();
     }),
   );
+  document.querySelectorAll<HTMLElement>('#barTier button').forEach((b) =>
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#barTier button').forEach((x) => x.classList.remove('on'));
+      b.classList.add('on');
+      ui.barTier = b.dataset.v!;
+      render();
+    }),
+  );
   document.querySelectorAll<HTMLElement>('#view button').forEach((b) =>
     b.addEventListener('click', () => {
       document.querySelectorAll('#view button').forEach((x) => x.classList.remove('on'));

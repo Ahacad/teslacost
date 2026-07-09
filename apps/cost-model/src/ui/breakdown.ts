@@ -1,22 +1,32 @@
-import { S } from '../state';
+import { S, ui } from '../state';
 import { WORLDS, MY_PRETAX, MY_DOWN5, TAX_RATE } from '../data/worlds';
 import { pmt } from '../domain/amort';
 import {
-  prin, termOf, insRaw, energyMonthly, subMonthly, monthlyAllIn, negEquity, delayOf, upfrontOf, tradeCredit,
+  prin, termOf, insRaw, energyMonthly, subMonthly, monthlyAllIn, negEquity, delayOf, upfrontOf, tradeCredit, aprOf,
 } from '../domain/finance';
 import { fmt } from './format';
 
-/** Live itemized monthly for the configured car (my099): stacked bar + line items + the P derivation. */
+/** The MY financing row the monthly-bar cards display (shared with compare.ts). */
+export function barWorld() {
+  return WORLDS.find((x) => x.key === ui.barTier) ?? WORLDS.find((x) => x.key === 'my099')!;
+}
+
+/** Live itemized monthly for the selected MY tier: stacked bar + line items + the P derivation. */
 export function renderBreakdown(): void {
   const el = document.getElementById('myBreakdown');
   if (!el) return;
-  const w = WORLDS.find((x) => x.key === 'my099')!;
+  const w = barWorld();
   const kia = WORLDS[0];
   const D = delayOf(w);
   const P = prin(w);
-  const pay = pmt(P, w.apr, termOf(w));
+  const apr = aprOf(w);
+  const pay = pmt(P, apr, termOf(w));
+  const payNote =
+    w.tier === 'promo'
+      ? `${fmt(P)} @ ${apr}% / ${termOf(w)} mo — FIXED by the 0.99% band (loan = 95% of price; the sliders move the cash gate below, not this payment)`
+      : `${fmt(P)} @ ${apr}% / ${termOf(w)} mo — moves with the trade-in offer, trade month${w.tier === 'roll' ? ', and your cash down' : ''}`;
   const parts = [
-    { k: 'Loan payment', v: pay, c: 'var(--cat-pay)', note: `${fmt(P)} @ ${w.apr}% / ${termOf(w)} mo` },
+    { k: 'Loan payment', v: pay, c: 'var(--cat-pay)', note: payNote },
     { k: 'Insurance', v: insRaw(w), c: 'var(--cat-ins)', note: 'your real quote (Progressive ÷ 6; GEICO wanted $500)' },
     { k: 'Maintenance', v: w.maint, c: 'var(--cat-maint)', note: 'tires/wipers/misc, flat' },
     { k: 'Charging', v: energyMonthly(w), c: 'var(--cat-fuel)', note: `$${S.ev} case × ${(S.miles / 23400).toFixed(2)} miles level` },
@@ -38,14 +48,21 @@ export function renderBreakdown(): void {
     )
     .join('');
 
-  // How the financed amount is built (mirrors prin() for the promo tier: the
-  // 0.99% band caps the loan at 95% of the pre-tax price; tax + gap are cash).
+  // How the financed amount is built — mirrors prin()/upfrontOf() per tier, so the
+  // reader sees exactly which sliders feed the payment vs the cash at signing.
   const roll = negEquity(D);
+  const gapTxt = roll >= 0 ? `Kia gap ${fmt(roll)}` : `<span class="pos">Kia equity ${fmt(-roll)}</span>`;
+  const atD = D > 0 ? `<small> (at trade month ${D})</small>` : '';
   const derivation =
-    `P = 95% × ${fmt(MY_PRETAX)} pre-tax = <b>${fmt(P)}</b> financed <small>(0.99% band caps the loan at ≤100% LTV)</small><br>` +
-    `cash gate = 5% down ${fmt(MY_DOWN5)} + WA tax after trade credit ${fmt(MY_PRETAX * TAX_RATE - tradeCredit(D))} + rack + ` +
-    `${roll >= 0 ? `Kia gap ${fmt(roll)}` : `<span class="pos">Kia equity ${fmt(-roll)}</span>`}${D > 0 ? `<small> (at trade month ${D})</small>` : ''}` +
-    ` = <b>${fmt(upfrontOf(w))}</b> at signing`;
+    w.tier === 'promo'
+      ? `P = 95% × ${fmt(MY_PRETAX)} pre-tax = <b>${fmt(P)}</b> financed <small>(0.99% band caps the loan at ≤100% LTV)</small><br>` +
+        `cash gate = 5% down ${fmt(MY_DOWN5)} + WA tax after trade credit ${fmt(MY_PRETAX * TAX_RATE - tradeCredit(D))} + rack + ${gapTxt}${atD}` +
+        ` = <b>${fmt(upfrontOf(w))}</b> at signing`
+      : w.tier === 'roll'
+        ? `P = ${fmt(w.otd!)} OTD − trade credit ${fmt(tradeCredit(D))} + ${gapTxt}${atD} − down ${fmt(S.myDown)} = <b>${fmt(P)}</b> financed <small>(>100% LTV, bank approval)</small><br>` +
+          `cash = down + rack = <b>${fmt(upfrontOf(w))}</b> at signing`
+        : `P = ${fmt(w.otd!)} OTD − trade credit ${fmt(tradeCredit(D))} + ${gapTxt}${atD} = <b>${fmt(P)}</b> financed <small>(standard rate, no down)</small><br>` +
+          `cash = rack = <b>${fmt(upfrontOf(w))}</b> at signing`;
 
   el.innerHTML =
     `<div class="bk-bar">${bar}</div>` +

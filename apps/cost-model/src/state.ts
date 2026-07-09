@@ -18,6 +18,7 @@ export const FEAT = new Set(['kia', 'my099']);
 export const ui = {
   hi: null as string | null,
   exSel: 'my099',
+  barTier: 'my099', // which MY financing row the monthly bars show (my099 | my299 | mystd)
   CHARTMAX: 0,
   VIS: [] as World[],
 };
