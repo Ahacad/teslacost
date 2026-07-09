@@ -89,12 +89,21 @@ export function wire(): void {
     render();
   });
 
-  // floating dock expand/collapse
+  // left dock expand/collapse: the whole collapsed rail is a click target; when
+  // open, only the header button toggles (clicks inside must reach the sliders).
   const dock = document.getElementById('dock')!;
   const toggle = document.getElementById('dockToggle')!;
-  toggle.addEventListener('click', () => {
-    const open = dock.classList.toggle('open');
+  const setDock = (open: boolean) => {
+    dock.classList.toggle('open', open);
+    document.body.classList.toggle('dock-open', open);
     toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setDock(!dock.classList.contains('open'));
+  });
+  dock.addEventListener('click', () => {
+    if (!dock.classList.contains('open')) setDock(true);
   });
 
   // worked-example world picker

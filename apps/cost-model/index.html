@@ -10,7 +10,7 @@
 <div class="wrap">
   <h1>What each world actually costs you</h1>
   <p class="sub">Keep the 2025 Kia Sportage X-Line vs. switching — Model Y Premium AWD (your build: 0.99%&nbsp;promo&nbsp;tier / 2.99%&nbsp;roll-everything&nbsp;tier / 5.64%&nbsp;standard / used), Ioniq&nbsp;5 (buy&nbsp;0% / lease), or a PHEV.
-  Seattle, July 2026, with your apartment's free 7.9&nbsp;kW charging. <b>Net cost = every dollar out of pocket minus what the car is still worth.</b> Tesla's promo APR is gated by DOWN PAYMENT: the 0.99% band demands 5% + all taxes/fees + the Kia gap in cash (~$10.7k today); pay less cash and the same car reprices to 2.99% — both are now rows. The sliders live in the <b>floating bar at the bottom of the screen</b> — drag while both charts stay in view.</p>
+  Seattle, July 2026, with your apartment's free 7.9&nbsp;kW charging. <b>Net cost = every dollar out of pocket minus what the car is still worth.</b> Tesla's promo APR is gated by DOWN PAYMENT: the 0.99% band demands 5% + all taxes/fees + the Kia gap in cash (~$10.7k today); pay less cash and the same car reprices to 2.99% — both are now rows. The sliders live in the <b>panel docked to the left edge</b> — click the rail to expand it and drag while both charts stay in view.</p>
 
   <div class="verdict" id="verdict">…</div>
 
@@ -28,7 +28,7 @@
   </div>
 
   <div class="card">
-    <h2>Your Model Y monthly — every part, live <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">— watch each piece move as you drag the sliders in the bottom bar</span></h2>
+    <h2>Your Model Y monthly — every part, live <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">— watch each piece move as you drag the sliders in the left panel</span></h2>
     <div class="seg small" id="barTier" style="max-width:560px;margin:0 0 12px">
       <button data-v="my099" class="on">0.99% promo tier</button>
       <button data-v="my299">2.99% roll tier</button>
@@ -54,7 +54,7 @@
     </table>
     <div class="body" style="font-size:12.5px;color:var(--muted);margin-top:10px">
       <b>Beats Kia</b> = first month this world's cost dips below keeping the Kia. <b>Walk-away whole</b> = first month the car
-      is worth at least what you still owe (sell without writing a check). "Cost" follows the view toggle in the bottom bar.
+      is worth at least what you still owe (sell without writing a check). "Cost" follows the view toggle in the left panel.
     </div>
   </div>
 
@@ -107,7 +107,7 @@
     <ul class="care" style="font-size:12.8px">
       <li><b style="color:var(--good)">Updated · July 4, 2026: real insurance quotes replace the estimate.</b> Your actual 6-month Model Y quotes — GEICO $3,000 (=$500/mo) and Progressive $2,500 (≈$417/mo) — replace the model's old $230/mo guess; the default is now your best real quote, editable above, and the Kia's $283/mo is editable next to its loan. That alone adds ~$187/mo ≈ <b>+$11.2k over 5 years</b> to both new-MY rows: your build is now ~<b>+$19.4k</b> vs keeping the Kia at 5 yr with FSD, and even FSD-off no longer breaks even inside 96 months. The used-MY/Ioniq rows are still generic estimates — real 2022–23-MY premiums run ~$275–300/mo, i.e. multiplier ×1.2–1.3 (used edge thins to ~$3.8–5.1k, break-even month ~28–34); a ×1.8 stress flips it to <b>Kia wins</b>. Get a real used-MY quote before acting on the "pick". Full sourcing: <code>analyses/insurance-reality-check-2026-07.md</code>.</li>
       <li><b style="color:var(--good)">New · July 2026: Tesla's down-payment tier mechanics are modeled.</b> Verified from Tesla's own configurator pricing matrix (<code>downPaymentMatrix</code> / <code>subventedInterestRate</code>): the 0.99% promo band requires a down payment of 5% of price PLUS all taxes and fees (loan ≤ 100% LTV) — with the Kia's $4,100 gap that's a <b>~$10.7k cash gate today</b>, shrinking ~$580/mo as the Kia loan amortizes (gate ~$6.5k at month 12). Dropping below the gate reprices the SAME car to the unpublished <b>2.99% band</b> (roll tax + fees + gap, >100% LTV, ~$2.6k cash) — that row is new, orange, and costs ~$4.1k more interest over 72 mo. Bank approval for >100% LTV is not guaranteed (partners cap ~120%) and enforcement is inconsistent (one Feb 2026 buyer kept 0.99% with $100 down). Defaults now match your real statement: $30,100 @ 5.19%/35 mo, $26,000 X-Line offer (market-fair per KBB/Edmunds July 2026), trade credit derived as 11.05% × trade value ($2,873 today), free apartment 7.9 kW charging ($25/mo road-trips-only case).</li>
-      <li><b style="color:var(--good)">Updated · July 2026: the new-MY rows are YOUR configured build</b> (Premium AWD $49,990 + Quicksilver $2,000 + white interior $1,000 + tow hitch $1,000, read off the live configurator with a Seattle ZIP), taxed at the 2026 rate (10.55% + 0.5% MV = 11.05%), plus the $553 roof rack in upfront and the $109/mo FSD subscription (toggle in the bottom bar; buying FSD outright ended 2/14/26). This <b>flips the June verdict for the new car</b>: with FSD the build never beats keeping the Kia inside 96 months (+$8.1k at 5 yr); without FSD it breaks even only at month 72. Full worked math incl. max checkout (≈$63.1k) and registration: <code>analyses/model-y-premium-awd-seattle-2026-07.md</code>. The fallback-rate row now uses Tesla’s live standard 5.64% (was the 6.27% market average).</li>
+      <li><b style="color:var(--good)">Updated · July 2026: the new-MY rows are YOUR configured build</b> (Premium AWD $49,990 + Quicksilver $2,000 + white interior $1,000 + tow hitch $1,000, read off the live configurator with a Seattle ZIP), taxed at the 2026 rate (10.55% + 0.5% MV = 11.05%), plus the $553 roof rack in upfront and the $109/mo FSD subscription (toggle in the left panel; buying FSD outright ended 2/14/26). This <b>flips the June verdict for the new car</b>: with FSD the build never beats keeping the Kia inside 96 months (+$8.1k at 5 yr); without FSD it breaks even only at month 72. Full worked math incl. max checkout (≈$63.1k) and registration: <code>analyses/model-y-premium-awd-seattle-2026-07.md</code>. The fallback-rate row now uses Tesla’s live standard 5.64% (was the 6.27% market average).</li>
       <li><b style="color:var(--good)">Updated · Kia residual (real data).</b> The keep-the-Kia resale was refreshed to a high-mileage-adjusted curve for a 2025 Sportage AWD gas, ~8 mo old, ~15.5k mi (KiaMedia MSRP + iSeeCars/CarEdge depreciation + KBB/Edmunds values): private <b>$24.0k now → $9.2k at 6yr</b>, dealer-trade <b>$21.0k → $7.8k</b>. The Sportage holds value better than the prior guess, so keeping it is cheaper than before and the switch edge is <b>thinner</b> (used MY @ 6% now ~$7.9k ahead at 5yr, not ~$11.7k). Month-0 is anchored to the conservative end of the field ranges; get a real Carvana/CarMax/dealer quote to tighten it.</li>
       <li><b style="color:var(--good)">New · negative equity is derived, not hardcoded.</b> The rolled gap is now <i>loan balance − dealer-trade value</i> at the month you trade (= $9,000 today, by construction), and it <b>moves with the "Trade the Kia in" slider</b> and your editable loan. The lease now also carries this gap in cash (the prior model omitted it, understating the lease by ~$9k).</li>
       <li><b style="color:var(--good)">Fixed · gas default.</b> Was $5.61 (a mid-2026 Hormuz spike); now $4.60 (WA multi-year baseline). The Kia is the most gas-sensitive world, so this is the single biggest lever — slider it to the price you expect to <i>average</i>.</li>
@@ -160,9 +160,10 @@
 </div>
 
 <div class="dock" id="dock">
-  <div class="dock-inner">
-    <div class="dock-bar">
-      <button id="dockToggle" class="dock-toggle" aria-expanded="false" aria-controls="dockMore">All assumptions <span class="chev">▴</span></button>
+  <button id="dockToggle" class="dock-toggle" aria-expanded="false" aria-controls="dockBody"><span class="chev">▸</span><span class="dock-label">Assumptions</span></button>
+  <div class="dock-rail" aria-hidden="true">Assumptions</div>
+  <div class="dock-body" id="dockBody">
+    <div class="dock-prime">
       <div class="ctl">
         <label>Holding period <b><span id="holdV">24</span> mo</b></label>
         <input type="range" id="hold" min="12" max="96" step="1" value="24">
@@ -170,13 +171,13 @@
       <div class="ctl">
         <label>Trade the Kia in <b id="delayV">switch now</b></label>
         <input type="range" id="delay" min="0" max="24" step="1" value="0">
+        <div id="delayReadout" class="dock-readout"></div>
       </div>
       <div class="seg small" id="view">
         <button data-v="net" class="on">True cost</button>
         <button data-v="cash">Cash out</button>
       </div>
     </div>
-    <div id="delayReadout" class="dock-readout"></div>
     <div class="dock-more" id="dockMore">
       <div class="controls">
         <div class="ctl" style="grid-column:1/-1">
