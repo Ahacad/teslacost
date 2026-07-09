@@ -11,14 +11,14 @@ export const S: State = {
 
 export const hidden = new Set<string>();
 
-/** The two lines spotlighted on the chart by default (keep-the-Kia vs the recommended new buy). */
-export const FEAT = new Set(['kia', 'my099']);
-
 /** Transient view state shared across the chart/table renderers. */
 export const ui = {
   hi: null as string | null,
   exSel: 'my099',
-  barTier: 'my099', // which MY financing row the monthly bars show (my099 | my299 | mystd)
+  barTier: 'my099', // the selected MY financing row (my099 | my299 | mystd) — drives chart spotlight, bars, table highlight, worked example
   CHARTMAX: 0,
   VIS: [] as World[],
 };
+
+/** Chart spotlight: keep-the-Kia + whichever MY financing tier is selected. */
+export const isFeat = (key: string): boolean => key === 'kia' || key === ui.barTier;

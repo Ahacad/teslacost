@@ -1,4 +1,4 @@
-import { S, hidden, FEAT, ui } from '../state';
+import { S, hidden, isFeat, ui } from '../state';
 import { WORLDS } from '../data/worlds';
 import { value } from '../domain/finance';
 import { getCSS, fmtk, fmt } from './format';
@@ -50,7 +50,7 @@ export function drawChart(): void {
     let d = '';
     for (let m = 0; m <= 96; m++) d += (m ? 'L' : 'M') + px(m).toFixed(1) + ' ' + py(value(w, m), ymax).toFixed(1) + ' ';
     const dash = w.key === 'lease' || w.key === 'mystd' ? 'stroke-dasharray="6 4"' : '';
-    const feat = FEAT.has(w.key);
+    const feat = isFeat(w.key);
     // Kia + MY 0.99% are always lit; every other line is faded but floats up to lit while it's the hovered/nearest one.
     const lit = feat || ui.hi === w.key;
     const wdt = ui.hi === w.key ? 3.5 : feat ? 3.3 : 1.7;
@@ -67,7 +67,7 @@ export function drawChart(): void {
   const over = (labs.length ? labs[labs.length - 1].y : 0) - (PAD.t + PH);
   if (over > 0) for (const L of labs) L.y -= over;
   for (const L of labs) {
-    const dim = !(FEAT.has(L.w.key) || ui.hi === L.w.key);
+    const dim = !(isFeat(L.w.key) || ui.hi === L.w.key);
     if (Math.abs(L.y - L.ey) > 5)
       s += `<line x1="${px(96) + 1}" y1="${L.ey}" x2="${px(96) + 5}" y2="${L.y + 0.5}" stroke="${L.w.color}" stroke-width="0.8" opacity="${dim ? 0.3 : 0.6}"/>`;
     s += `<text x="${px(96) + 6}" y="${L.y + 3.5}" font-size="10.5" font-weight="600" fill="${L.w.color}" opacity="${dim ? 0.3 : 1}">${L.w.short} ${fmtk(value(L.w, 96))}</text>`;
@@ -77,7 +77,7 @@ export function drawChart(): void {
   // legend (clickable)
   document.getElementById('legend')!.innerHTML = WORLDS.map(
     (w) =>
-      `<span data-k="${w.key}" class="${hidden.has(w.key) ? 'off' : ''} ${FEAT.has(w.key) ? 'feat' : ''}"><i class="swatch" style="background:${w.color}"></i>${w.label}</span>`,
+      `<span data-k="${w.key}" class="${hidden.has(w.key) ? 'off' : ''} ${isFeat(w.key) ? 'feat' : ''}"><i class="swatch" style="background:${w.color}"></i>${w.label}</span>`,
   ).join('');
   document.querySelectorAll<HTMLElement>('#legend span').forEach((el) => {
     el.onclick = () => {

@@ -24,17 +24,17 @@
       <div class="tip" id="tip"></div>
     </div>
     <div class="legend" id="legend"></div>
-    <div class="hint"><b>Keep&nbsp;the&nbsp;Kia</b> and <b>Model&nbsp;Y&nbsp;@&nbsp;0.99%</b> are highlighted; the other worlds are faded. Hover the chart to read every world at that month; hover a legend chip to spotlight that line, or click it to hide/show. The red line is your holding period; the dashed line (when set) is the month you trade the Kia — every switch world rides the Kia line until then, then peels off.</div>
+    <div class="hint"><b>Keep&nbsp;the&nbsp;Kia</b> and the <b>selected MY financing tier</b> (picker in the left panel or the monthly card) are highlighted; the other worlds are faded. Hover the chart to read every world at that month; hover a legend chip to spotlight that line, or click it to hide/show. The red line is your holding period; the dashed line (when set) is the month you trade the Kia — every switch world rides the Kia line until then, then peels off.</div>
   </div>
 
   <div class="card">
     <h2>Your Model Y monthly — every part, live <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">— watch each piece move as you drag the sliders in the left panel</span></h2>
-    <div class="seg small" id="barTier" style="max-width:560px;margin:0 0 12px">
+    <div class="seg small barTier" style="max-width:560px;margin:0 0 12px">
       <button data-v="my099" class="on">0.99% promo tier</button>
       <button data-v="my299">2.99% roll tier</button>
       <button data-v="mystd">5.64% standard</button>
     </div>
-    <div style="font-size:11.5px;color:var(--muted);margin:-6px 0 12px">Picks which financing row this card and the vs-Kia bars show. The 0.99% payment is <b>fixed by design</b> — that band caps the loan at 95% of the pre-tax price, so the trade-in and gap sliders move its <i>cash at signing</i>, not its payment. The 2.99% and 5.64% rows finance the rolled amounts, so their payments do move.</div>
+    <div style="font-size:11.5px;color:var(--muted);margin:-6px 0 12px">Picks which financing row EVERY view follows: the chart spotlight, this card, the vs-Kia bars, the table highlight, and the worked example. The 0.99% payment is <b>fixed by design</b> — that band caps the loan at 95% of the pre-tax price, so the trade-in and gap sliders move its <i>cash at signing</i>, not its payment. The 2.99% and 5.64% rows finance the rolled amounts, so their payments do move.</div>
     <div id="myBreakdown"></div>
   </div>
 
@@ -176,6 +176,14 @@
       <div class="seg small" id="view">
         <button data-v="net" class="on">True cost</button>
         <button data-v="cash">Cash out</button>
+      </div>
+      <div class="ctl">
+        <label>MY financing tier <span style="text-transform:none;letter-spacing:0">— drives every view</span></label>
+        <div class="seg small barTier">
+          <button data-v="my099" class="on">0.99%</button>
+          <button data-v="my299">2.99%</button>
+          <button data-v="mystd">5.64%</button>
+        </div>
       </div>
     </div>
     <div class="dock-more" id="dockMore">

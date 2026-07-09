@@ -1,4 +1,4 @@
-import { S } from '../state';
+import { S, ui } from '../state';
 import { WORLDS, LEASE_PMT } from '../data/worlds';
 import { pmt } from '../domain/amort';
 import {
@@ -70,7 +70,7 @@ export function render(): void {
     const tr = document.createElement('tr');
     if (w.key === cheapestReal.w.key) tr.className = 'win';
     else if (w.key === 'kia') tr.className = 'kia';
-    else if (w.key === 'my099' || w.key === 'my299') tr.className = 'my099';
+    else if (w.key === ui.barTier) tr.className = 'my099';
     const tags = (w.tag ? `<span class="tag">${w.tag}</span>` : '') + (w.tagBad ? `<span class="tag bad">${w.tagBad}</span>` : '');
     tr.innerHTML =
       `<td><span class="dot" style="background:${w.color}"></span>${w.label}${tags}</td>` +
@@ -89,7 +89,7 @@ export function render(): void {
         : `payment ${fmt(p)} + insurance $${Math.round(insRaw(w))} + maint $${w.maint}` +
           `${gasMonthly(w) > 0 ? ` + ${w.type === 'phev' ? 'energy' : 'gas'} ${fmt(gasMonthly(w))}` : ''}` +
           `${energyMonthly(w) > 0 ? ` + energy ${fmt(energyMonthly(w))}` : ''}${subMonthly(w) > 0 ? ` + FSD $${subMonthly(w)}` : ''} = <b>${fmt(monthlyAllIn(w))}/mo</b>`;
-    return `<details ${w.key === 'ioniq' || w.key === 'my099' ? 'open' : ''}>
+    return `<details ${w.key === 'ioniq' || w.key === ui.barTier ? 'open' : ''}>
       <summary><span class="dot" style="background:${w.color}"></span>${w.label} — ${fmt(monthlyAllIn(w))}/mo all-in</summary>
       <div class="body">${breakdown}.<br>${w.note}</div></details>`;
   }).join('');

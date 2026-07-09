@@ -60,11 +60,20 @@ export function wire(): void {
       render();
     }),
   );
-  document.querySelectorAll<HTMLElement>('#barTier button').forEach((b) =>
+  // MY financing tier — two synced pickers (left panel + monthly card); the choice
+  // drives the chart spotlight, both bar cards, the table highlight, and follows
+  // into the worked example.
+  document.querySelectorAll<HTMLElement>('.barTier button').forEach((b) =>
     b.addEventListener('click', () => {
-      document.querySelectorAll('#barTier button').forEach((x) => x.classList.remove('on'));
-      b.classList.add('on');
       ui.barTier = b.dataset.v!;
+      document.querySelectorAll<HTMLElement>('.barTier button').forEach((x) =>
+        x.classList.toggle('on', x.dataset.v === ui.barTier),
+      );
+      const sel = document.getElementById('exWorld') as HTMLSelectElement | null;
+      if (sel) {
+        ui.exSel = ui.barTier;
+        sel.value = ui.barTier;
+      }
       render();
     }),
   );
